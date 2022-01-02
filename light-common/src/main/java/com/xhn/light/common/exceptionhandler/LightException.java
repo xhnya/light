@@ -16,4 +16,9 @@ public class LightException extends RuntimeException{
     private Integer code; //状态码
     private String msg; //异常信息
 
+
+    public LightException(String msg) {
+        super(msg);
+        this.msg = msg;
+    }
 }
