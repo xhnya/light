@@ -21,6 +21,7 @@
     <modules>
         <module>light-gateway</module>
         <module>light-common</module>
+        <module>light-admin</module>
     </modules>
 
 
