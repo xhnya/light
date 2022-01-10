@@ -23,6 +23,7 @@
         <module>light-common</module>
         <module>light-admin</module>
         <module>light-auth</module>
+        <module>renren-generator</module>
     </modules>
 
 
