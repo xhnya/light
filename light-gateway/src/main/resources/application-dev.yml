@@ -9,6 +9,13 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
 
+        - id: light_cloud
+          uri: lb://light-cloud
+          predicates:
+            - Path=/api/cloud/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
         - id: user_admin
           uri: lb://exercise-member
           predicates:
