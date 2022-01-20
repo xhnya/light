@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 import cn.hutool.core.date.DateUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,7 @@ import com.xhn.light.common.utils.Result;
  * @email 930957853@qq.com
  * @date 2022-01-20 20:37:25
  */
+@Slf4j
 @RestController
 @RequestMapping("admin/banner")
 public class BannerController {
@@ -37,6 +39,7 @@ public class BannerController {
     @RequestMapping("/list")
     //@RequiresPermissions("admin:banner:list")
     public Result list(@RequestParam Map<String, Object> params){
+        log.info("=============="+params.toString());
         PageUtils page = bannerService.queryPage(params);
         return Result.ok().data("page", page);
     }
