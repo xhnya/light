@@ -3,7 +3,6 @@ package ${package}.${moduleName}.controller;
 import java.util.Arrays;
 import java.util.Map;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,7 +38,7 @@ public class ${className}Controller {
     public Result list(@RequestParam Map<String, Object> params){
         PageUtils page = ${classname}Service.queryPage(params);
 
-        return Result.ok().put("page", page);
+        return Result.ok().data("page", page);
     }
 
 
@@ -51,7 +50,7 @@ public class ${className}Controller {
     public Result info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
 		${className}Entity ${classname} = ${classname}Service.getById(${pk.attrname});
 
-        return Result.ok().put("${classname}", ${classname});
+        return Result.ok().data("${classname}", ${classname});
     }
 
     /**

@@ -19,16 +19,16 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void insertFill(MetaObject metaObject) {
-        this.setFieldValByName("gmtCreate",new Date(),metaObject);
-        this.setFieldValByName("gmtModified",new Date(),metaObject);
+        this.setFieldValByName("create_time",new Date(),metaObject);
+        this.setFieldValByName("update_time",new Date(),metaObject);
     }
 
     /**
-     *mybatisplus的策略
+     * mybatisplus的策略
      * @param metaObject
      */
     @Override
     public void updateFill(MetaObject metaObject) {
-        this.setFieldValByName("gmtModified",new Date(),metaObject);
+        this.setFieldValByName("update_time",new Date(),metaObject);
     }
 }
