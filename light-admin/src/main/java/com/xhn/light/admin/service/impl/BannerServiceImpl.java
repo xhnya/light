@@ -1,7 +1,9 @@
 package com.xhn.light.admin.service.impl;
 
 import org.springframework.stereotype.Service;
+
 import java.util.Map;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -21,6 +23,8 @@ public class BannerServiceImpl extends ServiceImpl<BannerDao, BannerEntity> impl
         IPage<BannerEntity> page = this.page(
                 new Query<BannerEntity>().getPage(params),
                 new QueryWrapper<BannerEntity>()
+                        .eq(params.get("start") != null, "start", params.get("start"))
+                        .like(!params.get("name").equals(""),"name",params.get("name") )
         );
 
         return new PageUtils(page);

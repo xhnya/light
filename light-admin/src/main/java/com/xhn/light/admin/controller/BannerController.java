@@ -6,11 +6,7 @@ import java.util.Map;
 import cn.hutool.core.date.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.xhn.light.admin.entity.BannerEntity;
 import com.xhn.light.admin.service.BannerService;
@@ -36,10 +32,10 @@ public class BannerController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
+    @GetMapping("/list")
     //@RequiresPermissions("admin:banner:list")
     public Result list(@RequestParam Map<String, Object> params){
-        log.info("=============="+params.toString());
+        log.info("=============="+params);
         PageUtils page = bannerService.queryPage(params);
         return Result.ok().data("page", page);
     }
@@ -62,7 +58,6 @@ public class BannerController {
     @RequestMapping("/save")
     //@RequiresPermissions("admin:banner:save")
     public Result save(@RequestBody BannerEntity banner){
-        banner.setCreateTime(DateUtil.date());
         bannerService.save(banner);
         return Result.ok();
     }
