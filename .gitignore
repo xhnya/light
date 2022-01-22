@@ -45,3 +45,4 @@ build/
 **/.mvn
 logs/**
 logs
+**/src/main/resources/src/views/**

@@ -23,7 +23,7 @@ import com.xhn.light.common.utils.Result;
  *
  * @author xhn
  * @email 930957853@qq.com
- * @date 2022-01-22 13:15:00
+ * @date 2022-01-22 16:36:17
  */
 @RestController
 @RequestMapping("game/score")

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xhn.light.game.dao.GameDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.xhn.light.game.entity.GameEntity" id="gameMap">
+        <result property="id" column="id"/>
+        <result property="gameName" column="game_name"/>
+        <result property="website" column="website"/>
+        <result property="coverUrl" column="cover_url"/>
+        <result property="releaseTime" column="release_time"/>
+        <result property="gameNameChina" column="game_name_china"/>
+        <result property="gameDescribe" column="game_describe"/>
+        <result property="price" column="price"/>
+        <result property="gameType" column="game_type"/>
+        <result property="gameMaking" column="game_making"/>
+        <result property="gameIssue" column="game_issue"/>
+        <result property="videoUrl" column="video_url"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="isHot" column="is_hot"/>
+        <result property="bgUrl" column="bg_url"/>
+        <result property="imgUrl" column="img_url"/>
+        <result property="sort" column="sort"/>
+    </resultMap>
+
+
+</mapper>

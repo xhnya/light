@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 
  * @author xhn
  * @email 930957853@qq.com
- * @date 2022-01-22 13:15:00
+ * @date 2022-01-22 16:36:17
  */
 @Mapper
 public interface ScoreDao extends BaseMapper<ScoreEntity> {

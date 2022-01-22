@@ -11,7 +11,7 @@ import lombok.Data;
  * 
  * @author xhn
  * @email 930957853@qq.com
- * @date 2022-01-22 13:14:59
+ * @date 2022-01-22 16:36:15
  */
 @Data
 @TableName("gms_produce")
@@ -36,5 +36,9 @@ public class ProduceEntity implements Serializable {
 	 */
 	@TableField(fill = FieldFill.INSERT)
 	private Date createTime;
+	/**
+	 * 具有的游戏数
+	 */
+	private Integer gameNums;
 
 }

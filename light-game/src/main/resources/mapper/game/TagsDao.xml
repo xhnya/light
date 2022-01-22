@@ -10,6 +10,8 @@
         <result property="createTime" column="create_time"/>
         <result property="start" column="start"/>
         <result property="isDel" column="is_del"/>
+        <result property="sort" column="sort"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
 

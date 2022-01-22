@@ -1,6 +1,8 @@
 package com.xhn.light.game.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -11,7 +13,7 @@ import lombok.Data;
  * 
  * @author xhn
  * @email 930957853@qq.com
- * @date 2022-01-22 13:14:59
+ * @date 2022-01-22 16:36:16
  */
 @Data
 @TableName("gms_picture")
@@ -42,12 +44,10 @@ public class PictureEntity implements Serializable {
 	/**
 	 * 
 	 */
-	@TableField(fill = FieldFill.INSERT)
 	private Date createTime;
 	/**
 	 * 
 	 */
-	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private Date updateTime;
 
 }

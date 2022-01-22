@@ -11,7 +11,7 @@ import lombok.Data;
  * 
  * @author xhn
  * @email 930957853@qq.com
- * @date 2022-01-22 13:15:00
+ * @date 2022-01-22 16:36:16
  */
 @Data
 @TableName("gms_rank")
