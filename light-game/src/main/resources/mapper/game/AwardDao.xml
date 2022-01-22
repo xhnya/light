@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xhn.light.game.dao.AwardDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.xhn.light.game.entity.AwardEntity" id="awardMap">
+        <result property="id" column="id"/>
+        <result property="gameId" column="game_id"/>
+        <result property="year" column="year"/>
+        <result property="institutionsName" column="institutions_name"/>
+        <result property="nameDescribe" column="name_describe"/>
+        <result property="awardName" column="award_name"/>
+        <result property="sort" column="sort"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+
+</mapper>
