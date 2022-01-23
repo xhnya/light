@@ -30,6 +30,10 @@ public class ComputerConfigEntity implements Serializable {
 	 */
 	private Integer type;
 	/**
+	 * 游戏id
+	 */
+	private Long gameId;
+	/**
 	 * 操作系统
 	 */
 	private String systemOs;

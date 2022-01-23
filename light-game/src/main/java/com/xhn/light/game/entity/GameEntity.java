@@ -58,15 +58,15 @@ public class GameEntity implements Serializable {
 	/**
 	 * 游戏类型
 	 */
-	private String gameType;
+	private Long gameType;
 	/**
 	 * 制作商
 	 */
-	private String gameMaking;
+	private Long gameMaking;
 	/**
 	 * 发行商
 	 */
-	private String gameIssue;
+	private Long gameIssue;
 	/**
 	 * 详情视频
 	 */

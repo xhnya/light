@@ -1,8 +1,10 @@
 package com.xhn.light.game.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,6 +41,17 @@ public class TagsController {
         PageUtils page = tagsService.queryPage(params);
 
         return Result.ok().data("page", page);
+    }
+    /**
+     * 获取列表
+     */
+    @RequestMapping("/tagsList")
+    //@RequiresPermissions("game:tags:list")
+    public Result selectList(){
+        QueryWrapper<TagsEntity> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("sort");
+        List<TagsEntity> list = tagsService.list(wrapper);
+        return Result.ok().data("list", list);
     }
 
 

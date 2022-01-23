@@ -3,6 +3,9 @@ package com.xhn.light.game.dao;
 import com.xhn.light.game.entity.GameTagsEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 游戏标签对应表
@@ -13,5 +16,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface GameTagsDao extends BaseMapper<GameTagsEntity> {
-	
+
+    void addList( Long gameId, List<Long> list);
 }

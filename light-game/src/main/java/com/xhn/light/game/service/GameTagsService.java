@@ -3,6 +3,7 @@ package com.xhn.light.game.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.game.entity.GameTagsEntity;
+import com.xhn.light.game.entity.vo.GameTagsVo;
 
 import java.util.Map;
 
@@ -16,5 +17,7 @@ import java.util.Map;
 public interface GameTagsService extends IService<GameTagsEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void addList(GameTagsVo tagsList);
 }
 

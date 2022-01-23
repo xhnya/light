@@ -32,6 +32,10 @@ public class BannerEntity implements Serializable {
 	 */
 	private String resourcesUrl;
 	/**
+	 *
+	 */
+	private Long gameId;
+	/**
 	 * 
 	 */
 	private Integer isDel;

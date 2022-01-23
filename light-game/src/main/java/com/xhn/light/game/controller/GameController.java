@@ -40,6 +40,16 @@ public class GameController {
 
         return Result.ok().data("page", page);
     }
+//    /**
+//     * 获取列表
+//     */
+//    @RequestMapping("/gameList")
+//    //@RequiresPermissions("game:game:list")
+//    public Result gameList(@RequestParam Map<String, Object> params){
+//        gameService
+//
+//        return Result.ok().data("page", page);
+//    }
 
 
     /**
@@ -60,8 +70,7 @@ public class GameController {
     //@RequiresPermissions("game:game:save")
     public Result save(@RequestBody GameEntity game){
 		gameService.save(game);
-
-        return Result.ok();
+        return Result.ok().data("gameId",game.getId());
     }
 
     /**

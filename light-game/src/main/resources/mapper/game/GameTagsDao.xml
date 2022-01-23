@@ -10,6 +10,12 @@
         <result property="tagsId" column="tags_id"/>
         <result property="sort" column="sort"/>
     </resultMap>
+    <insert id="addList">
+        insert into gms_game_tags(game_id,tags_id) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{gameId},#{item})
+        </foreach>
+    </insert>
 
 
 </mapper>

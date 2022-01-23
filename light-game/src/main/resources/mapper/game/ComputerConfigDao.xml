@@ -13,6 +13,7 @@
         <result property="computerCpu" column="computer_cpu"/>
         <result property="computerHard" column="computer_hard"/>
         <result property="computerNetwork" column="computer_network"/>
+        <result property="gameId" column="game_id"/>
     </resultMap>
 
 
