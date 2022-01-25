@@ -40,16 +40,16 @@ public class GameController {
 
         return Result.ok().data("page", page);
     }
-//    /**
-//     * 获取列表
-//     */
-//    @RequestMapping("/gameList")
-//    //@RequiresPermissions("game:game:list")
-//    public Result gameList(@RequestParam Map<String, Object> params){
-//        gameService
-//
-//        return Result.ok().data("page", page);
-//    }
+    /**
+     * 获取列表
+     */
+    @RequestMapping("/gameList")
+    //@RequiresPermissions("game:game:list")
+    public Result gameList(@RequestParam Map<String, Object> params){
+        PageUtils page = gameService.gameList(params);
+
+        return Result.ok().data("page", page);
+    }
 
 
     /**

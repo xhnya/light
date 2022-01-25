@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * @author xhn
  * @date 2022/1/23 20:26
- * @description: 后台管理的游戏列表
+ * @description: 后台管理的游戏列表,用于后台展示游戏类表的封装类
  */
 @Data
 public class GameListAdmin {
@@ -24,10 +24,6 @@ public class GameListAdmin {
      */
     private String website;
     /**
-     * 封面图
-     */
-    private String coverUrl;
-    /**
      * 发行时间
      */
     private Date releaseTime;
@@ -35,10 +31,7 @@ public class GameListAdmin {
      * 中文名
      */
     private String gameNameChina;
-    /**
-     * 描述
-     */
-    private String gameDescribe;
+
     /**
      * 价格
      */
@@ -55,26 +48,11 @@ public class GameListAdmin {
      * 发行商
      */
     private String gameIssue;
-    /**
-     *
-     */
-    private Date createTime;
-    /**
-     *
-     */
-    private Date updateTime;
+
     /**
      * 是否热门
      */
     private Integer isHot;
-    /**
-     * 背景图
-     */
-    private String bgUrl;
-    /**
-     * 主要图片
-     */
-    private String imgUrl;
     /**
      * 排序
      */

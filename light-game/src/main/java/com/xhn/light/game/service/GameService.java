@@ -16,5 +16,7 @@ import java.util.Map;
 public interface GameService extends IService<GameEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    PageUtils gameList(Map<String, Object> params);
 }
 
