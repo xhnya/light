@@ -24,6 +24,7 @@ public class ScoreEntity implements Serializable {
 	 */
 	@TableId(type = IdType.AUTO)
 	private Long id;
+	private Long gameId;
 	/**
 	 * 游戏分数
 	 */

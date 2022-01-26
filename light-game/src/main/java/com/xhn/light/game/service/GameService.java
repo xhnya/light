@@ -3,6 +3,7 @@ package com.xhn.light.game.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.game.entity.GameEntity;
+import com.xhn.light.game.entity.vo.GameInfoVo;
 
 import java.util.Map;
 
@@ -18,5 +19,7 @@ public interface GameService extends IService<GameEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     PageUtils gameList(Map<String, Object> params);
+
+    GameInfoVo getGameInfo(Long id);
 }
 

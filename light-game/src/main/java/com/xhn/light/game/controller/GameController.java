@@ -3,6 +3,7 @@ package com.xhn.light.game.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.xhn.light.game.entity.vo.GameInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,15 +52,15 @@ public class GameController {
         return Result.ok().data("page", page);
     }
 
-
     /**
-     * 信息
+     * 获取游戏的详细信息
+     * @param id 传入游戏的id
+     * @return
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("game:game:info")
     public Result info(@PathVariable("id") Long id){
-		GameEntity game = gameService.getById(id);
-
+        GameInfoVo game = gameService.getGameInfo(id);
         return Result.ok().data("game", game);
     }
 

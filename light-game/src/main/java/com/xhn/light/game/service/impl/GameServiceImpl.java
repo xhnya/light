@@ -1,6 +1,7 @@
 package com.xhn.light.game.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xhn.light.game.entity.vo.GameInfoVo;
 import com.xhn.light.game.entity.vo.GameListAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,11 @@ public class GameServiceImpl extends ServiceImpl<GameDao, GameEntity> implements
         Page<GameEntity> page = new Page<>(1,10);
         List<GameListAdmin> result= gameDao.gameList(page);
         return new PageUtils(result,1,10,result.size());
+    }
+
+    @Override
+    public GameInfoVo getGameInfo(Long id) {
+        return gameDao.getGameInfo(id);
     }
 
 }
