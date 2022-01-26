@@ -44,10 +44,13 @@ public class GameListAdmin {
      * 制作商
      */
     private String gameMaking;
+
+
     /**
      * 发行商
      */
     private String gameIssue;
+
 
     /**
      * 是否热门

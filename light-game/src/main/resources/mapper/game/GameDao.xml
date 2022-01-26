@@ -24,14 +24,15 @@
         <result property="imgUrl" column="img_url"/>
         <result property="sort" column="sort"/>
     </resultMap>
-<!--    TODO: 子查询有多个结果-->
+
     <select id="gameList" resultType="com.xhn.light.game.entity.vo.GameListAdmin">
         select g.id as id,g.game_name as gameName,g.website as website,
         g.release_time as releaseTime ,g.game_name_china as gameNameChina,
         g.price as price,t.type_name as gameType,g.is_hot as isHot,g.sort as sort,
-        (select p.name from gms_produce p,gms_game g where p.id=g.game_issue ) as gameIssue,
-        (select p.name from gms_produce p,gms_game g where p.id=g.game_making) as gameMaking
-        from gms_game g , gms_produce p,gms_type t
+        (select p.name from gms_produce p where p.id=g.game_issue) as gameIssue,
+        (select pe.name from gms_produce pe where pe.id=g.game_making) as gameMaking
+        from gms_game g ,gms_type t
+        where t.id=g.game_type
     </select>
 
 
