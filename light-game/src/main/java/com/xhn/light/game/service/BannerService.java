@@ -16,5 +16,7 @@ import java.util.Map;
 public interface BannerService extends IService<BannerEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    PageUtils getGameBannerList(Map<String, Object> params);
 }
 

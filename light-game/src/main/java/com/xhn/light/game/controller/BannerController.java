@@ -40,6 +40,16 @@ public class BannerController {
 
         return Result.ok().data("page", page);
     }
+    /**
+     * 获取游戏banner图
+     */
+    @RequestMapping("/getGameBannerList")
+    //@RequiresPermissions("game:banner:list")
+    public Result getGameBannerList(@RequestParam Map<String, Object> params){
+        PageUtils page = bannerService.getGameBannerList(params);
+
+        return Result.ok().data("page", page);
+    }
 
 
     /**

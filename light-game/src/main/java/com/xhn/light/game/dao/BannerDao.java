@@ -1,8 +1,12 @@
 package com.xhn.light.game.dao;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xhn.light.game.entity.BannerEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xhn.light.game.entity.vo.GameBannerListVo;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * 游戏详情banner图
@@ -13,5 +17,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface BannerDao extends BaseMapper<BannerEntity> {
-	
+
+    List<GameBannerListVo> getGameBannerList(IPage<BannerEntity> page);
 }

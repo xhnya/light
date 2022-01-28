@@ -14,6 +14,14 @@
         <result property="updateTime" column="update_time"/>
         <result property="gameId" column="game_id"/>
     </resultMap>
+<!--    TODO: 映射，url查不出来-->
+    <select id="getGameBannerList" resultType="com.xhn.light.game.entity.vo.GameBannerListVo">
+        select b.id id,g.id gameId,g.game_name gameName,b.resources_url imgUrl,b.create_time createTime,b.update_time updateTime,
+               (select count(*) from gms_banner b where g.id=b.game_id and is_del=0) nums
+        from gms_game g,gms_banner b
+        GROUP BY g.id
+        ORDER BY b.create_time DESC
+    </select>
 
 
 </mapper>
