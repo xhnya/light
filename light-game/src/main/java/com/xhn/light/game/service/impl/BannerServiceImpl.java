@@ -1,5 +1,6 @@
 package com.xhn.light.game.service.impl;
 
+import com.xhn.light.game.entity.vo.GameAdminBannerVo;
 import com.xhn.light.game.entity.vo.GameBannerListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class BannerServiceImpl extends ServiceImpl<BannerDao, BannerEntity> impl
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<BannerEntity> page = this.page(
                 new Query<BannerEntity>().getPage(params),
-                new QueryWrapper<BannerEntity>()
+                new QueryWrapper<BannerEntity>().eq(params.get("id")!=null,"game_id",params.get("id"))
         );
 
         return new PageUtils(page);
@@ -42,7 +43,7 @@ public class BannerServiceImpl extends ServiceImpl<BannerDao, BannerEntity> impl
     }
 
     @Override
-    public List<String> getGameBannerUrl(Long id) {
+    public List<GameAdminBannerVo> getGameBannerUrl(Long id) {
         return bannerDao.getGameBannerUrl(id);
     }
 

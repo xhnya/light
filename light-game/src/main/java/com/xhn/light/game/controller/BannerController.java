@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.xhn.light.game.entity.vo.GameAdminBannerVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +35,6 @@ public class BannerController {
     //@RequiresPermissions("game:banner:list")
     public Result list(@RequestParam Map<String, Object> params){
         PageUtils page = bannerService.queryPage(params);
-
         return Result.ok().data("page", page);
     }
     /**
@@ -100,9 +100,20 @@ public class BannerController {
      */
     @GetMapping("getGameBannerUrl")
     public Result getGameBannerUrl(@RequestParam Long id) {
-        List<String> result=bannerService.getGameBannerUrl(id);
+        List<GameAdminBannerVo> result=bannerService.getGameBannerUrl(id);
         return Result.ok().data("result",result);
     }
 
+    /**
+     * 获取游戏banner的列表通过游戏的id
+     * @param params
+     * @return
+     */
+    @RequestMapping("/getGameBannerUrlByGameId")
+    //@RequiresPermissions("game:banner:list")
+    public Result getGameBannerUrlByGameId(@RequestParam Map<String, Object> params){
+        PageUtils page = bannerService.queryPage(params);
+        return Result.ok().data("page", page);
+    }
 
 }

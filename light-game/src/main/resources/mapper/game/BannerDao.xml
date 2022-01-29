@@ -21,7 +21,6 @@
 
 <!--        </association>-->
 <!--    </resultMap>-->
-<!--    TODO: 映射，url查不出来-->
     <select id="getGameBannerList" resultType="com.xhn.light.game.entity.vo.GameBannerListVo">
         select b.id id,g.id gameId,g.game_name gameName,b.create_time createTime,b.update_time updateTime,
                (select count(*) from gms_banner b where g.id=b.game_id and is_del=0) nums,
@@ -29,10 +28,10 @@
         from gms_game g,gms_banner b
         where g.id=b.game_id
         group by g.id
-        ORDER BY b.create_time DESC
+        ORDER BY b.update_time DESC
     </select>
-    <select id="getGameBannerUrl" resultType="java.lang.String">
-        select resources_url from gms_banner where game_id =#{id}
+    <select id="getGameBannerUrl" resultType="com.xhn.light.game.entity.vo.GameAdminBannerVo">
+        select id id, resources_url url from gms_banner where game_id =#{id}
     </select>
 
 

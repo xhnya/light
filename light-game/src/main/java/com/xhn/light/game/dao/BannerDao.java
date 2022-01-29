@@ -3,6 +3,7 @@ package com.xhn.light.game.dao;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xhn.light.game.entity.BannerEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xhn.light.game.entity.vo.GameAdminBannerVo;
 import com.xhn.light.game.entity.vo.GameBannerListVo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -20,5 +21,5 @@ public interface BannerDao extends BaseMapper<BannerEntity> {
 
     List<GameBannerListVo> getGameBannerList(IPage<BannerEntity> page);
 
-    List<String> getGameBannerUrl(Long id);
+    List<GameAdminBannerVo> getGameBannerUrl(Long id);
 }
