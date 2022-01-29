@@ -1,14 +1,11 @@
 package com.xhn.light.game.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.xhn.light.game.entity.BannerEntity;
 import com.xhn.light.game.service.BannerService;
@@ -95,5 +92,17 @@ public class BannerController {
 
         return Result.ok();
     }
+
+    /**
+     * 通过游戏id获取banner
+     * @param id
+     * @return
+     */
+    @GetMapping("getGameBannerUrl")
+    public Result getGameBannerUrl(@RequestParam Long id) {
+        List<String> result=bannerService.getGameBannerUrl(id);
+        return Result.ok().data("result",result);
+    }
+
 
 }

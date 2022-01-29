@@ -14,13 +14,25 @@
         <result property="updateTime" column="update_time"/>
         <result property="gameId" column="game_id"/>
     </resultMap>
+<!--    <resultMap id="gameBannerAdmin" type="com.xhn.light.game.entity.BannerEntity">-->
+<!--        <id property="id" column="id"/>-->
+<!--        <result property="createTime" column="create_time"/>-->
+<!--        <association property="game" javaType="com.xhn.light.game.entity.GameEntity">-->
+
+<!--        </association>-->
+<!--    </resultMap>-->
 <!--    TODO: 映射，url查不出来-->
     <select id="getGameBannerList" resultType="com.xhn.light.game.entity.vo.GameBannerListVo">
-        select b.id id,g.id gameId,g.game_name gameName,b.resources_url imgUrl,b.create_time createTime,b.update_time updateTime,
-               (select count(*) from gms_banner b where g.id=b.game_id and is_del=0) nums
+        select b.id id,g.id gameId,g.game_name gameName,b.create_time createTime,b.update_time updateTime,
+               (select count(*) from gms_banner b where g.id=b.game_id and is_del=0) nums,
+               b.is_del isDel
         from gms_game g,gms_banner b
-        GROUP BY g.id
+        where g.id=b.game_id
+        group by g.id
         ORDER BY b.create_time DESC
+    </select>
+    <select id="getGameBannerUrl" resultType="java.lang.String">
+        select resources_url from gms_banner where game_id =#{id}
     </select>
 
 

@@ -20,6 +20,7 @@ public class GameBannerListVo {
     private String gameName;
 
     private Integer nums;
+    private Integer isDel;
 
     private List<String> imgUrl;
 

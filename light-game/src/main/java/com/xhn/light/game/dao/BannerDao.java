@@ -19,4 +19,6 @@ import java.util.List;
 public interface BannerDao extends BaseMapper<BannerEntity> {
 
     List<GameBannerListVo> getGameBannerList(IPage<BannerEntity> page);
+
+    List<String> getGameBannerUrl(Long id);
 }

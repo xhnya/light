@@ -41,4 +41,9 @@ public class BannerServiceImpl extends ServiceImpl<BannerDao, BannerEntity> impl
         return new PageUtils(result,result.size(), (int) page.getSize(), (int) page.getCurrent());
     }
 
+    @Override
+    public List<String> getGameBannerUrl(Long id) {
+        return bannerDao.getGameBannerUrl(id);
+    }
+
 }

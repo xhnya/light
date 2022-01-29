@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.game.entity.BannerEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,5 +19,7 @@ public interface BannerService extends IService<BannerEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     PageUtils getGameBannerList(Map<String, Object> params);
+
+    List<String> getGameBannerUrl(Long id);
 }
 
