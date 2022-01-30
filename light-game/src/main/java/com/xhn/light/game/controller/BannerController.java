@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.xhn.light.game.entity.vo.GameAdminBannerVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,7 @@ import com.xhn.light.common.utils.Result;
  * @email 930957853@qq.com
  * @date 2022-01-22 16:36:16
  */
+@Slf4j
 @RestController
 @RequestMapping("game/banner")
 public class BannerController {
@@ -112,7 +114,8 @@ public class BannerController {
     @RequestMapping("/getGameBannerUrlByGameId")
     //@RequiresPermissions("game:banner:list")
     public Result getGameBannerUrlByGameId(@RequestParam Map<String, Object> params){
-        PageUtils page = bannerService.queryPage(params);
+        log.info(String.valueOf(params));
+        PageUtils page = bannerService.getGameBannerUrlByGameId(params);
         return Result.ok().data("page", page);
     }
 

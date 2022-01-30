@@ -22,5 +22,7 @@ public interface BannerService extends IService<BannerEntity> {
     PageUtils getGameBannerList(Map<String, Object> params);
 
     List<GameAdminBannerVo> getGameBannerUrl(Long id);
+
+    PageUtils getGameBannerUrlByGameId(Map<String, Object> params);
 }
 

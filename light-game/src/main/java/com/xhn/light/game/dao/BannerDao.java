@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xhn.light.game.entity.BannerEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xhn.light.game.entity.vo.GameAdminBannerVo;
+import com.xhn.light.game.entity.vo.GameBannerInfoListVo;
 import com.xhn.light.game.entity.vo.GameBannerListVo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -22,4 +23,6 @@ public interface BannerDao extends BaseMapper<BannerEntity> {
     List<GameBannerListVo> getGameBannerList(IPage<BannerEntity> page);
 
     List<GameAdminBannerVo> getGameBannerUrl(Long id);
+
+    List<GameBannerInfoListVo> getGameBannerUrlByGameId(IPage<BannerEntity> page, Long gameId);
 }
