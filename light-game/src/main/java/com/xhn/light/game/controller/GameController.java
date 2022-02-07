@@ -1,21 +1,17 @@
 package com.xhn.light.game.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import com.xhn.light.game.entity.vo.GameInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.xhn.light.game.entity.GameEntity;
 import com.xhn.light.game.service.GameService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Result;
-
 
 
 /**
@@ -36,30 +32,42 @@ public class GameController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("game:game:list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = gameService.queryPage(params);
 
         return Result.ok().data("page", page);
     }
+
     /**
      * 获取列表
      */
     @RequestMapping("/gameList")
     //@RequiresPermissions("game:game:list")
-    public Result gameList(@RequestParam Map<String, Object> params){
+    public Result gameList(@RequestParam Map<String, Object> params) {
         PageUtils page = gameService.gameList(params);
 
         return Result.ok().data("page", page);
     }
 
     /**
+     * 下拉框的游戏列表
+     * @return
+     */
+    @GetMapping("/gameListForSelect")
+    public Result gameListForSelect() {
+        List<GameEntity> list = gameService.list();
+        return Result.ok().data("gameList",list);
+    }
+
+    /**
      * 获取游戏的详细信息
+     *
      * @param id 传入游戏的id
      * @return
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("game:game:info")
-    public Result info(@PathVariable("id") Long id){
+    public Result info(@PathVariable("id") Long id) {
         GameInfoVo game = gameService.getGameInfo(id);
         return Result.ok().data("game", game);
     }
@@ -69,9 +77,9 @@ public class GameController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("game:game:save")
-    public Result save(@RequestBody GameEntity game){
-		gameService.save(game);
-        return Result.ok().data("gameId",game.getId());
+    public Result save(@RequestBody GameEntity game) {
+        gameService.save(game);
+        return Result.ok().data("gameId", game.getId());
     }
 
     /**
@@ -79,8 +87,8 @@ public class GameController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("game:game:update")
-    public Result update(@RequestBody GameEntity game){
-		gameService.updateById(game);
+    public Result update(@RequestBody GameEntity game) {
+        gameService.updateById(game);
 
         return Result.ok();
     }
@@ -90,8 +98,8 @@ public class GameController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("game:game:delete")
-    public Result delete(@RequestBody Long[] ids){
-		gameService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        gameService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }
