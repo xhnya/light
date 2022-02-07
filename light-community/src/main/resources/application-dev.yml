@@ -3,7 +3,7 @@ spring:
     username: root
     password: xhnya@1216
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://101.35.8.166:63306/light_game?serverTimezone=GMT%2B8&useSSL=false&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://101.35.8.166:63306/light_community?serverTimezone=GMT%2B8&useSSL=false&useUnicode=true&characterEncoding=utf-8
   cloud:
     nacos:
       discovery:
