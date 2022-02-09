@@ -58,6 +58,7 @@ public class ArticleEntity implements Serializable {
 	/**
 	 * 发表日期
 	 */
+	@TableField(fill = FieldFill.INSERT)
 	private Date createTime;
 	/**
 	 * 发布的类型，资讯或者社区
@@ -86,6 +87,7 @@ public class ArticleEntity implements Serializable {
 	/**
 	 * 
 	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private Date updateTime;
 	/**
 	 * 是否热门
