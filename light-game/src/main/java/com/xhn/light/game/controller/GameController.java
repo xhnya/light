@@ -104,4 +104,14 @@ public class GameController {
         return Result.ok();
     }
 
+    /**
+     * 远程调用的接口
+     * @param ids
+     * @return
+     */
+    @GetMapping("/gatGameNameByIdsForCommunity")
+    public List<String> gatGameNameByIdsForCommunity(List<Long> ids) {
+        return  gameService.gatGameNameByIdsForCommunity(ids);
+    }
+
 }

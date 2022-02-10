@@ -38,6 +38,9 @@
         select g.id id,t.type_name typeName,
         from gms_game g,gms_type t
     </select>
+    <select id="gatGameNameByIdsForCommunity" resultType="java.lang.String">
+        select game_name from gms_game where id in (#{ids})
+    </select>
 
 
 </mapper>

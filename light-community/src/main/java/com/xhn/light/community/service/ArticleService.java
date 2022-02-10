@@ -3,6 +3,7 @@ package com.xhn.light.community.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.community.entity.ArticleEntity;
+import com.xhn.light.community.entity.vo.ArticleAdminListQueryVo;
 
 import java.util.Map;
 
@@ -16,5 +17,7 @@ import java.util.Map;
 public interface ArticleService extends IService<ArticleEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    PageUtils selectPageAdminList(ArticleAdminListQueryVo params);
 }
 

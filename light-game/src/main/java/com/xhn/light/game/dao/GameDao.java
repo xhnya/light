@@ -24,4 +24,6 @@ public interface GameDao extends BaseMapper<GameEntity> {
     List<GameListAdmin> gameList(Page<GameEntity> page);
 
     GameInfoVo getGameInfo(Long id);
+
+    List<String> gatGameNameByIdsForCommunity(List<Long> ids);
 }

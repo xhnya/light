@@ -20,10 +20,19 @@
         <result property="coverImage" column="cover_image"/>
         <result property="status" column="status"/>
         <result property="typeId" column="type_id"/>
-        <result property="recommended" column="recommended"/>
+        <result property="recommended" column="recommended "/>
         <result property="updateTime" column="update_time"/>
         <result property="isHot" column="is_hot"/>
     </resultMap>
+    <select id="selectPageAdminList" resultType="com.xhn.light.community.entity.vo.ArticleAdminListVo">
+        select id id,title title,parent_id parentId,user user,click_num clickNum,create_time createTime,
+        is_hot isHot, status status, recommended recommended
+        from cms_article
+        <where>
+            is_del=1
+        </where>
+        Order by update_time desc
+    </select>
 
 
 </mapper>

@@ -10,5 +10,4 @@
         <result property="tagId" column="tag_id"/>
     </resultMap>
 
-
 </mapper>

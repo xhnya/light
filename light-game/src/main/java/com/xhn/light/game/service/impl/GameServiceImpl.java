@@ -47,4 +47,9 @@ public class GameServiceImpl extends ServiceImpl<GameDao, GameEntity> implements
         return gameDao.getGameInfo(id);
     }
 
+    @Override
+    public List<String> gatGameNameByIdsForCommunity(List<Long> ids) {
+        return gameDao.gatGameNameByIdsForCommunity(ids);
+    }
+
 }

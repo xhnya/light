@@ -3,12 +3,10 @@ package com.xhn.light.community.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.xhn.light.community.entity.vo.ArticleAdminListQueryVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.xhn.light.community.entity.ArticleEntity;
 import com.xhn.light.community.service.ArticleService;
@@ -24,6 +22,7 @@ import com.xhn.light.common.utils.Result;
  * @email 930957853@qq.com
  * @date 2022-02-09 16:28:26
  */
+@Slf4j
 @RestController
 @RequestMapping("community/article")
 public class ArticleController {
@@ -38,6 +37,15 @@ public class ArticleController {
     public Result list(@RequestParam Map<String, Object> params){
         PageUtils page = articleService.queryPage(params);
 
+        return Result.ok().data("page", page);
+    }
+    /**
+     * 页面的列表，管理后台
+     */
+    @GetMapping("/pageAdminList")
+    //@RequiresPermissions("community:article:list")
+    public Result pageAdminList( ArticleAdminListQueryVo params){
+        PageUtils page = articleService.selectPageAdminList(params);
         return Result.ok().data("page", page);
     }
 

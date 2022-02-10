@@ -5,6 +5,7 @@ import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.game.entity.GameEntity;
 import com.xhn.light.game.entity.vo.GameInfoVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,5 +22,7 @@ public interface GameService extends IService<GameEntity> {
     PageUtils gameList(Map<String, Object> params);
 
     GameInfoVo getGameInfo(Long id);
+
+    List<String> gatGameNameByIdsForCommunity(List<Long> ids);
 }
 
