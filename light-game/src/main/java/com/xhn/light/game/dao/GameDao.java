@@ -1,6 +1,7 @@
 package com.xhn.light.game.dao;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xhn.light.common.pojo.PageOfGameName;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.game.entity.GameEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -25,5 +26,5 @@ public interface GameDao extends BaseMapper<GameEntity> {
 
     GameInfoVo getGameInfo(Long id);
 
-    List<String> gatGameNameByIdsForCommunity(List<Long> ids);
+    List<PageOfGameName> gatGameNameByIdsForCommunity(List<Long> ids);
 }

@@ -1,9 +1,11 @@
 package com.xhn.light.community.client;
 
+import com.xhn.light.common.pojo.PageOfGameName;
 import com.xhn.light.common.utils.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -15,6 +17,6 @@ import java.util.List;
 @Component
 @FeignClient(value = "light-game",fallback =GameFeignServiceImpl.class)
 public interface GameFeignService {
-    @GetMapping("/gatGameNameByIdsForCommunity")
-    public List<String>  gatGameNameByIdsForCommunity(List<Long> ids);
+    @GetMapping("/game/game/gatGameNameByIdsForCommunity")
+    public List<PageOfGameName>  gatGameNameByIdsForCommunity(@RequestParam(value = "ids") List<Long> ids);
 }

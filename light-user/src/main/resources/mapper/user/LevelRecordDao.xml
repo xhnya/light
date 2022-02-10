@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xhn.light.user.dao.LevelRecordDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.xhn.light.user.entity.LevelRecordEntity" id="levelRecordMap">
+        <result property="id" column="id"/>
+        <result property="gainTime" column="gain_time"/>
+        <result property="gainForm" column="gain_form"/>
+        <result property="gainTitle" column="gain_title"/>
+        <result property="gainNums" column="gain_nums"/>
+        <result property="gainBefore" column="gain_before"/>
+        <result property="gainAfter" column="gain_after"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+
+</mapper>

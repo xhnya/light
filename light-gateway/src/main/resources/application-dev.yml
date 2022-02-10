@@ -30,6 +30,13 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
 
+        - id: light_user
+          uri: lb://light-user
+          predicates:
+            - Path=/api/user/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
 
         - id: user_admin
           uri: lb://exercise-member

@@ -1,0 +1,89 @@
+package com.xhn.light.user.controller;
+
+import java.util.Arrays;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.xhn.light.user.entity.UserEntity;
+import com.xhn.light.user.service.UserService;
+import com.xhn.light.common.utils.PageUtils;
+import com.xhn.light.common.utils.Result;
+
+
+
+/**
+ * 用户重要信息
+ *
+ * @author xhn
+ * @email 930957853@qq.com
+ * @date 2022-02-10 17:28:33
+ */
+@RestController
+@RequestMapping("user/user")
+public class UserController {
+    @Autowired
+    private UserService userService;
+
+    /**
+     * 列表
+     */
+    @RequestMapping("/list")
+    //@RequiresPermissions("user:user:list")
+    public Result list(@RequestParam Map<String, Object> params){
+        PageUtils page = userService.queryPage(params);
+
+        return Result.ok().data("page", page);
+    }
+
+
+    /**
+     * 信息
+     */
+    @RequestMapping("/info/{id}")
+    //@RequiresPermissions("user:user:info")
+    public Result info(@PathVariable("id") Long id){
+		UserEntity user = userService.getById(id);
+
+        return Result.ok().data("user", user);
+    }
+
+    /**
+     * 保存
+     */
+    @RequestMapping("/save")
+    //@RequiresPermissions("user:user:save")
+    public Result save(@RequestBody UserEntity user){
+		userService.save(user);
+
+        return Result.ok();
+    }
+
+    /**
+     * 修改
+     */
+    @RequestMapping("/update")
+    //@RequiresPermissions("user:user:update")
+    public Result update(@RequestBody UserEntity user){
+		userService.updateById(user);
+
+        return Result.ok();
+    }
+
+    /**
+     * 删除
+     */
+    @RequestMapping("/delete")
+    //@RequiresPermissions("user:user:delete")
+    public Result delete(@RequestBody Long[] ids){
+		userService.removeByIds(Arrays.asList(ids));
+
+        return Result.ok();
+    }
+
+}

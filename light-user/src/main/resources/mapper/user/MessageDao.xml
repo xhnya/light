@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xhn.light.user.dao.MessageDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.xhn.light.user.entity.MessageEntity" id="messageMap">
+        <result property="id" column="id"/>
+        <result property="chatMessageToUuid" column="chat_message_to_uuid"/>
+        <result property="chatMessageData" column="chat_message_data"/>
+        <result property="chatMessageType" column="chat_message_type"/>
+        <result property="chatMessageIsRead" column="chat_message_is_read"/>
+        <result property="chatMessageIo" column="chat_message_io"/>
+        <result property="userTo" column="user_to"/>
+        <result property="userForm" column="user_form"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+
+</mapper>

@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.xhn.light.common.pojo.PageOfGameName;
 import com.xhn.light.game.entity.vo.GameInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -110,7 +111,7 @@ public class GameController {
      * @return
      */
     @GetMapping("/gatGameNameByIdsForCommunity")
-    public List<String> gatGameNameByIdsForCommunity(List<Long> ids) {
+    public List<PageOfGameName> gatGameNameByIdsForCommunity(@RequestParam(value = "ids") List<Long> ids) {
         return  gameService.gatGameNameByIdsForCommunity(ids);
     }
 

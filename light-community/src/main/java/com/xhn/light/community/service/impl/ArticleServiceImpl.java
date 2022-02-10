@@ -1,10 +1,12 @@
 package com.xhn.light.community.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xhn.light.common.pojo.PageOfGameName;
 import com.xhn.light.common.utils.Result;
 import com.xhn.light.community.client.GameFeignService;
 import com.xhn.light.community.entity.vo.ArticleAdminListQueryVo;
 import com.xhn.light.community.entity.vo.ArticleAdminListVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,7 @@ import com.xhn.light.community.dao.ArticleDao;
 import com.xhn.light.community.entity.ArticleEntity;
 import com.xhn.light.community.service.ArticleService;
 
-
+@Slf4j
 @Service("articleService")
 public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleEntity> implements ArticleService {
 
@@ -47,13 +49,28 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleEntity> i
         List<ArticleAdminListVo> result=articleDao.selectPageAdminList(page,params);
         List<Long> gameList = new ArrayList<>();
         List<Long> userList = new ArrayList<>();
+        List<Long>  typeList= new ArrayList<>();
         for (ArticleAdminListVo articleAdminListVo : result) {
-            gameList.add(articleAdminListVo.getParentId());
             userList.add(articleAdminListVo.getUser());
-        }
-        List<String> gameName = gameFeignService.gatGameNameByIdsForCommunity(gameList);
-        //TODO: 用户和社区，社区需要判断是什么类型才能继续
+            if (articleAdminListVo.getTypeId()==1){
+                gameList.add(articleAdminListVo.getParentId());
+            }else {
+                typeList.add(articleAdminListVo.getParentId());
+            }
 
+        }
+        //TODO: 完善用户信息
+        List<PageOfGameName> gameName = gameFeignService.gatGameNameByIdsForCommunity(gameList);
+        log.info("gameName================>"+gameName);
+        for (ArticleAdminListVo articleAdminListVo : result) {
+            if (gameName!=null){
+                for (int i = 0; i < gameName.size(); i++) {
+                    if (gameName.get(i).getId()==articleAdminListVo.getParentId()){
+                        articleAdminListVo.setParentName(gameName.get(i).getName());
+                    }
+                }
+            }
+        }
 
         return new PageUtils(result,(int)page.getTotal(),(int)page.getSize(),(int)page.getPages());
     }

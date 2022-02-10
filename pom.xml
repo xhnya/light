@@ -26,7 +26,8 @@
         <module>light-cloud</module>
         <module>light-game</module>
         <module>light-community</module>
-        <module>renren-generator</module>
+        <module>light-user</module>
+<!--        <module>renren-generator</module>-->
     </modules>
 
 

@@ -26,7 +26,7 @@
     </resultMap>
     <select id="selectPageAdminList" resultType="com.xhn.light.community.entity.vo.ArticleAdminListVo">
         select id id,title title,parent_id parentId,user user,click_num clickNum,create_time createTime,
-        is_hot isHot, status status, recommended recommended
+        is_hot isHot, status status, recommended recommended,type_id typeId
         from cms_article
         <where>
             is_del=1

@@ -52,4 +52,5 @@ public class ArticleAdminListVo {
      * 是否热门
      */
     private Integer isHot;
+    private Long typeId;
 }

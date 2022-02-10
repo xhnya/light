@@ -26,7 +26,8 @@ import com.xhn.light.common.utils.Result;
  */
 @RestController
 @RequestMapping("game/content")
-public class ContentController {
+public class
+ContentController {
     @Autowired
     private ContentService contentService;
 
