@@ -21,7 +21,7 @@ public class LevelServiceImpl extends ServiceImpl<LevelDao, LevelEntity> impleme
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<LevelEntity> page = this.page(
                 new Query<LevelEntity>().getPage(params),
-                new QueryWrapper<LevelEntity>()
+                new QueryWrapper<LevelEntity>().orderByAsc("level_sort")
         );
 
         return new PageUtils(page);
