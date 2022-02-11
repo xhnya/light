@@ -1,14 +1,12 @@
 package com.xhn.light.user.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.xhn.light.common.pojo.PageOfGameName;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.xhn.light.user.entity.UserEntity;
 import com.xhn.light.user.service.UserService;
@@ -39,6 +37,15 @@ public class UserController {
         PageUtils page = userService.queryPage(params);
 
         return Result.ok().data("page", page);
+    }
+
+    /**
+     * 提供给社区后台显示的远程调用接口
+     */
+    @GetMapping("/getUserFromAdminCommunity")
+    public List<PageOfGameName> getUserFromAdminCommunity(@RequestParam List<Long> ids){
+
+        return userService.getUserFromAdminCommunity(ids);
     }
 
 

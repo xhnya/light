@@ -3,7 +3,7 @@
 
 <mapper namespace="com.xhn.light.user.dao.UserDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.xhn.light.user.entity.UserEntity" id="userMap">
         <result property="id" column="id"/>
         <result property="email" column="email"/>
@@ -27,6 +27,13 @@
         <result property="updateTime" column="update_time"/>
         <result property="code" column="code"/>
     </resultMap>
+    <select id="getUserFromAdminCommunity" resultType="com.xhn.light.common.pojo.PageOfGameName">
+        select id id,user_name name from ums_user where id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+    </select>
 
 
 </mapper>

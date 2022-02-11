@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xhn.light.common.pojo.PageOfGameName;
 import com.xhn.light.common.utils.Result;
 import com.xhn.light.community.client.GameFeignService;
+import com.xhn.light.community.client.UserFeignService;
 import com.xhn.light.community.entity.vo.ArticleAdminListQueryVo;
 import com.xhn.light.community.entity.vo.ArticleAdminListVo;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleEntity> i
 
     @Autowired
     private GameFeignService gameFeignService;
+    @Autowired
+    private UserFeignService userFeignService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -59,14 +62,22 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleEntity> i
             }
 
         }
-        //TODO: 完善用户信息
+        List<PageOfGameName> userNameList=userFeignService.getUserFromAdminCommunity(userList);
         List<PageOfGameName> gameName = gameFeignService.gatGameNameByIdsForCommunity(gameList);
         log.info("gameName================>"+gameName);
+        log.info("userNameList================>"+userNameList);
         for (ArticleAdminListVo articleAdminListVo : result) {
             if (gameName!=null){
                 for (int i = 0; i < gameName.size(); i++) {
                     if (gameName.get(i).getId()==articleAdminListVo.getParentId()){
                         articleAdminListVo.setParentName(gameName.get(i).getName());
+                    }
+                }
+            }
+            if (userNameList!=null){
+                for (int i = 0; i < userNameList.size(); i++) {
+                    if (userNameList.get(i).getId()==articleAdminListVo.getUser()){
+                        articleAdminListVo.setUserName(userNameList.get(i).getName());
                     }
                 }
             }

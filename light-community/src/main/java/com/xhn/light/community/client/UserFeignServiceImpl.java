@@ -1,6 +1,9 @@
 package com.xhn.light.community.client;
 
+import com.xhn.light.common.pojo.PageOfGameName;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author ：xhn
@@ -8,5 +11,10 @@ import org.springframework.stereotype.Component;
  * @description：
  */
 @Component
-public class UserFeignServiceImpl {
+public class UserFeignServiceImpl implements UserFeignService{
+
+    @Override
+    public List<PageOfGameName> getUserFromAdminCommunity(List<Long> ids) {
+        return null;
+    }
 }
