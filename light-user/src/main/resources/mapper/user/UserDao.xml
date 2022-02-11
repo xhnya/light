@@ -25,6 +25,7 @@
         <result property="userName" column="user_name"/>
         <result property="userType" column="user_type"/>
         <result property="updateTime" column="update_time"/>
+        <result property="code" column="code"/>
     </resultMap>
 
 

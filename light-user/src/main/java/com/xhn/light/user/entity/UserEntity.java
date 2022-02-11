@@ -28,6 +28,10 @@ public class UserEntity implements Serializable {
 	 */
 	private String email;
 	/**
+	 * 用户代码
+	 */
+	private Long code;
+	/**
 	 * 手机号码
 	 */
 	private String phonenumber;
@@ -74,6 +78,7 @@ public class UserEntity implements Serializable {
 	/**
 	 * 创建时间
 	 */
+	@TableField(fill = FieldFill.INSERT)
 	private Date createTime;
 	/**
 	 * 更新者
@@ -98,6 +103,7 @@ public class UserEntity implements Serializable {
 	/**
 	 * 
 	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private Date updateTime;
 
 }

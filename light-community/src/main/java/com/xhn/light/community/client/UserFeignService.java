@@ -9,6 +9,6 @@ import org.springframework.stereotype.Component;
  * @description：
  */
 @Component
-@FeignClient(value = "light-game",fallback =GameFeignServiceImpl.class)
+@FeignClient(value = "light-user",fallback =GameFeignServiceImpl.class)
 public interface UserFeignService {
 }
