@@ -2,7 +2,10 @@ package com.xhn.light.game.dao;
 
 import com.xhn.light.game.entity.RankEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xhn.light.game.entity.vo.RankAdminListVo;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * 游戏排行榜
@@ -13,5 +16,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface RankDao extends BaseMapper<RankEntity> {
-	
+
+    List<RankAdminListVo> getRankAdminList(Integer type);
 }

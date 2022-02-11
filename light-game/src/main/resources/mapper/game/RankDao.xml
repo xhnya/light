@@ -11,6 +11,12 @@
         <result property="createTime" column="create_time"/>
         <result property="type" column="type"/>
     </resultMap>
+    <select id="getRankAdminList" resultType="com.xhn.light.game.entity.vo.RankAdminListVo">
+        select r.id id,g.game_name gameName,r.sort sort
+        from gms_rank r,gms_game g
+        where type=#{type} and g.id=r.game_id
+        Order by sort ASC
+    </select>
 
 
 </mapper>
