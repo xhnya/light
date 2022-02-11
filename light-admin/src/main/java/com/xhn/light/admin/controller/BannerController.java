@@ -1,9 +1,11 @@
 package com.xhn.light.admin.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import cn.hutool.core.date.DateUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +40,18 @@ public class BannerController {
         log.info("=============="+params);
         PageUtils page = bannerService.queryPage(params);
         return Result.ok().data("page", page);
+    }
+    /**
+     * 列表
+     */
+    @GetMapping("/bannerList")
+    //@RequiresPermissions("admin:banner:list")
+    public Result bannerList(){
+        QueryWrapper<BannerEntity> wrapper = new QueryWrapper<>();
+        wrapper.eq("start",0);
+        wrapper.orderByDesc("sort");
+        List<BannerEntity> result = bannerService.list(wrapper);
+        return Result.ok().data("bannerList", result);
     }
 
 

@@ -2,45 +2,52 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: light_admin
+        - id: admin_admin
           uri: lb://light-admin
           predicates:
             - Path=/api/admin/**
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
 
-        - id: light_cloud
+        - id: admin_cloud
           uri: lb://light-cloud
           predicates:
             - Path=/api/cloud/**
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
 
-        - id: light_game
+        - id: admin_game
           uri: lb://light-game
           predicates:
             - Path=/api/game/**
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
 
-        - id: light_community
+        - id: admin_community
           uri: lb://light-community
           predicates:
             - Path=/api/community/**
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
 
-        - id: light_user
+        - id: admin_user
           uri: lb://light-user
           predicates:
             - Path=/api/user/**
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
 
-
-        - id: user_admin
-          uri: lb://exercise-member
+        - id: light_user
+          uri: lb://light-user
           predicates:
-            - Path=/api/member/**
+            - Path=/light/user/**
           filters:
-            - RewritePath=/api/(?<segment>.*),/$\{segment}
+            - RewritePath=/light/(?<segment>.*),/$\{segment}
+
+        - id: light_admin
+          uri: lb://light-admin
+          predicates:
+            - Path=/light/admin/**
+          filters:
+            - RewritePath=/light/(?<segment>.*),/$\{segment}
+

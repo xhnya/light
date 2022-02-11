@@ -24,7 +24,9 @@ public class BannerServiceImpl extends ServiceImpl<BannerDao, BannerEntity> impl
                 new Query<BannerEntity>().getPage(params),
                 new QueryWrapper<BannerEntity>()
                         .eq(params.get("start") != null, "start", params.get("start"))
-                        .like(!params.get("name").equals(""),"name",params.get("name") )
+                        .like(!params.get("name").equals("") || params.get("name") != null ,"name",params.get("name") )
+
+
         );
 
         return new PageUtils(page);
