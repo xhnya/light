@@ -1,5 +1,6 @@
 package com.xhn.light.game.service.impl;
 
+import com.xhn.light.game.entity.vo.GameRankList;
 import com.xhn.light.game.entity.vo.RankAdminListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,11 @@ public class RankServiceImpl extends ServiceImpl<RankDao, RankEntity> implements
     @Override
     public List<RankAdminListVo> getRankAdminList(Integer type) {
         return rankDao.getRankAdminList(type);
+    }
+
+    @Override
+    public List<GameRankList> getHotGameRankList(Integer type) {
+        return rankDao.getHotGameRankList(type);
     }
 
 }

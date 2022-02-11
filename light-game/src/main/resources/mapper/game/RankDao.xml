@@ -17,6 +17,14 @@
         where type=#{type} and g.id=r.game_id
         Order by sort ASC
     </select>
+    <select id="getHotGameRankList" resultType="com.xhn.light.game.entity.vo.GameRankList">
+        select r.id id,g.game_name gameName,r.sort sort,g.id gameId,r.create_time createTime,
+               r.type type,t.type_name gameType,g.game_name_china gameNameChina,g.cover_url coverUrl,
+               g.release_time releaseTime
+        from gms_rank r,gms_game g,gms_type t
+        where type=#{type} and g.id=r.game_id and g.game_type=t.id
+        Order by sort ASC
+    </select>
 
 
 </mapper>
