@@ -74,6 +74,18 @@ public class GameController {
     }
 
     /**
+     * 页面显示游戏详情
+     * @param id
+     * @return
+     */
+    @GetMapping("/gameInfo/{id}")
+    //@RequiresPermissions("game:game:info")
+    public Result gameInfo(@PathVariable("id") Long id) {
+        GameEntity game = gameService.getById(id);
+        return Result.ok().data("game", game);
+    }
+
+    /**
      * 保存
      */
     @RequestMapping("/save")

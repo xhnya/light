@@ -42,7 +42,7 @@
         where t.id = g.game_type
     </select>
     <select id="getGameInfo" resultType="com.xhn.light.game.entity.vo.GameInfoVo">
-        select g.id id, t.type_name typeName,
+        select g.id id, t.type_name typeName
         from gms_game g,
              gms_type t
     </select>
