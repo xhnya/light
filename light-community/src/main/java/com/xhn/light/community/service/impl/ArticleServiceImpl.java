@@ -7,6 +7,7 @@ import com.xhn.light.community.client.GameFeignService;
 import com.xhn.light.community.client.UserFeignService;
 import com.xhn.light.community.entity.vo.ArticleAdminListQueryVo;
 import com.xhn.light.community.entity.vo.ArticleAdminListVo;
+import com.xhn.light.community.entity.vo.IndexHotPageList;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,10 +47,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleEntity> i
         return new PageUtils(page);
     }
 
+    /**
+     * 后台管理的页面列表显示，进行了远程调用
+     * @param params
+     * @return
+     */
     @Override
     public PageUtils selectPageAdminList(ArticleAdminListQueryVo params) {
         Page<ArticleEntity> page = new Page<>(params.getPage(),params.getLimit());
         List<ArticleAdminListVo> result=articleDao.selectPageAdminList(page,params);
+        //为远程调用提供参数
         List<Long> gameList = new ArrayList<>();
         List<Long> userList = new ArrayList<>();
         List<Long>  typeList= new ArrayList<>();
@@ -62,10 +69,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleEntity> i
             }
 
         }
+        //远程调用
         List<PageOfGameName> userNameList=userFeignService.getUserFromAdminCommunity(userList);
         List<PageOfGameName> gameName = gameFeignService.gatGameNameByIdsForCommunity(gameList);
         log.info("gameName================>"+gameName);
         log.info("userNameList================>"+userNameList);
+        //给现在的属性赋值
         for (ArticleAdminListVo articleAdminListVo : result) {
             if (gameName!=null){
                 for (int i = 0; i < gameName.size(); i++) {
@@ -84,6 +93,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleEntity> i
         }
 
         return new PageUtils(result,(int)page.getTotal(),(int)page.getSize(),(int)page.getPages());
+    }
+
+    @Override
+    public List<IndexHotPageList> selectIndexHotPageList() {
+        return articleDao.selectIndexHotPageList();
     }
 
 }

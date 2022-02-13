@@ -50,10 +50,18 @@ spring:
             - Path=/light/admin/**
           filters:
             - RewritePath=/light/(?<segment>.*),/$\{segment}
+
         - id: light_game
           uri: lb://light-game
           predicates:
             - Path=/light/game/**
+          filters:
+            - RewritePath=/light/(?<segment>.*),/$\{segment}
+
+        - id: light_community
+          uri: lb://light-community
+          predicates:
+            - Path=/light/community/**
           filters:
             - RewritePath=/light/(?<segment>.*),/$\{segment}
 

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xhn.light.common.pojo.PageOfGameName;
 import com.xhn.light.game.entity.vo.GameInfoVo;
 import com.xhn.light.game.entity.vo.GameListAdmin;
+import com.xhn.light.game.entity.vo.ReleaseOrHotGameList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +52,11 @@ public class GameServiceImpl extends ServiceImpl<GameDao, GameEntity> implements
     @Override
     public List<PageOfGameName> gatGameNameByIdsForCommunity(List<Long> ids) {
         return gameDao.gatGameNameByIdsForCommunity(ids);
+    }
+
+    @Override
+    public List<ReleaseOrHotGameList> getNewReleaseGame() {
+        return gameDao.getNewReleaseGame();
     }
 
 }

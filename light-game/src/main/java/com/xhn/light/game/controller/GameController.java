@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.xhn.light.common.pojo.PageOfGameName;
 import com.xhn.light.game.entity.vo.GameInfoVo;
+import com.xhn.light.game.entity.vo.ReleaseOrHotGameList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,12 +53,13 @@ public class GameController {
 
     /**
      * 下拉框的游戏列表
+     *
      * @return
      */
     @GetMapping("/gameListForSelect")
     public Result gameListForSelect() {
         List<GameEntity> list = gameService.list();
-        return Result.ok().data("gameList",list);
+        return Result.ok().data("gameList", list);
     }
 
     /**
@@ -75,6 +77,7 @@ public class GameController {
 
     /**
      * 页面显示游戏详情
+     *
      * @param id
      * @return
      */
@@ -119,12 +122,23 @@ public class GameController {
 
     /**
      * 远程调用的接口
+     *
      * @param ids
      * @return
      */
     @GetMapping("/gatGameNameByIdsForCommunity")
     public List<PageOfGameName> gatGameNameByIdsForCommunity(@RequestParam(value = "ids") List<Long> ids) {
-        return  gameService.gatGameNameByIdsForCommunity(ids);
+        return gameService.gatGameNameByIdsForCommunity(ids);
+    }
+
+    /**
+     * 获取首页的最新发布的游戏
+     * @return
+     */
+    @GetMapping("/getNewReleaseGame")
+    public Result getNewReleaseGame() {
+        List<ReleaseOrHotGameList> result=gameService.getNewReleaseGame();
+        return Result.ok().data("result",result);
     }
 
 }

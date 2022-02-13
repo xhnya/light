@@ -33,6 +33,9 @@
         </where>
         Order by update_time desc
     </select>
+    <select id="selectIndexHotPageList" resultType="com.xhn.light.community.entity.vo.IndexHotPageList">
+        select id id,title title from cms_article Order by update_time desc limit 8
+    </select>
 
 
 </mapper>

@@ -52,6 +52,11 @@
             #{item}
         </foreach>
     </select>
+    <select id="getNewReleaseGame" resultType="com.xhn.light.game.entity.vo.ReleaseOrHotGameList">
+        select id id ,game_name_china name ,cover_url cover,release_time time
+        from gms_game
+        order by create_time desc limit 4
+    </select>
 
 
 </mapper>
