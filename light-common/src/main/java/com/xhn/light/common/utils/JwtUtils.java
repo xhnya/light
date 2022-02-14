@@ -18,10 +18,11 @@ public class JwtUtils {
 
     //常量
     public static final long EXPIRE = 1000 * 60 * 60 * 24; //token过期时间
-    public static final String APP_SECRET = "ukc8BDbRigUDaY6pZFfWus2jZWLPHO"; //秘钥
 
+    public static final String APP_SECRET = "gvo7i93ULJGO0GZvKMhgZBTrBfDnrLp41n5"; //秘钥
+    //ukc8BDbRigUDaY6pZFfWus2jZWLPHO
     //生成token字符串的方法
-    public static String getJwtToken(String id, String nickname){
+    public static String getJwtToken(Long id, String code){
 
         String JwtToken = Jwts.builder()
                 .setHeaderParam("typ", "JWT")
@@ -32,7 +33,7 @@ public class JwtUtils {
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))
 
                 .claim("id", id)  //设置token主体部分 ，存储用户信息
-                .claim("nickname", nickname)
+                .claim("code", code)
 
                 .signWith(SignatureAlgorithm.HS256, APP_SECRET)
                 .compact();

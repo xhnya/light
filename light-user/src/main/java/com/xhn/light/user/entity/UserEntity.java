@@ -30,7 +30,7 @@ public class UserEntity implements Serializable {
 	/**
 	 * 用户代码
 	 */
-	private Long code;
+	private String code;
 	/**
 	 * 手机号码
 	 */

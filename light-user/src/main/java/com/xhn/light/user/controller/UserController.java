@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.xhn.light.common.pojo.PageOfGameName;
 import com.xhn.light.common.pojo.UserAnPageView;
+import com.xhn.light.common.pojo.UserLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,6 @@ import com.xhn.light.user.entity.UserEntity;
 import com.xhn.light.user.service.UserService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Result;
-
 
 
 /**
@@ -34,7 +34,7 @@ public class UserController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("user:user:list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = userService.queryPage(params);
 
         return Result.ok().data("page", page);
@@ -44,7 +44,7 @@ public class UserController {
      * 提供给社区后台显示的远程调用接口
      */
     @GetMapping("/getUserFromAdminCommunity")
-    public List<PageOfGameName> getUserFromAdminCommunity(@RequestParam List<Long> ids){
+    public List<PageOfGameName> getUserFromAdminCommunity(@RequestParam List<Long> ids) {
 
         return userService.getUserFromAdminCommunity(ids);
     }
@@ -55,8 +55,8 @@ public class UserController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("user:user:info")
-    public Result info(@PathVariable("id") Long id){
-		UserEntity user = userService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        UserEntity user = userService.getById(id);
 
         return Result.ok().data("user", user);
     }
@@ -66,8 +66,8 @@ public class UserController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("user:user:save")
-    public Result save(@RequestBody UserEntity user){
-		userService.save(user);
+    public Result save(@RequestBody UserEntity user) {
+        userService.save(user);
 
         return Result.ok();
     }
@@ -77,8 +77,8 @@ public class UserController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("user:user:update")
-    public Result update(@RequestBody UserEntity user){
-		userService.updateById(user);
+    public Result update(@RequestBody UserEntity user) {
+        userService.updateById(user);
 
         return Result.ok();
     }
@@ -88,17 +88,23 @@ public class UserController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("user:user:delete")
-    public Result delete(@RequestBody Long[] ids){
-		userService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        userService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }
+
     /**
      * 给社区主界面显示提供远程调用接口
      */
     @GetMapping("/getCommunityIndex")
-    public List<UserAnPageView> getCommunityIndex(@RequestParam List<Long> ids){
+    public List<UserAnPageView> getCommunityIndex(@RequestParam List<Long> ids) {
         return userService.getCommunityIndex(ids);
+    }
+
+    @PostMapping("/getUserAndPassword")
+    public Result getUserAndPassword(@RequestBody UserLogin user) {
+        return userService.getUserAndPassword(user.getUsername(),user.getPassword());
     }
 
 }
