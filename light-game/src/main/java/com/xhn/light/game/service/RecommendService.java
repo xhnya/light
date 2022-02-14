@@ -3,7 +3,9 @@ package com.xhn.light.game.service;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.game.entity.RecommendEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xhn.light.game.entity.vo.RecommendListView;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,4 +16,6 @@ import java.util.Map;
 public interface RecommendService extends IService<RecommendEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    List<RecommendListView> listView();
 }

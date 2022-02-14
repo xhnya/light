@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.xhn.light.common.pojo.PageOfGameName;
+import com.xhn.light.common.pojo.UserAnPageView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -91,6 +92,13 @@ public class UserController {
 		userService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
+    }
+    /**
+     * 给社区主界面显示提供远程调用接口
+     */
+    @GetMapping("/getCommunityIndex")
+    public List<UserAnPageView> getCommunityIndex(@RequestParam List<Long> ids){
+        return userService.getCommunityIndex(ids);
     }
 
 }

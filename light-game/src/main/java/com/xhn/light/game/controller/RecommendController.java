@@ -3,10 +3,12 @@ package com.xhn.light.game.controller;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Result;
 import com.xhn.light.game.entity.RecommendEntity;
+import com.xhn.light.game.entity.vo.RecommendListView;
 import com.xhn.light.game.service.RecommendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,6 +36,13 @@ public class RecommendController {
 
         return Result.ok().data("page", page);
     }
+    @GetMapping("/listView")
+    //@RequiresPermissions("game:game:list")
+    public Result listView() {
+        List<RecommendListView> page=recommendService.listView();
+        return Result.ok().data("page", page);
+    }
+
 
 
 }

@@ -4,15 +4,19 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.xhn.light.common.utils.PageParamsUtils;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Query;
 import com.xhn.light.game.entity.GameEntity;
 import com.xhn.light.game.entity.RecommendEntity;
+import com.xhn.light.game.entity.vo.RecommendAdminList;
+import com.xhn.light.game.entity.vo.RecommendListView;
 import com.xhn.light.game.service.RecommendService;
 import com.xhn.light.game.dao.RecommendDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,9 +32,17 @@ public class RecommendServiceImpl extends ServiceImpl<RecommendDao, RecommendEnt
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        Page<RecommendEntity> page = new Page<>();
-//        re=recommendDao.selectRecommendList(page);
-        return new PageUtils(page);
+        //列表时间显示
+        Page page = new PageParamsUtils().getPage(params);
+//        Page<RecommendEntity> page = new Page<>();
+        List<RecommendAdminList> result=recommendDao.selectRecommendList(page,params);
+        return new PageUtils(result,(int)page.getTotal(),(int)page.getSize(),(int)page.getPages());
+    }
+
+    @Override
+    public List<RecommendListView> listView() {
+        List<RecommendListView> list=recommendDao.listView();
+        return list;
     }
 }
 

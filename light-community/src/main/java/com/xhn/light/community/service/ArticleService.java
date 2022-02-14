@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.community.entity.ArticleEntity;
 import com.xhn.light.community.entity.vo.ArticleAdminListQueryVo;
+import com.xhn.light.community.entity.vo.CommunityIndexListParam;
+import com.xhn.light.community.entity.vo.CommunityIndexView;
 import com.xhn.light.community.entity.vo.IndexHotPageList;
 
 import java.util.List;
@@ -23,5 +25,7 @@ public interface ArticleService extends IService<ArticleEntity> {
     PageUtils selectPageAdminList(ArticleAdminListQueryVo params);
 
     List<IndexHotPageList> selectIndexHotPageList();
+
+    List<CommunityIndexView> selectCommunityIndexView(CommunityIndexListParam params);
 }
 

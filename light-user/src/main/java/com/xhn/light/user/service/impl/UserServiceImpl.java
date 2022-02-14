@@ -1,6 +1,7 @@
 package com.xhn.light.user.service.impl;
 
 import com.xhn.light.common.pojo.PageOfGameName;
+import com.xhn.light.common.pojo.UserAnPageView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,11 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
     @Override
     public List<PageOfGameName> getUserFromAdminCommunity(List<Long> ids) {
         return userDao.getUserFromAdminCommunity(ids);
+    }
+
+    @Override
+    public List<UserAnPageView> getCommunityIndex(List<Long> ids) {
+        return userDao.getCommunityIndex(ids);
     }
 
 }

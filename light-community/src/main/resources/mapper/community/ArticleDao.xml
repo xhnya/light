@@ -36,6 +36,11 @@
     <select id="selectIndexHotPageList" resultType="com.xhn.light.community.entity.vo.IndexHotPageList">
         select id id,title title from cms_article Order by update_time desc limit 8
     </select>
+    <select id="selectCommunityIndexView" resultType="com.xhn.light.community.entity.vo.CommunityIndexView">
+        select id id,user userId,title title,update_time time
+        from cms_article
+        order by update_time desc
+    </select>
 
 
 </mapper>

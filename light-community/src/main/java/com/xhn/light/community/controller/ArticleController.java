@@ -1,9 +1,12 @@
 package com.xhn.light.community.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import com.xhn.light.community.entity.vo.ArticleAdminListQueryVo;
+import com.xhn.light.community.entity.vo.CommunityIndexListParam;
+import com.xhn.light.community.entity.vo.CommunityIndexView;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +15,6 @@ import com.xhn.light.community.entity.ArticleEntity;
 import com.xhn.light.community.service.ArticleService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Result;
-
 
 
 /**
@@ -34,17 +36,18 @@ public class ArticleController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("community:article:list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = articleService.queryPage(params);
 
         return Result.ok().data("page", page);
     }
+
     /**
      * 页面的列表，管理后台
      */
     @GetMapping("/pageAdminList")
     //@RequiresPermissions("community:article:list")
-    public Result pageAdminList( ArticleAdminListQueryVo params){
+    public Result pageAdminList(ArticleAdminListQueryVo params) {
         PageUtils page = articleService.selectPageAdminList(params);
         return Result.ok().data("page", page);
     }
@@ -55,8 +58,8 @@ public class ArticleController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("community:article:info")
-    public Result info(@PathVariable("id") Long id){
-		ArticleEntity article = articleService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        ArticleEntity article = articleService.getById(id);
 
         return Result.ok().data("article", article);
     }
@@ -66,8 +69,8 @@ public class ArticleController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("community:article:save")
-    public Result save(@RequestBody ArticleEntity article){
-		articleService.save(article);
+    public Result save(@RequestBody ArticleEntity article) {
+        articleService.save(article);
 
         return Result.ok();
     }
@@ -77,8 +80,8 @@ public class ArticleController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("community:article:update")
-    public Result update(@RequestBody ArticleEntity article){
-		articleService.updateById(article);
+    public Result update(@RequestBody ArticleEntity article) {
+        articleService.updateById(article);
 
         return Result.ok();
     }
@@ -88,10 +91,21 @@ public class ArticleController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("community:article:delete")
-    public Result delete(@RequestBody Long[] ids){
-		articleService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        articleService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
+    }
+
+    /**
+     * 社区主界面的列表显示
+     * @param params
+     * @return
+     */
+    @GetMapping("indexListView")
+    public Result CommunityIndexListView(CommunityIndexListParam params) {
+        List<CommunityIndexView> result=articleService.selectCommunityIndexView(params);
+        return  Result.ok().data("results",result);
     }
 
 }

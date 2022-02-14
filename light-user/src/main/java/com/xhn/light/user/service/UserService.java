@@ -2,6 +2,7 @@ package com.xhn.light.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xhn.light.common.pojo.PageOfGameName;
+import com.xhn.light.common.pojo.UserAnPageView;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.user.entity.UserEntity;
 
@@ -20,5 +21,7 @@ public interface UserService extends IService<UserEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     List<PageOfGameName> getUserFromAdminCommunity(List<Long> ids);
+
+    List<UserAnPageView> getCommunityIndex(List<Long> ids);
 }
 

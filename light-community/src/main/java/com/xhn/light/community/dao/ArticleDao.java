@@ -3,9 +3,7 @@ package com.xhn.light.community.dao;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xhn.light.community.entity.ArticleEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.xhn.light.community.entity.vo.ArticleAdminListQueryVo;
-import com.xhn.light.community.entity.vo.ArticleAdminListVo;
-import com.xhn.light.community.entity.vo.IndexHotPageList;
+import com.xhn.light.community.entity.vo.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -23,4 +21,7 @@ public interface ArticleDao extends BaseMapper<ArticleEntity> {
     List<ArticleAdminListVo> selectPageAdminList(Page<ArticleEntity> page, ArticleAdminListQueryVo params);
 
     List<IndexHotPageList> selectIndexHotPageList();
+
+
+    List<CommunityIndexView> selectCommunityIndexView(Page<ArticleEntity> page, CommunityIndexListParam params);
 }

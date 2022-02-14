@@ -17,4 +17,19 @@
         id,game_id,type,
         state,create_time,update_time
     </sql>
+    <select id="selectRecommendList" resultType="com.xhn.light.game.entity.vo.RecommendAdminList">
+        select r.id id,g.game_name name ,r.state state,r.update_time time
+        from gms_recommend r,gms_game g
+        <where>
+            r.game_id=g.id
+        </where>
+        order by r.update_time DESC
+    </select>
+    <select id="listView" resultType="com.xhn.light.game.entity.vo.RecommendListView">
+        select g.id id,g.game_name name,g.cover_url cover
+        FROM gms_recommend r,gms_game g
+        where r.game_id=g.id
+        order by r.update_time DESC
+        limit 6
+    </select>
 </mapper>

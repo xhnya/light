@@ -85,6 +85,10 @@ public class ArticleEntity implements Serializable {
 	 */
 	private Integer recommended;
 	/**
+	 * 置顶实现，默认为0，置顶就在当前最大+1
+	 */
+	private Integer sort;
+	/**
 	 * 
 	 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)

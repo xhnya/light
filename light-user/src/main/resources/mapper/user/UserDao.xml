@@ -34,6 +34,14 @@
         </foreach>
 
     </select>
+    <select id="getCommunityIndex" resultType="com.xhn.light.common.pojo.UserAnPageView">
+        select u.id id,u.user_name userName ,u.avatar cover
+        from ums_user u
+        where u.id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 
 
 </mapper>
