@@ -11,7 +11,7 @@ import lombok.Data;
  * 
  * @author xhn
  * @email 930957853@qq.com
- * @date 2022-02-10 17:28:33
+ * @date 2022-02-14 20:23:45
  */
 @Data
 @TableName("ums_user_info")
@@ -24,6 +24,10 @@ public class UserInfoEntity implements Serializable {
 	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
+	 * 
+	 */
+	private Long userId;
+	/**
 	 * 用户名
 	 */
 	private String userName;
@@ -35,10 +39,6 @@ public class UserInfoEntity implements Serializable {
 	 * Email
 	 */
 	private String userEmail;
-	/**
-	 * 密码
-	 */
-	private String password;
 	/**
 	 * 昵称
 	 */
@@ -84,32 +84,14 @@ public class UserInfoEntity implements Serializable {
 	 */
 	private Date birthday;
 	/**
-	 * 最后一次登录时间
-	 */
-	private Date lastLogin;
-	/**
-	 * 登录的ip地址
-	 */
-	private String loginIp;
-	/**
-	 * 尝试登录，未登录成功次数
-	 */
-	private Integer attempts;
-	/**
-	 * 最后尝试登陆未成功时间
-	 */
-	private Date attemptsTime;
-	/**
 	 * 注册日期时间
 	 */
+	@TableField(fill = FieldFill.INSERT)
 	private Date createTime;
-	/**
-	 * 用户状态 1正常状态 2 删除至回收站 3锁定
-	 */
-	private Integer userStatus;
 	/**
 	 * 
 	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private Date updateTime;
 
 }

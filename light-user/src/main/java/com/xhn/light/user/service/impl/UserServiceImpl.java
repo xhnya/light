@@ -7,6 +7,8 @@ import com.xhn.light.common.exceptionhandler.LightException;
 import com.xhn.light.common.pojo.PageOfGameName;
 import com.xhn.light.common.pojo.UserAnPageView;
 import com.xhn.light.common.utils.*;
+import com.xhn.light.user.dao.UserInfoDao;
+import com.xhn.light.user.entity.UserInfoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xhn.light.user.dao.UserDao;
 import com.xhn.light.user.entity.UserEntity;
 import com.xhn.light.user.service.UserService;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service("userService")
@@ -26,6 +29,11 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private UserInfoDao userInfoDao;
+
+    private static final String AVATAR="http://img.xhnya.top/img/vae.jpg";
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -54,6 +62,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
      * @param password
      * @return
      */
+    @Transactional
     @Override
     public Result getUserAndPassword(String username, String password) {
         PhoneOrEmailOrUserName type = new PhoneOrEmailOrUserName();
@@ -73,9 +82,30 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
         UserEntity user = baseMapper.selectOne(wrapper);
         //查出来为空，
         if (user==null){
-            //并且是手机号登录 TODO: 完善登录和注册处理
+            //并且是手机号登录
             if (judge==1){
-                String code = IdUtil.simpleUUID();
+                UserEntity userEntity = new UserEntity();
+                userEntity.setCode(IdUtil.simpleUUID());
+                userEntity.setPhonenumber(username);
+                userEntity.setAvatar(AVATAR);
+                userEntity.setUserType("01");
+                String userNameSet="用户"+username;
+                userEntity.setUserName(userNameSet);
+                int i1 = baseMapper.insert(userEntity);
+                if (i1<1){
+                    throw LightException.from(ResultCode.REGISTER_ERROR);
+                }
+                //设置用户信息
+                UserInfoEntity userInfo = new UserInfoEntity();
+                userInfo.setUserId(userEntity.getId());
+                userInfo.setUserMobile(username);
+                userInfo.setUserName(userNameSet);
+                int i = userInfoDao.insert(userInfo);
+                if (i<1){
+                    throw LightException.from(ResultCode.REGISTER_ERROR);
+                }
+
+
             }
             throw LightException.from(ResultCode.LOGIN_ERROR);
         }

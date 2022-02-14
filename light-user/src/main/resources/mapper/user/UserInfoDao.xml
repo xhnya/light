@@ -6,10 +6,10 @@
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.xhn.light.user.entity.UserInfoEntity" id="userInfoMap">
         <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
         <result property="userName" column="user_name"/>
         <result property="userMobile" column="user_mobile"/>
         <result property="userEmail" column="user_email"/>
-        <result property="password" column="password"/>
         <result property="nickName" column="nick_name"/>
         <result property="trueName" column="true_name"/>
         <result property="sex" column="sex"/>
@@ -21,12 +21,7 @@
         <result property="zip" column="zip"/>
         <result property="qq" column="qq"/>
         <result property="birthday" column="birthday"/>
-        <result property="lastLogin" column="last_login"/>
-        <result property="loginIp" column="login_ip"/>
-        <result property="attempts" column="attempts"/>
-        <result property="attemptsTime" column="attempts_time"/>
         <result property="createTime" column="create_time"/>
-        <result property="userStatus" column="user_status"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
 

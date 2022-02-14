@@ -11,7 +11,7 @@ import lombok.Data;
  * 
  * @author xhn
  * @email 930957853@qq.com
- * @date 2022-02-10 17:28:33
+ * @date 2022-02-14 20:23:45
  */
 @Data
 @TableName("ums_user")
@@ -24,21 +24,17 @@ public class UserEntity implements Serializable {
 	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
-	 * 用户邮箱
-	 */
-	private String email;
-	/**
 	 * 用户代码
 	 */
 	private String code;
 	/**
+	 * 用户邮箱
+	 */
+	private String email;
+	/**
 	 * 手机号码
 	 */
 	private String phonenumber;
-	/**
-	 * 用户性别（0男 1女 2未知）
-	 */
-	private String sex;
 	/**
 	 * 头像路径
 	 */

@@ -102,6 +102,11 @@ public class UserController {
         return userService.getCommunityIndex(ids);
     }
 
+    /**
+     * 提供远程调用接口
+     * @param user
+     * @return
+     */
     @PostMapping("/getUserAndPassword")
     public Result getUserAndPassword(@RequestBody UserLogin user) {
         return userService.getUserAndPassword(user.getUsername(),user.getPassword());
