@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>exercise</title>
+</head>
+<body>
+<div>
+<!--    <span style="color: #1890ff ;margin-top: 3px;" th:text="${username}"></span>-->
+    <h2>尊敬的用户,你好:</h2>
+    <h3 style="margin-top: 3px;text-indent:70px;">感谢你使用light</h3>
+    <h3 style="margin-top: 3px;text-indent:70px;">你正在进行安全验证,你的验证码为:</h3>
+    <h2 style="text-indent:100px;background: #1890ff;width: 250px;margin-left: 70px"><span th:text="${code}"></span></h2>
+    <h3 style="margin-top: 3px;text-indent:70px;">验证码3分钟内有效,请妥善保管</h3>
+</div>
+</body>
+</html>

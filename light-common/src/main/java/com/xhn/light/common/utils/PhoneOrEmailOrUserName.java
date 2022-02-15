@@ -9,13 +9,18 @@ import cn.hutool.core.util.ReUtil;
  */
 public class PhoneOrEmailOrUserName {
 
-    public Integer judge(String username){
-        if (ReUtil.isMatch(Re.phone, username)){
-            return 1;
+    public static final String PHONECOLUMN= "phonenumber";
+    public static final String EMAILCOLUMN= "email";
+    public static final String USERNAMECOLUMN= "user_name";
+
+
+    public String judge(String username) {
+        if (ReUtil.isMatch(Re.phone, username)) {
+            return PHONECOLUMN;
         }
-        if (ReUtil.isMatch(Re.email, username)){
-            return 2;
+        if (ReUtil.isMatch(Re.email, username)) {
+            return EMAILCOLUMN;
         }
-        return 3;
+        return USERNAMECOLUMN;
     }
 }

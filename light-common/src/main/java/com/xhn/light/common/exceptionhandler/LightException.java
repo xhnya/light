@@ -29,13 +29,13 @@ public class LightException extends RuntimeException{
         return msg;
     }
 
-    private LightException(Integer code, String msg) {
+    public LightException(Integer code, String msg) {
         super(msg);
         this.code = code;
         this.msg = msg;
     }
 
-    private LightException(String msg) {
+    public LightException(String msg) {
         super(msg);
         this.msg = msg;
     }
