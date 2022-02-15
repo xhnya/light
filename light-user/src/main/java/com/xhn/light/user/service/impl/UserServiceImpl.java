@@ -13,10 +13,12 @@ import com.xhn.light.user.dao.UserInfoDao;
 import com.xhn.light.user.entity.UserInfoEntity;
 import com.xhn.light.user.entity.UserLevelEntity;
 import com.xhn.light.common.utils.RabbitMqUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,7 +33,7 @@ import com.xhn.light.user.entity.UserEntity;
 import com.xhn.light.user.service.UserService;
 import org.springframework.transaction.annotation.Transactional;
 
-
+@Slf4j
 @Service("userService")
 public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements UserService {
 
@@ -43,6 +45,9 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
 
     @Autowired
     private AmqpTemplate rabbitTemplate;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     private static final String AVATAR = "http://img.xhnya.top/img/vae.jpg";
 
@@ -77,30 +82,36 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
     @Transactional
     @Override
     public Result getUserAndPassword(String username, String password) {
+        //判断类型
         PhoneOrEmailOrUserName type = new PhoneOrEmailOrUserName();
         String judge = type.judge(username);
+        //查询数据库中是否有该字段
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>();
-
         wrapper.eq(judge, username);
+
+        Long count = baseMapper.selectCount(wrapper);
         UserEntity user = baseMapper.selectOne(wrapper);
 
-        String userPassword = user.getPassword();
+
         //手机号登录或者邮箱则从redis中获取验证码
         if (judge.equals(PhoneOrEmailOrUserName.PHONECOLUMN) ||
                 judge.equals(PhoneOrEmailOrUserName.EMAILCOLUMN)) {
-            //冲redis中获取数据查看是否匹配
-            //TODO: 完善登录逻辑，发送验证码接口
-
+            //从redis中获取数据查看是否匹配
+            String code = redisTemplate.opsForValue().get(username);
+            log.info("username" + username + "===========>" + code);
+            if (!password.equals(code)) {
+                throw LightException.from(ResultCode.LOGIN_CODE_ERROR);
+            }
             /**
              * 验证通过，并且查出来的数据为空
              *
              */
-            if (user == null) {
-                /**
-                 * 手机号第一次登录
-                 * 则进入注册环节
-                 */
+            if (count == 0) {
                 if (judge.equals(PhoneOrEmailOrUserName.PHONECOLUMN)) {
+                    /**
+                     * 手机号第一次登录
+                     * 则进入注册环节
+                     */
                     UserEntity userEntity = new UserEntity();
                     userEntity.setCode(IdUtil.simpleUUID());
                     userEntity.setPhonenumber(username);
@@ -126,23 +137,24 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
                      * 添加注册人数
                      * 等级添加
                      */
-                    rabbitTemplate.convertAndSend("fanout_register_exchange", "", userEntity.getId());
+                    Long entityId = userEntity.getId();
+                    rabbitTemplate.convertAndSend("fanout_register_exchange", "", entityId);
                     /**
                      * 注册成功则返回token，和登录成功一样
                      */
                     String token = JwtUtils.getJwtToken(userEntity.getId(), userEntity.getCode());
                     return Result.ok().data("token", token);
+                } else {
+                    throw LightException.from(ResultCode.LOGIN_NOT);
                 }
-                throw LightException.from(ResultCode.LOGIN_ERROR);
             }
-
-        } else if (!SecureUtil.md5(password).equals(userPassword)) {
+        } else if (!SecureUtil.md5(password).equals(user.getPassword())) {
             //否则通过密码验证
             throw LightException.from(ResultCode.LOGIN_ERROR);
         }
         //判断账号状态
-        if (user.getYesapiRySysUserStatus().equals("0")) {
-            throw LightException.from(ResultCode.LOGIN_ERROR);
+        if (!user.getYesapiRySysUserStatus().equals("0")) {
+            throw LightException.from(ResultCode.LOGIN_COUNT_ERROR);
         }
         String token = JwtUtils.getJwtToken(user.getId(), user.getCode());
 

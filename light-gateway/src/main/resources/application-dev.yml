@@ -65,3 +65,10 @@ spring:
           filters:
             - RewritePath=/light/(?<segment>.*),/$\{segment}
 
+        - id: light_auth
+          uri: lb://light-auth
+          predicates:
+            - Path=/light/auth/**
+          filters:
+            - RewritePath=/light/(?<segment>.*),/$\{segment}
+

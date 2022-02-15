@@ -7,6 +7,7 @@ import com.xhn.light.common.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date: 2022/1/10 17:38
  */
 @RestController
+@RequestMapping("/auth")
 public class LoginController {
 
     @Autowired

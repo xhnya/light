@@ -33,6 +33,12 @@ public enum ResultCode implements IResultCode {
 
     LOGIN_ERROR(20014, "登录失败，用户名或密码错误！"),
 
+    LOGIN_NOT(200141,"账号不存在"),
+
+    LOGIN_CODE_ERROR(200142,"验证码错误"),
+
+    LOGIN_COUNT_ERROR(200143,"账号状态异常"),
+
     REGISTER_ERROR(20015, "注册失败"),
 
     GET_PLAYAUTH_FAIL(20016, "获取视频凭证失败"),
