@@ -84,7 +84,7 @@ public class GameController {
     @GetMapping("/gameInfo/{id}")
     //@RequiresPermissions("game:game:info")
     public Result gameInfo(@PathVariable("id") Long id) {
-        GameEntity game = gameService.getById(id);
+        GameInfoView game = gameService.gameInfo(id);
         return Result.ok().data("game", game);
     }
 
