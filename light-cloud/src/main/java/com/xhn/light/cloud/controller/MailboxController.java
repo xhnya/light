@@ -4,6 +4,7 @@ import cn.hutool.core.util.RandomUtil;
 import com.xhn.light.cloud.service.MailboxService;
 import com.xhn.light.common.utils.Result;
 import com.xhn.light.common.utils.StringUtils;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -21,10 +22,11 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping("/cloud/email")
 public class MailboxController {
-    @Autowired
-    private MailboxService mailboxService;
+
     @Autowired
     private StringRedisTemplate redisTemplate;
+    @Autowired
+    private AmqpTemplate rabbitTemplate;
 
     @PostMapping("/sendMailBox")
     public Result sendMailBox(String email) {
@@ -32,13 +34,8 @@ public class MailboxController {
         if (!StringUtils.isEmpty(code)) {
             return Result.ok();
         }
-        code = RandomUtil.randomString(6);
-        boolean isSend = mailboxService.sendMailBox(code, email);
-        if (isSend) {
-            redisTemplate.opsForValue().set(email, code, 3, TimeUnit.MINUTES);
-            return Result.ok().message("success");
-        } else {
-            return Result.error().message("error");
-        }
+        rabbitTemplate.convertAndSend("email",email);
+        return Result.ok();
+
     }
 }
