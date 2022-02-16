@@ -2,7 +2,10 @@ package com.xhn.light.game.dao;
 
 import com.xhn.light.game.entity.ScoreEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xhn.light.game.entity.vo.GameInfoScoreList;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * 游戏评分表
@@ -14,5 +17,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ScoreDao extends BaseMapper<ScoreEntity> {
-	
+
+    List<GameInfoScoreList> getGameInfoList(Long id);
 }

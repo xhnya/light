@@ -15,6 +15,12 @@
         <result property="sort" column="sort"/>
         <result property="gameId" column="game_id"/>
     </resultMap>
+    <select id="getGameInfoList" resultType="com.xhn.light.game.entity.vo.GameInfoScoreList">
+        select id id,game_score gameScore,score_name scoreName,
+               score_describe scoreDescribe
+        from gms_score
+        where game_id=#{id}
+    </select>
 
 
 </mapper>

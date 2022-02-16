@@ -58,6 +58,17 @@
         from gms_game
         order by create_time desc limit 4
     </select>
+    <select id="gameInfo" resultType="com.xhn.light.game.entity.vo.GameInfoView">
+        select g.id id,g.game_name  gameName,g.game_name_china gameNameOther,t.type_name typeName,
+               (select p.name from gms_produce p where p.id=g.game_making) produceName,
+               (select p.name from gms_produce p where p.id=g.game_issue) issueName,
+               g.release_time releaseTime,g.website website,g.cover_url cover,g.game_describe gameDescribe,
+               (select s.game_score from gms_score s where s.game_id=g.id and s.type=0 ) lightScore,
+               (select s.game_score from gms_score s where s.game_id=g.id and s.type=1 ) userScore,
+               g.bg_url bgUrl,g.video_url videoUrl
+        from gms_game g,gms_type t
+        where g.id=#{id} and t.id=g.game_type
+    </select>
 
 
 </mapper>

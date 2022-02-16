@@ -25,4 +25,11 @@ public interface BannerDao extends BaseMapper<BannerEntity> {
     List<GameAdminBannerVo> getGameBannerUrl(Long id);
 
     List<GameBannerInfoListVo> getGameBannerUrlByGameId(IPage<BannerEntity> page, Long gameId);
+
+    /**
+     * 游戏详情banner展示
+     * @param id
+     * @return
+     */
+    List<String> getGameInfoList(Long id);
 }

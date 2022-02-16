@@ -23,6 +23,7 @@ public class AtlasEntity implements Serializable {
 	 */
 	@TableId(type = IdType.AUTO)
 	private Long id;
+	private Long gameId;
 	/**
 	 * 图集名称
 	 */

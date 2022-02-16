@@ -11,6 +11,7 @@
         <result property="coverUrl" column="cover_url"/>
         <result property="isDel" column="is_del"/>
         <result property="createTime" column="create_time"/>
+        <result property="gameId" column="gameId"/>
     </resultMap>
 
 

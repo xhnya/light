@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.xhn.light.common.pojo.PageOfGameName;
+import com.xhn.light.game.entity.vo.GameInfoView;
 import com.xhn.light.game.entity.vo.GameInfoVo;
 import com.xhn.light.game.entity.vo.ReleaseOrHotGameList;
 import org.springframework.beans.factory.annotation.Autowired;

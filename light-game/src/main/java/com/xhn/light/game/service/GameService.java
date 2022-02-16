@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.xhn.light.common.pojo.PageOfGameName;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.game.entity.GameEntity;
+import com.xhn.light.game.entity.vo.GameInfoView;
 import com.xhn.light.game.entity.vo.GameInfoVo;
 import com.xhn.light.game.entity.vo.ReleaseOrHotGameList;
 
@@ -28,5 +29,7 @@ public interface GameService extends IService<GameEntity> {
     List<PageOfGameName> gatGameNameByIdsForCommunity(List<Long> ids);
 
     List<ReleaseOrHotGameList> getNewReleaseGame();
+
+    GameInfoView gameInfo(Long id);
 }
 

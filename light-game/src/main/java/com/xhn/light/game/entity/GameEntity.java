@@ -42,6 +42,7 @@ public class GameEntity implements Serializable {
 	/**
 	 * 发行时间
 	 */
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date releaseTime;
 	/**
 	 * 中文名

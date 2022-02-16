@@ -4,6 +4,8 @@ import com.xhn.light.game.entity.PictureEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * 游戏图片
  * 
@@ -13,5 +15,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface PictureDao extends BaseMapper<PictureEntity> {
-	
+
+    List<String> getGameInfoList(Long id);
 }
