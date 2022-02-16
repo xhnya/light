@@ -36,16 +36,21 @@ public class TypeEntity implements Serializable {
 	 */
 	private Long parentId;
 	/**
-	 * 状态
+	 * 状态，拿来当类型字段，如果是0则是游戏
+	 *
+	 *
+	 *
 	 */
 	private Integer status;
 	/**
 	 * 
 	 */
+	@TableField(fill = FieldFill.INSERT)
 	private Date createTime;
 	/**
 	 * 
 	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private Date updateTime;
 	/**
 	 * 

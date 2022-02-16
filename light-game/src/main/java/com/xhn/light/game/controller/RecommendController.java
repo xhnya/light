@@ -1,5 +1,6 @@
 package com.xhn.light.game.controller;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Result;
 import com.xhn.light.game.entity.RecommendEntity;
@@ -29,6 +30,7 @@ public class RecommendController {
         return Result.ok();
     }
 
+//    TODO: 游戏优惠应该有另外的一套逻辑
     @RequestMapping("/list")
     //@RequiresPermissions("game:game:list")
     public Result list(@RequestParam Map<String, Object> params) {
@@ -38,8 +40,8 @@ public class RecommendController {
     }
     @GetMapping("/listView")
     //@RequiresPermissions("game:game:list")
-    public Result listView() {
-        List<RecommendListView> page=recommendService.listView();
+    public Result listView(@RequestParam Integer type) {
+        List<RecommendListView> page=recommendService.listView(type);
         return Result.ok().data("page", page);
     }
 

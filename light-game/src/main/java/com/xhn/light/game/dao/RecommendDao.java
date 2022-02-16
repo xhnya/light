@@ -19,9 +19,9 @@ import java.util.Map;
 @Mapper
 public interface RecommendDao extends BaseMapper<RecommendEntity> {
 
-    List<RecommendAdminList> selectRecommendList(Page page, Map<String, Object> params);
+    List<RecommendAdminList> selectRecommendList(Page page, Integer type);
 
-    List<RecommendListView> listView();
+    List<RecommendListView> listView(Integer type);
 }
 
 

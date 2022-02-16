@@ -5,16 +5,17 @@
 <mapper namespace="com.xhn.light.game.dao.RecommendDao">
 
     <resultMap id="BaseResultMap" type="com.xhn.light.game.entity.RecommendEntity">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="gameId" column="game_id" jdbcType="BIGINT"/>
-            <result property="type" column="type" jdbcType="TINYINT"/>
-            <result property="state" column="state" jdbcType="TINYINT"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="gameId" column="game_id" jdbcType="BIGINT"/>
+        <result property="type" column="type" jdbcType="TINYINT"/>
+        <result property="state" column="state" jdbcType="TINYINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,game_id,type,
+        id
+        ,game_id,type,
         state,create_time,update_time
     </sql>
     <select id="selectRecommendList" resultType="com.xhn.light.game.entity.vo.RecommendAdminList">
@@ -22,14 +23,18 @@
         from gms_recommend r,gms_game g
         <where>
             r.game_id=g.id
+            <if test="type!=null ">and type = #{type}</if>
         </where>
         order by r.update_time DESC
     </select>
     <select id="listView" resultType="com.xhn.light.game.entity.vo.RecommendListView">
-        select g.id id,g.game_name name,g.cover_url cover
-        FROM gms_recommend r,gms_game g
-        where r.game_id=g.id
-        order by r.update_time DESC
-        limit 6
+        select g.id id, g.game_name name, g.cover_url cover
+        FROM gms_recommend r,
+        gms_game g
+        <where>
+            r.game_id = g.id
+            <if test="type!=null ">and type = #{type}</if>
+        </where>
+        order by r.update_time DESC limit 6
     </select>
 </mapper>

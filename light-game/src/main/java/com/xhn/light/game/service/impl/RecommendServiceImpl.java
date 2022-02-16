@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.xhn.light.common.utils.Constant;
 import com.xhn.light.common.utils.PageParamsUtils;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Query;
@@ -35,13 +36,15 @@ public class RecommendServiceImpl extends ServiceImpl<RecommendDao, RecommendEnt
         //列表时间显示
         Page page = new PageParamsUtils().getPage(params);
 //        Page<RecommendEntity> page = new Page<>();
-        List<RecommendAdminList> result=recommendDao.selectRecommendList(page,params);
+
+        Integer type = new Integer(params.get("type").toString());
+        List<RecommendAdminList> result=recommendDao.selectRecommendList(page,type);
         return new PageUtils(result,(int)page.getTotal(),(int)page.getSize(),(int)page.getPages());
     }
 
     @Override
-    public List<RecommendListView> listView() {
-        List<RecommendListView> list=recommendDao.listView();
+    public List<RecommendListView> listView(Integer type) {
+        List<RecommendListView> list=recommendDao.listView(type);
         return list;
     }
 }

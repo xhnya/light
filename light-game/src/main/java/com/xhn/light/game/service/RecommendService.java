@@ -17,5 +17,5 @@ public interface RecommendService extends IService<RecommendEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
 
-    List<RecommendListView> listView();
+    List<RecommendListView> listView(Integer type);
 }
