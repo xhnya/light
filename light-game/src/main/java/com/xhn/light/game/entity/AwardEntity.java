@@ -44,6 +44,10 @@ public class AwardEntity implements Serializable {
 	 */
 	private String awardName;
 	/**
+	 * 机构的封面头像
+	 */
+	private String coverUrl;
+	/**
 	 * 
 	 */
 	private Integer sort;
