@@ -27,6 +27,7 @@
         <module>light-game</module>
         <module>light-community</module>
         <module>light-user</module>
+        <module>light-search</module>
 <!--        <module>renren-generator</module>-->
     </modules>
 
@@ -56,6 +57,7 @@
     <dependencyManagement>
         <dependencies>
             <!--aliyun-->
+<!--            TODO: 阿里云部分依赖需要手动放入-->
             <dependency>
                 <groupId>com.aliyun</groupId>
                 <artifactId>aliyun-java-sdk-core</artifactId>
