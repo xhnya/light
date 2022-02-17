@@ -1,7 +1,9 @@
 package com.xhn.light.auth.service.impl;
 
+import cn.hutool.crypto.SecureUtil;
 import com.alibaba.cloud.commons.lang.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sun.org.slf4j.internal.Logger;
 import com.xhn.light.auth.client.UserFeignService;
 import com.xhn.light.auth.service.LoginService;
 import com.xhn.light.auth.vo.LoginInfoVo;
@@ -9,8 +11,10 @@ import com.xhn.light.common.enums.ResultCode;
 import com.xhn.light.common.exceptionhandler.LightException;
 
 import com.xhn.light.common.pojo.UserLogin;
+import com.xhn.light.common.utils.JwtUtils;
 import com.xhn.light.common.utils.PhoneOrEmailOrUserName;
 import com.xhn.light.common.utils.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +25,10 @@ import java.util.Map;
  * @date ：2022/2/14 15:12
  * @description：
  */
+@Slf4j
 @Service
 public class LoginServiceImpl implements LoginService {
+
 
     @Autowired
     private UserFeignService userFeignService;
@@ -51,9 +57,18 @@ public class LoginServiceImpl implements LoginService {
             throw LightException.from(ResultCode.LOGIN_ERROR);
         }
         //不为空，验证账号和密码
+        UserLogin login = userFeignService.getUserAndPassword1(userLogin);
+        if (login==null){
+            throw LightException.from(ResultCode.LOGIN_NOT);
+        }
+        log.info(String.valueOf(login)+"<======>"+userLogin);
+        if (!SecureUtil.md5(password).equals(login.getPassword())) {
+            //否则通过密码验证
+            throw LightException.from(ResultCode.LOGIN_ERROR);
+        }
+        String token = JwtUtils.getJwtToken(login.getId(), login.getCode());
 
-
-        return Result.ok();
+        return Result.ok().data("token",token);
     }
 
     @Override

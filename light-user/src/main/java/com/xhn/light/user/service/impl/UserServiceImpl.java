@@ -14,6 +14,7 @@ import com.xhn.light.user.dao.UserInfoDao;
 import com.xhn.light.user.entity.UserInfoEntity;
 import com.xhn.light.user.entity.UserLevelEntity;
 import com.xhn.light.common.utils.RabbitMqUtils;
+import com.xhn.light.user.entity.vo.UserInfoView;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
 
@@ -164,9 +165,34 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
 
     @Override
     public UserLogin getUserAndPassword1(String username, String password) {
+        PhoneOrEmailOrUserName type = new PhoneOrEmailOrUserName();
+        String judge = type.judge(username);
+        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>();
+        wrapper.eq(judge, username);
+        Long count = baseMapper.selectCount(wrapper);
 
+        log.info(username+"========>");
+        log.info(password+"========>");
+        if (count == 0) {
+            throw LightException.from(ResultCode.LOGIN_NOT);
+        }
+        UserEntity user = baseMapper.selectOne(wrapper);
+        //判断账号状态
+        if (!user.getYesapiRySysUserStatus().equals("0")) {
+            throw LightException.from(ResultCode.LOGIN_COUNT_ERROR);
+        }
+        UserLogin login = new UserLogin();
+        login.setUsername(username);
+        login.setPassword(user.getPassword());
+        login.setCode(user.getCode());
+        login.setId(user.getId());
+        log.info("login========>"+String.valueOf(login));
+        return login;
+    }
 
-        return null;
+    @Override
+    public UserInfoView getUserInfoByToken(Long userId) {
+        return userDao.getUserInfoByToken(userId);
     }
 
 }

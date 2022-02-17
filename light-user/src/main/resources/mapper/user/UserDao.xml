@@ -40,5 +40,9 @@
             #{item}
         </foreach>
     </select>
+    <select id="getUserInfoByToken" resultType="com.xhn.light.user.entity.vo.UserInfoView">
+        select id id,avatar cover,user_name userName
+        from ums_user where id=#{userId}
+    </select>
 
 </mapper>

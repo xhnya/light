@@ -7,6 +7,7 @@ import com.xhn.light.common.pojo.UserLogin;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Result;
 import com.xhn.light.user.entity.UserEntity;
+import com.xhn.light.user.entity.vo.UserInfoView;
 
 import java.util.List;
 import java.util.Map;
@@ -29,5 +30,7 @@ public interface UserService extends IService<UserEntity> {
     Result getUserAndPassword(String username, String password);
 
     UserLogin getUserAndPassword1(String username, String password);
+
+    UserInfoView getUserInfoByToken(Long userId);
 }
 

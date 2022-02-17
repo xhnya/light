@@ -11,4 +11,9 @@ import lombok.Data;
 public class UserLogin {
     private String username;
     private String password;
+    private Long id;
+    /**
+     * 用户代码
+     */
+    private String code;
 }

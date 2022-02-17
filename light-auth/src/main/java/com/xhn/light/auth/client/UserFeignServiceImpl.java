@@ -21,6 +21,7 @@ public class UserFeignServiceImpl implements UserFeignService{
 
     @Override
     public UserLogin getUserAndPassword1(UserLogin user) {
-        throw LightException.from("登录出错");
+        log.info("调用user服务失败===============>");
+        throw LightException.from("user服务异常");
     }
 }

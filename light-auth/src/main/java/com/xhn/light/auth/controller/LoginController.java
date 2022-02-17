@@ -31,8 +31,7 @@ public class LoginController {
      */
     @PostMapping("/login")
     public Result login(@RequestBody UserLogin userLogin){
-        Result token=loginService.login(userLogin);
-        return Result.ok().data("token",token);
+        return loginService.login(userLogin);
     }
 
     @PostMapping("/phoneAndEmail")

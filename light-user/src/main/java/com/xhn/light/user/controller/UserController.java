@@ -7,6 +7,9 @@ import java.util.Map;
 import com.xhn.light.common.pojo.PageOfGameName;
 import com.xhn.light.common.pojo.UserAnPageView;
 import com.xhn.light.common.pojo.UserLogin;
+import com.xhn.light.common.utils.Constant;
+import com.xhn.light.common.utils.JwtUtils;
+import com.xhn.light.user.entity.vo.UserInfoView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +17,8 @@ import com.xhn.light.user.entity.UserEntity;
 import com.xhn.light.user.service.UserService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Result;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -104,22 +109,35 @@ public class UserController {
 
     /**
      * 提供远程调用接口
+     *
      * @param user
      * @return
      */
     @PostMapping("/getUserAndPassword")
     public Result getUserAndPassword(@RequestBody UserLogin user) {
-        return userService.getUserAndPassword(user.getUsername(),user.getPassword());
+        return userService.getUserAndPassword(user.getUsername(), user.getPassword());
     }
 
     /**
      * 提供远程调用接口
+     *
      * @param user
      * @return
      */
     @PostMapping("/getUserAndPassword1")
     public UserLogin getUserAndPassword1(@RequestBody UserLogin user) {
-        return userService.getUserAndPassword1(user.getUsername(),user.getPassword());
+        return userService.getUserAndPassword1(user.getUsername(), user.getPassword());
+    }
+
+    @PostMapping("getUserInfo")
+    public Result getUserInfo(HttpServletRequest request) {
+        String info = JwtUtils.getUserInfoByJwtToken(request);
+        if (info.equals("")){
+            return Result.error().message("没有登录");
+        }
+        Long userId=Long.parseLong(info);
+        UserInfoView userInfo=userService.getUserInfoByToken(userId);
+        return Result.ok().data("result",userInfo);
     }
 
 }
