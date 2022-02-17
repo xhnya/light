@@ -24,4 +24,6 @@ public interface ArticleDao extends BaseMapper<ArticleEntity> {
 
 
     List<CommunityIndexView> selectCommunityIndexView(Page<ArticleEntity> page, CommunityIndexListParam params);
+
+    List<IndexHotPageList> getGamePageInfoLit();
 }

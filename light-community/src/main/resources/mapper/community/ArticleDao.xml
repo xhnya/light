@@ -25,21 +25,29 @@
         <result property="isHot" column="is_hot"/>
     </resultMap>
     <select id="selectPageAdminList" resultType="com.xhn.light.community.entity.vo.ArticleAdminListVo">
-        select id id,title title,parent_id parentId,user user,click_num clickNum,create_time createTime,
-        is_hot isHot, status status, recommended recommended,type_id typeId
-        from cms_article
+        select a.id id,a.title title,a.parent_id parentId,a.user user,a.click_num clickNum,a.create_time createTime,
+        a.is_hot isHot, a.status status, a.recommended recommended,a.type_id typeId,c.name  parentName
+        from cms_article a,cms_community c
         <where>
             is_del=1
+            and a.parent_id=c.id
         </where>
-        Order by update_time desc
+        Order by a.update_time desc
     </select>
     <select id="selectIndexHotPageList" resultType="com.xhn.light.community.entity.vo.IndexHotPageList">
-        select id id,title title from cms_article Order by update_time desc limit 8
+        select id id,title title from cms_article where publish_type='原创' Order by update_time desc limit 8
     </select>
     <select id="selectCommunityIndexView" resultType="com.xhn.light.community.entity.vo.CommunityIndexView">
         select id id,user userId,title title,update_time time
         from cms_article
         order by update_time desc
+    </select>
+    <select id="getGamePageInfoLit" resultType="com.xhn.light.community.entity.vo.IndexHotPageList">
+        select id id,title title
+        from cms_article
+        where  is_del=1 and publish_type &lt;&gt; '原创'
+        order by create_time desc
+        limit 12
     </select>
 
 

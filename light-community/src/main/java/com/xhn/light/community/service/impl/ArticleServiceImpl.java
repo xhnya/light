@@ -58,32 +58,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleEntity> i
         Page<ArticleEntity> page = new Page<>(params.getPage(), params.getLimit());
         List<ArticleAdminListVo> result = articleDao.selectPageAdminList(page, params);
         //为远程调用提供参数
-        List<Long> gameList = new ArrayList<>();
         List<Long> userList = new ArrayList<>();
-        List<Long> typeList = new ArrayList<>();
         for (ArticleAdminListVo articleAdminListVo : result) {
             userList.add(articleAdminListVo.getUser());
-            if (articleAdminListVo.getTypeId() == 1) {
-                gameList.add(articleAdminListVo.getParentId());
-            } else {
-                typeList.add(articleAdminListVo.getParentId());
-            }
-
         }
         //远程调用
         List<PageOfGameName> userNameList = userFeignService.getUserFromAdminCommunity(userList);
-        List<PageOfGameName> gameName = gameFeignService.gatGameNameByIdsForCommunity(gameList);
-        log.info("gameName================>" + gameName);
         log.info("userNameList================>" + userNameList);
         //给现在的属性赋值
         for (ArticleAdminListVo articleAdminListVo : result) {
-            if (gameName != null) {
-                for (int i = 0; i < gameName.size(); i++) {
-                    if (gameName.get(i).getId() == articleAdminListVo.getParentId()) {
-                        articleAdminListVo.setParentName(gameName.get(i).getName());
-                    }
-                }
-            }
             if (userNameList != null) {
                 for (int i = 0; i < userNameList.size(); i++) {
                     if (userNameList.get(i).getId() == articleAdminListVo.getUser()) {
@@ -137,6 +120,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleEntity> i
         }
 
         return result;
+    }
+
+    @Override
+    public List<IndexHotPageList> getGamePageInfoLit() {
+
+        return articleDao.getGamePageInfoLit();
     }
 
 }

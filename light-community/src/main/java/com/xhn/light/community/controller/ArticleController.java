@@ -7,6 +7,7 @@ import java.util.Map;
 import com.xhn.light.community.entity.vo.ArticleAdminListQueryVo;
 import com.xhn.light.community.entity.vo.CommunityIndexListParam;
 import com.xhn.light.community.entity.vo.CommunityIndexView;
+import com.xhn.light.community.entity.vo.IndexHotPageList;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -71,7 +72,6 @@ public class ArticleController {
     //@RequiresPermissions("community:article:save")
     public Result save(@RequestBody ArticleEntity article) {
         articleService.save(article);
-
         return Result.ok();
     }
 
@@ -106,6 +106,16 @@ public class ArticleController {
     public Result CommunityIndexListView(CommunityIndexListParam params) {
         List<CommunityIndexView> result=articleService.selectCommunityIndexView(params);
         return  Result.ok().data("results",result);
+    }
+
+    /**
+     * 首页游戏动态展示
+     * @return
+     */
+    @GetMapping("getGamePageInfoLit")
+    public Result getGamePageInfoLit(){
+        List<IndexHotPageList> result=articleService.getGamePageInfoLit();
+        return  Result.ok().data("result",result);
     }
 
 }

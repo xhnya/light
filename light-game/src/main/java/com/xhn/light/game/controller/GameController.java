@@ -1,10 +1,12 @@
 package com.xhn.light.game.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.xhn.light.common.pojo.PageOfGameName;
+import com.xhn.light.game.client.AddCommunityFeign;
 import com.xhn.light.game.entity.vo.GameInfoView;
 import com.xhn.light.game.entity.vo.GameInfoVo;
 import com.xhn.light.game.entity.vo.ReleaseOrHotGameList;
@@ -29,6 +31,8 @@ import com.xhn.light.common.utils.Result;
 public class GameController {
     @Autowired
     private GameService gameService;
+    @Autowired
+    private AddCommunityFeign addCommunityFeign;
 
     /**
      * 列表
@@ -96,6 +100,10 @@ public class GameController {
     //@RequiresPermissions("game:game:save")
     public Result save(@RequestBody GameEntity game) {
         gameService.save(game);
+        Map<String, Object> map = new HashMap<>();
+        map.put("id",game.getId());
+        map.put("name",game.getGameNameChina());
+        addCommunityFeign.saveFromGame(map);
         return Result.ok().data("gameId", game.getId());
     }
 
