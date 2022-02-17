@@ -8,6 +8,7 @@ import com.xhn.light.common.exceptionhandler.LightException;
 import com.xhn.light.common.name.MqName;
 import com.xhn.light.common.pojo.PageOfGameName;
 import com.xhn.light.common.pojo.UserAnPageView;
+import com.xhn.light.common.pojo.UserLogin;
 import com.xhn.light.common.utils.*;
 import com.xhn.light.user.dao.UserInfoDao;
 import com.xhn.light.user.entity.UserInfoEntity;
@@ -159,6 +160,13 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
         String token = JwtUtils.getJwtToken(user.getId(), user.getCode());
 
         return Result.ok().data("token", token);
+    }
+
+    @Override
+    public UserLogin getUserAndPassword1(String username, String password) {
+
+
+        return null;
     }
 
 }

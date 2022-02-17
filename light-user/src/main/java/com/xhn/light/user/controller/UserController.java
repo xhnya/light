@@ -112,4 +112,14 @@ public class UserController {
         return userService.getUserAndPassword(user.getUsername(),user.getPassword());
     }
 
+    /**
+     * 提供远程调用接口
+     * @param user
+     * @return
+     */
+    @PostMapping("/getUserAndPassword1")
+    public UserLogin getUserAndPassword1(@RequestBody UserLogin user) {
+        return userService.getUserAndPassword1(user.getUsername(),user.getPassword());
+    }
+
 }

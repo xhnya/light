@@ -3,6 +3,7 @@ package com.xhn.light.user.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xhn.light.common.pojo.PageOfGameName;
 import com.xhn.light.common.pojo.UserAnPageView;
+import com.xhn.light.common.pojo.UserLogin;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Result;
 import com.xhn.light.user.entity.UserEntity;
@@ -26,5 +27,7 @@ public interface UserService extends IService<UserEntity> {
     List<UserAnPageView> getCommunityIndex(List<Long> ids);
 
     Result getUserAndPassword(String username, String password);
+
+    UserLogin getUserAndPassword1(String username, String password);
 }
 

@@ -27,16 +27,39 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private UserFeignService userFeignService;
 
+    /**
+     * 代码重构
+     * String username = userLogin.getUsername();
+     * String password = userLogin.getPassword();
+     * //      Integer type = loginInfoVo.getType();
+     * if (StringUtils.isBlank(username) || StringUtils.isBlank(password)){
+     * throw LightException.from(ResultCode.LOGIN_ERROR);
+     * }
+     * Result result = userFeignService.getUserAndPassword(userLogin);
+     * String token = (String) result.getData().get("token");
+     * return token;
+     * TODO： 加入用户权限管理
+     * @param userLogin
+     * @return
+     */
     @Override
-    public String login(UserLogin userLogin) {
+    public Result login(UserLogin userLogin) {
         String username = userLogin.getUsername();
         String password = userLogin.getPassword();
-//        Integer type = loginInfoVo.getType();
-        if (StringUtils.isBlank(username) || StringUtils.isBlank(password)){
+        //判断输入的是否为空
+        if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
             throw LightException.from(ResultCode.LOGIN_ERROR);
         }
-        Result result = userFeignService.getUserAndPassword(userLogin);
-        String token = (String) result.getData().get("token");
-        return token;
+        //不为空，验证账号和密码
+
+
+        return Result.ok();
+    }
+
+    @Override
+    public String verificationLogin(UserLogin userLogin) {
+
+
+        return null;
     }
 }

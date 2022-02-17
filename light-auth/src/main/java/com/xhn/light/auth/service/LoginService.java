@@ -2,6 +2,7 @@ package com.xhn.light.auth.service;
 
 import com.xhn.light.auth.vo.LoginInfoVo;
 import com.xhn.light.common.pojo.UserLogin;
+import com.xhn.light.common.utils.Result;
 
 /**
  * @author ：xhn
@@ -9,5 +10,7 @@ import com.xhn.light.common.pojo.UserLogin;
  * @description：
  */
 public interface LoginService {
-    String login(UserLogin userLogin);
+    Result login(UserLogin userLogin);
+
+    String verificationLogin(UserLogin userLogin);
 }

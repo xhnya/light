@@ -24,9 +24,20 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
+    /**
+     * 密码登录
+     * @param userLogin
+     * @return
+     */
     @PostMapping("/login")
     public Result login(@RequestBody UserLogin userLogin){
-        String token=loginService.login(userLogin);
+        Result token=loginService.login(userLogin);
+        return Result.ok().data("token",token);
+    }
+
+    @PostMapping("/phoneAndEmail")
+    public Result verificationLogin(@RequestBody UserLogin userLogin){
+        String token=loginService.verificationLogin(userLogin);
         return Result.ok().data("token",token);
     }
 

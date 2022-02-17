@@ -17,4 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface UserFeignService {
     @PostMapping("/user/user/getUserAndPassword")
     public Result getUserAndPassword(@RequestBody UserLogin user);
+
+    @PostMapping("/user/user/getUserAndPassword1")
+    public UserLogin getUserAndPassword1(@RequestBody UserLogin user);
 }
