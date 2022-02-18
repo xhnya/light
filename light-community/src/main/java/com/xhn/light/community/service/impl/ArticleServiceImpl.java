@@ -2,6 +2,7 @@ package com.xhn.light.community.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xhn.light.common.pojo.PageOfGameName;
+import com.xhn.light.common.pojo.PageParam;
 import com.xhn.light.common.pojo.UserAnPageView;
 import com.xhn.light.common.utils.Result;
 import com.xhn.light.community.client.GameFeignService;
@@ -133,6 +134,29 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleEntity> i
     @Override
     public List<IndexHotPageList> getUserNeedKnow() {
         return articleDao.getUserNeedKnow();
+    }
+
+    @Override
+    public PageUtils getInformation(PageParam param) {
+        Page<ArticleEntity> page = new Page<>(param.getPage(), param.getLimit());
+        List<CommunityIndexView> result = articleDao.getInformation(page);
+        List<Long> list = new ArrayList<>();
+        for (CommunityIndexView view : result) {
+            list.add(view.getUserId());
+        }
+        List<UserAnPageView> userInfoList = userFeignService.getCommunityIndex(list);
+        for (CommunityIndexView view : result) {
+            if (userInfoList != null) {
+                for (int i = 0; i < userInfoList.size(); i++) {
+                    UserAnPageView userAnPageView = userInfoList.get(i);
+                    if (userAnPageView.getId() == view.getUserId()) {
+                        view.setName(userAnPageView.getUserName());
+                        view.setCover(userAnPageView.getCover());
+                    }
+                }
+            }
+        }
+        return new PageUtils(result, (int) page.getTotal(), (int) page.getSize(), (int) page.getPages());
     }
 
 }

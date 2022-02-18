@@ -1,12 +1,10 @@
 package com.xhn.light.community.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xhn.light.common.pojo.PageParam;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.community.entity.ArticleEntity;
-import com.xhn.light.community.entity.vo.ArticleAdminListQueryVo;
-import com.xhn.light.community.entity.vo.CommunityIndexListParam;
-import com.xhn.light.community.entity.vo.CommunityIndexView;
-import com.xhn.light.community.entity.vo.IndexHotPageList;
+import com.xhn.light.community.entity.vo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -31,5 +29,7 @@ public interface ArticleService extends IService<ArticleEntity> {
     List<IndexHotPageList> getGamePageInfoLit();
 
     List<IndexHotPageList> getUserNeedKnow();
+
+    PageUtils getInformation(PageParam param);
 }
 

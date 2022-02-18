@@ -30,4 +30,6 @@ public interface ArticleDao extends BaseMapper<ArticleEntity> {
     List<IndexHotPageList> selectIndexHotPageList();
 
     List<IndexHotPageList> getUserNeedKnow();
+
+    List<CommunityIndexView> getInformation(Page<ArticleEntity> page);
 }

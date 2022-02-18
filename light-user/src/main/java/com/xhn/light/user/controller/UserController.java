@@ -129,6 +129,11 @@ public class UserController {
         return userService.getUserAndPassword1(user.getUsername(), user.getPassword());
     }
 
+    /**
+     * 获取用户的信息
+     * @param request
+     * @return
+     */
     @PostMapping("getUserInfo")
     public Result getUserInfo(HttpServletRequest request) {
         String info = JwtUtils.getUserInfoByJwtToken(request);

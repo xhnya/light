@@ -4,11 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.xhn.light.common.pojo.PageParam;
 import com.xhn.light.common.utils.JwtUtils;
-import com.xhn.light.community.entity.vo.ArticleAdminListQueryVo;
-import com.xhn.light.community.entity.vo.CommunityIndexListParam;
-import com.xhn.light.community.entity.vo.CommunityIndexView;
-import com.xhn.light.community.entity.vo.IndexHotPageList;
+import com.xhn.light.community.entity.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -103,47 +101,62 @@ public class ArticleController {
 
     /**
      * 社区主界面的列表显示
+     *
      * @param params
      * @return
      */
     @GetMapping("indexListView")
     public Result CommunityIndexListView(CommunityIndexListParam params) {
-        PageUtils result=articleService.selectCommunityIndexView(params);
-        return  Result.ok().data("results",result);
+        PageUtils result = articleService.selectCommunityIndexView(params);
+        return Result.ok().data("results", result);
     }
 
     /**
      * 首页游戏动态展示
+     *
      * @return
      */
     @GetMapping("getGamePageInfoLit")
-    public Result getGamePageInfoLit(){
-        List<IndexHotPageList> result=articleService.getGamePageInfoLit();
-        return  Result.ok().data("result",result);
+    public Result getGamePageInfoLit() {
+        List<IndexHotPageList> result = articleService.getGamePageInfoLit();
+        return Result.ok().data("result", result);
     }
 
 
     /**
      * 本站需知
+     *
      * @return
      */
     @GetMapping("getUserNeedKnow")
-    public Result  getUserNeedKnow(){
-        List<IndexHotPageList> result=articleService.getUserNeedKnow();
-        return  Result.ok().data("list",result);
+    public Result getUserNeedKnow() {
+        List<IndexHotPageList> result = articleService.getUserNeedKnow();
+        return Result.ok().data("list", result);
     }
 
     @RequestMapping("/saveUserArticle")
     //@RequiresPermissions("community:article:save")
-    public Result saveUserArticle(@RequestBody ArticleEntity article, HttpServletRequest request){
+    public Result saveUserArticle(@RequestBody ArticleEntity article, HttpServletRequest request) {
         String info = JwtUtils.getUserInfoByJwtToken(request);
-        if (info.equals("")){
+        if (info.equals("")) {
             return Result.error().message("没有登录");
         }
-        Long userId=Long.parseLong(info);
+        Long userId = Long.parseLong(info);
         article.setUser(userId);
         articleService.save(article);
         return Result.ok();
+    }
+
+
+    /**
+     *
+     * @param param
+     * @return
+     */
+    @GetMapping("/getInformation")
+    public Result getInformation(PageParam param) {
+        PageUtils result=articleService.getInformation(param);
+        return Result.ok().data("page",result);
     }
 
 

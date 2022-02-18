@@ -59,6 +59,12 @@
         where c.name = '本站需知' AND a.parent_id=c.id
         order by a.sort desc, a.update_time desc limit 3
     </select>
+    <select id="getInformation" resultType="com.xhn.light.community.entity.vo.CommunityIndexView">
+        select id id, user userId, title title, update_time time,description content
+        from cms_article
+        where publish_type = '资讯'
+        order by update_time desc
+    </select>
 
 
 </mapper>
