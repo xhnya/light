@@ -85,8 +85,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleEntity> i
     }
 
     @Override
-    public List<CommunityIndexView> selectCommunityIndexView(CommunityIndexListParam params) {
+    public PageUtils selectCommunityIndexView(CommunityIndexListParam params) {
+
         Page<ArticleEntity> page = new Page<>(params.getPage(), params.getLimit());
+
         List<CommunityIndexView> result = articleDao.selectCommunityIndexView(page, params);
         List<Long> list = new ArrayList<>();
         for (CommunityIndexView view : result) {
@@ -119,13 +121,18 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleEntity> i
             }
         }
 
-        return result;
+        return new PageUtils(result, (int) page.getTotal(), (int) page.getSize(), (int) page.getPages());
     }
 
     @Override
     public List<IndexHotPageList> getGamePageInfoLit() {
 
         return articleDao.getGamePageInfoLit();
+    }
+
+    @Override
+    public List<IndexHotPageList> getUserNeedKnow() {
+        return articleDao.getUserNeedKnow();
     }
 
 }

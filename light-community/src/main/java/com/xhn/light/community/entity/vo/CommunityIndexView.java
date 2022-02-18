@@ -23,4 +23,5 @@ public class CommunityIndexView {
     private String name;
     private String title;
     private Date time;
+    private String content;
 }

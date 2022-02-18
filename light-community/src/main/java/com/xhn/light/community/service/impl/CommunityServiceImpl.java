@@ -1,6 +1,8 @@
 package com.xhn.light.community.service.impl;
 
+import com.xhn.light.community.entity.vo.CommunityListViewForIndex;
 import com.xhn.light.community.entity.vo.SelectCommunityView;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +21,9 @@ import com.xhn.light.community.service.CommunityService;
 
 @Service("communityService")
 public class CommunityServiceImpl extends ServiceImpl<CommunityDao, CommunityEntity> implements CommunityService {
+
+    @Autowired
+    private CommunityDao communityDao;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -79,6 +84,11 @@ public class CommunityServiceImpl extends ServiceImpl<CommunityDao, CommunityEnt
         result.add(view1);
         result.add(view2);
         return result;
+    }
+
+    @Override
+    public List<CommunityListViewForIndex> getCommunityListView() {
+        return communityDao.getCommunityListView();
     }
 
 }

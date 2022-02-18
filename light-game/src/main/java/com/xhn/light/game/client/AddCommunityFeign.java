@@ -17,6 +17,6 @@ import java.util.Map;
 @FeignClient(value = "light-community",fallback =AddCommunityFeignImpl.class)
 public interface AddCommunityFeign {
 
-    @PostMapping("/saveFromGame")
+    @PostMapping("/community/community/saveFromGame")
     public Result saveFromGame(@RequestBody Map<String,Object> params);
 }

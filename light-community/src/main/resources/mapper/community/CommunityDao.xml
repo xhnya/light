@@ -13,6 +13,11 @@
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
+    <select id="getCommunityListView" resultType="com.xhn.light.community.entity.vo.CommunityListViewForIndex">
+        select id id,name name from cms_community
+        order by sort desc,update_time desc
+        limit 12
+    </select>
 
 
 </mapper>

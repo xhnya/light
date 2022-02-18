@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.xhn.light.common.utils.JwtUtils;
 import com.xhn.light.community.entity.vo.ArticleAdminListQueryVo;
 import com.xhn.light.community.entity.vo.CommunityIndexListParam;
 import com.xhn.light.community.entity.vo.CommunityIndexView;
@@ -16,6 +17,8 @@ import com.xhn.light.community.entity.ArticleEntity;
 import com.xhn.light.community.service.ArticleService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Result;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -71,6 +74,7 @@ public class ArticleController {
     @RequestMapping("/save")
     //@RequiresPermissions("community:article:save")
     public Result save(@RequestBody ArticleEntity article) {
+
         articleService.save(article);
         return Result.ok();
     }
@@ -104,7 +108,7 @@ public class ArticleController {
      */
     @GetMapping("indexListView")
     public Result CommunityIndexListView(CommunityIndexListParam params) {
-        List<CommunityIndexView> result=articleService.selectCommunityIndexView(params);
+        PageUtils result=articleService.selectCommunityIndexView(params);
         return  Result.ok().data("results",result);
     }
 
@@ -117,5 +121,30 @@ public class ArticleController {
         List<IndexHotPageList> result=articleService.getGamePageInfoLit();
         return  Result.ok().data("result",result);
     }
+
+
+    /**
+     * 本站需知
+     * @return
+     */
+    @GetMapping("getUserNeedKnow")
+    public Result  getUserNeedKnow(){
+        List<IndexHotPageList> result=articleService.getUserNeedKnow();
+        return  Result.ok().data("list",result);
+    }
+
+    @RequestMapping("/saveUserArticle")
+    //@RequiresPermissions("community:article:save")
+    public Result saveUserArticle(@RequestBody ArticleEntity article, HttpServletRequest request){
+        String info = JwtUtils.getUserInfoByJwtToken(request);
+        if (info.equals("")){
+            return Result.error().message("没有登录");
+        }
+        Long userId=Long.parseLong(info);
+        article.setUser(userId);
+        articleService.save(article);
+        return Result.ok();
+    }
+
 
 }

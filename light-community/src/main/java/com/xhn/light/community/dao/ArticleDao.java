@@ -20,10 +20,14 @@ public interface ArticleDao extends BaseMapper<ArticleEntity> {
 
     List<ArticleAdminListVo> selectPageAdminList(Page<ArticleEntity> page, ArticleAdminListQueryVo params);
 
-    List<IndexHotPageList> selectIndexHotPageList();
+    
 
 
     List<CommunityIndexView> selectCommunityIndexView(Page<ArticleEntity> page, CommunityIndexListParam params);
 
     List<IndexHotPageList> getGamePageInfoLit();
+
+    List<IndexHotPageList> selectIndexHotPageList();
+
+    List<IndexHotPageList> getUserNeedKnow();
 }

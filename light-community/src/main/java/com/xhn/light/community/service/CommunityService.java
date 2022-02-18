@@ -3,6 +3,7 @@ package com.xhn.light.community.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.community.entity.CommunityEntity;
+import com.xhn.light.community.entity.vo.CommunityListViewForIndex;
 import com.xhn.light.community.entity.vo.SelectCommunityView;
 
 import java.util.List;
@@ -20,5 +21,7 @@ public interface CommunityService extends IService<CommunityEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     List<SelectCommunityView> getCommunityCascader();
+
+    List<CommunityListViewForIndex> getCommunityListView();
 }
 
