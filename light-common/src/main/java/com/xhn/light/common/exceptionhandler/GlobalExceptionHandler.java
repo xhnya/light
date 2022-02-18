@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public Result error(Exception e){
         e.printStackTrace();
-        return  Result.error().message("执行了全局异常处理");
+        return  Result.error().message("执行了全局异常处理").code(500);
     }
 
     @ExceptionHandler(ArithmeticException.class)

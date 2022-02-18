@@ -7,9 +7,7 @@ import java.util.Map;
 
 import com.xhn.light.common.pojo.PageOfGameName;
 import com.xhn.light.game.client.AddCommunityFeign;
-import com.xhn.light.game.entity.vo.GameInfoView;
-import com.xhn.light.game.entity.vo.GameInfoVo;
-import com.xhn.light.game.entity.vo.ReleaseOrHotGameList;
+import com.xhn.light.game.entity.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -101,8 +99,8 @@ public class GameController {
     public Result save(@RequestBody GameEntity game) {
         gameService.save(game);
         Map<String, Object> map = new HashMap<>();
-        map.put("id",game.getId());
-        map.put("name",game.getGameNameChina());
+        map.put("id", game.getId());
+        map.put("name", game.getGameNameChina());
         addCommunityFeign.saveFromGame(map);
         return Result.ok().data("gameId", game.getId());
     }
@@ -142,12 +140,51 @@ public class GameController {
 
     /**
      * 获取首页的最新发布的游戏
+     *
      * @return
      */
     @GetMapping("/getNewReleaseGame")
     public Result getNewReleaseGame() {
-        List<ReleaseOrHotGameList> result=gameService.getNewReleaseGame();
-        return Result.ok().data("result",result);
+        List<ReleaseOrHotGameList> result = gameService.getNewReleaseGame();
+        return Result.ok().data("result", result);
     }
 
+    /**
+     * 获取分类页的最近游戏，判断用户有没有登录，如果登录就返回历史或者关注的游戏
+     *
+     * @return
+     */
+    @GetMapping("/reqMyGameList")
+    public Result getMyGameList() {
+        List<ReleaseOrHotGameList> result = gameService.getNewReleaseGame();
+        return Result.ok().data("result", result);
+    }
+
+    /**
+     * 分类顶端的文本游戏的显示
+     *
+     * @param id 分类的id
+     * @return
+     */
+    @GetMapping("/getGameTypeForType")
+    public Result getGameTypeForType(@RequestParam Long id) {
+        List<TypeGameListView> result = gameService.getGameTypeForType(id);
+        return Result.ok().data("result", result);
+    }
+
+    @GetMapping("/getGameTypeForTypeTop")
+    public Result getGameTypeForTypeTop(@RequestParam Long id) {
+        List<TypeGameListView> result = gameService.getGameTypeForTypeTop(id);
+        return Result.ok().data("result", result);
+    }
+
+    /**
+     * 获取所有的游戏显示
+     * @return
+     */
+    @GetMapping("/getAllGameList")
+    public Result getAllGameList() {
+        List<AllGameListView> result = gameService.getAllGameList();
+        return Result.ok().data("result", result);
+    }
 }

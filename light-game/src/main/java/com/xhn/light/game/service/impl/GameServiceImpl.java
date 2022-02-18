@@ -99,4 +99,19 @@ public class GameServiceImpl extends ServiceImpl<GameDao, GameEntity> implements
         return result;
     }
 
+    @Override
+    public List<TypeGameListView> getGameTypeForType(Long id) {
+        return gameDao.getGameTypeForType(id);
+    }
+
+    @Override
+    public List<TypeGameListView> getGameTypeForTypeTop(Long id) {
+        return gameDao.getGameTypeForTypeTop(id);
+    }
+
+    @Override
+    public List<AllGameListView> getAllGameList() {
+        return gameDao.getAllGameList();
+    }
+
 }

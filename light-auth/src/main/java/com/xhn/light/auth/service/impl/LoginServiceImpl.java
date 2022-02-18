@@ -3,7 +3,6 @@ package com.xhn.light.auth.service.impl;
 import cn.hutool.crypto.SecureUtil;
 import com.alibaba.cloud.commons.lang.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.sun.org.slf4j.internal.Logger;
 import com.xhn.light.auth.client.UserFeignService;
 import com.xhn.light.auth.service.LoginService;
 import com.xhn.light.auth.vo.LoginInfoVo;
@@ -15,7 +14,10 @@ import com.xhn.light.common.utils.JwtUtils;
 import com.xhn.light.common.utils.PhoneOrEmailOrUserName;
 import com.xhn.light.common.utils.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -28,7 +30,7 @@ import java.util.Map;
 @Slf4j
 @Service
 public class LoginServiceImpl implements LoginService {
-
+    private static final Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
 
     @Autowired
     private UserFeignService userFeignService;
@@ -62,7 +64,9 @@ public class LoginServiceImpl implements LoginService {
             throw LightException.from(ResultCode.LOGIN_NOT);
         }
         log.info(String.valueOf(login)+"<======>"+userLogin);
-        if (!SecureUtil.md5(password).equals(login.getPassword())) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String password1 = encoder.encode(password);
+        if (!password1.equals(login.getPassword())) {
             //否则通过密码验证
             throw LightException.from(ResultCode.LOGIN_ERROR);
         }

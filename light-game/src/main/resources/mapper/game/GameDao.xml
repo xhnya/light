@@ -41,7 +41,7 @@
              gms_type t
         where t.id = g.game_type
     </select>
-<!--    TODO: 后台页面的详情展示-->
+    <!--    TODO: 后台页面的详情展示-->
     <select id="getGameInfo" resultType="com.xhn.light.game.entity.vo.GameInfoVo">
         select g.id id, t.type_name typeName
         from gms_game g,
@@ -54,20 +54,62 @@
         </foreach>
     </select>
     <select id="getNewReleaseGame" resultType="com.xhn.light.game.entity.vo.ReleaseOrHotGameList">
-        select id id ,game_name_china name ,cover_url cover,release_time time
+        select id id, game_name_china name, cover_url cover, release_time time
         from gms_game
         order by create_time desc limit 4
     </select>
     <select id="gameInfo" resultType="com.xhn.light.game.entity.vo.GameInfoView">
-        select g.id id,g.game_name  gameName,g.game_name_china gameNameOther,t.type_name typeName,
-               (select p.name from gms_produce p where p.id=g.game_making) produceName,
-               (select p.name from gms_produce p where p.id=g.game_issue) issueName,
-               g.release_time releaseTime,g.website website,g.cover_url cover,g.game_describe gameDescribe,
-               (select s.game_score from gms_score s where s.game_id=g.id and s.type=0 ) lightScore,
-               (select s.game_score from gms_score s where s.game_id=g.id and s.type=1 ) userScore,
-               g.bg_url bgUrl,g.video_url videoUrl
-        from gms_game g,gms_type t
-        where g.id=#{id} and t.id=g.game_type
+        select g.id                                                                         id,
+               g.game_name                                                                  gameName,
+               g.game_name_china                                                            gameNameOther,
+               t.type_name                                                                  typeName,
+               (select p.name from gms_produce p where p.id = g.game_making)                produceName,
+               (select p.name from gms_produce p where p.id = g.game_issue)                 issueName,
+               g.release_time                                                               releaseTime,
+               g.website                                                                    website,
+               g.cover_url                                                                  cover,
+               g.game_describe                                                              gameDescribe,
+               (select s.game_score from gms_score s where s.game_id = g.id and s.type = 0) lightScore,
+               (select s.game_score from gms_score s where s.game_id = g.id and s.type = 1) userScore,
+               g.bg_url                                                                     bgUrl,
+               g.video_url                                                                  videoUrl
+        from gms_game g,
+             gms_type t
+        where g.id = #{id}
+          and t.id = g.game_type
+    </select>
+    <select id="getGameTypeForType" resultType="com.xhn.light.game.entity.vo.TypeGameListView">
+        select g.id id, g.game_name name
+        from gms_game g,
+             gms_type t
+        where t.id = #{id}
+          and t.id = g.game_type
+          and g.is_hot = 1
+        order by g.sort desc, g.update_time desc limit 8,30
+    </select>
+    <select id="getGameTypeForTypeTop" resultType="com.xhn.light.game.entity.vo.TypeGameListView">
+        select g.id id, g.game_name name, g.cover_url img
+        from gms_game g,
+             gms_type t
+        where t.id = #{id}
+          and t.id = g.game_type
+          and g.is_hot = 1
+        order by g.sort desc, g.update_time desc limit 8
+    </select>
+    <select id="getAllGameList" resultType="com.xhn.light.game.entity.vo.AllGameListView">
+        select g.id                                                        id,
+               g.game_name                                                 name,
+               g.game_name_china                                           nameOther,
+               g.game_describe                                             describes,
+               g.release_time                                              releaseTime,
+               t.type_name                                                 typeName,
+               g.img_url                                                   imgUrl,
+               (select name from gms_produce p where p.id = g.game_making) makingName,
+               (select name from gms_produce p where p.id = g.game_issue) issueName
+        from gms_game g,
+             gms_type t
+        where g.game_type = t.id
+        order by g.sort desc, g.update_time desc
     </select>
 
 

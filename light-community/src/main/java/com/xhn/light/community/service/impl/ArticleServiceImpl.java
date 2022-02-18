@@ -76,7 +76,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleEntity> i
             }
         }
 
-        return new PageUtils(result, (int) page.getTotal(), (int) page.getSize(), (int) page.getPages());
+        return new PageUtils(result, (int) page.getTotal(), (int) page.getSize(), (int) page.getCurrent());
     }
 
     @Override

@@ -5,10 +5,7 @@ import com.xhn.light.common.pojo.PageOfGameName;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.game.entity.GameEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.xhn.light.game.entity.vo.GameInfoView;
-import com.xhn.light.game.entity.vo.GameInfoVo;
-import com.xhn.light.game.entity.vo.GameListAdmin;
-import com.xhn.light.game.entity.vo.ReleaseOrHotGameList;
+import com.xhn.light.game.entity.vo.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -33,4 +30,10 @@ public interface GameDao extends BaseMapper<GameEntity> {
     List<ReleaseOrHotGameList> getNewReleaseGame();
 
     GameInfoView gameInfo(Long id);
+
+    List<TypeGameListView> getGameTypeForType(Long id);
+
+    List<TypeGameListView> getGameTypeForTypeTop(Long id);
+
+    List<AllGameListView> getAllGameList();
 }
