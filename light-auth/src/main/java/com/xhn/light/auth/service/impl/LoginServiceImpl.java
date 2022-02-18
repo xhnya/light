@@ -63,10 +63,10 @@ public class LoginServiceImpl implements LoginService {
         if (login==null){
             throw LightException.from(ResultCode.LOGIN_NOT);
         }
-        log.info(String.valueOf(login)+"<======>"+userLogin);
+        log.info(String.valueOf(login)+"<数据库======用户>"+userLogin);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String password1 = encoder.encode(password);
-        if (!password1.equals(login.getPassword())) {
+
+        if (!encoder.matches(password,login.getPassword())) {
             //否则通过密码验证
             throw LightException.from(ResultCode.LOGIN_ERROR);
         }
