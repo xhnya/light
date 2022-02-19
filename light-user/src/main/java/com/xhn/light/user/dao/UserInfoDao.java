@@ -2,6 +2,7 @@ package com.xhn.light.user.dao;
 
 import com.xhn.light.user.entity.UserInfoEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xhn.light.user.entity.vo.UserInfoForMy;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,5 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface UserInfoDao extends BaseMapper<UserInfoEntity> {
-	
+
+    UserInfoForMy getUserInfo(Long userId);
 }

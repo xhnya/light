@@ -1,14 +1,12 @@
 package com.xhn.light.game.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.xhn.light.game.entity.vo.ScoreViewForIndex;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.xhn.light.game.entity.ScoreEntity;
 import com.xhn.light.game.service.ScoreService;
@@ -85,6 +83,16 @@ public class ScoreController {
 		scoreService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
+    }
+
+    /**
+     * 资讯页的游戏评测
+     * @return
+     */
+    @GetMapping("getEvaluating")
+    public Result getEvaluating() {
+        List<ScoreViewForIndex> result =scoreService.getEvaluating();
+        return Result.ok().data("result",result);
     }
 
 }

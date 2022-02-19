@@ -170,9 +170,8 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(judge, username);
         Long count = baseMapper.selectCount(wrapper);
-
-        log.info(username+"========>");
-        log.info(password+"========>");
+        log.info(username + "========>");
+        log.info(password + "========>");
         if (count == 0) {
             throw LightException.from(ResultCode.LOGIN_NOT);
         }
@@ -186,13 +185,75 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
         login.setPassword(user.getPassword());
         login.setCode(user.getCode());
         login.setId(user.getId());
-        log.info("login========>"+String.valueOf(login));
+        log.info("login========>" + String.valueOf(login));
         return login;
     }
 
     @Override
     public UserInfoView getUserInfoByToken(Long userId) {
         return userDao.getUserInfoByToken(userId);
+    }
+
+    @Override
+    public UserLogin getUserInfoForAuth(String username, String password) {
+        //判断类型
+        PhoneOrEmailOrUserName type = new PhoneOrEmailOrUserName();
+        String judge = type.judge(username);
+        //查询数据库中是否有该字段
+        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>();
+        wrapper.eq(judge, username);
+        UserLogin login = new UserLogin();
+        Long count = baseMapper.selectCount(wrapper);
+        if (count==0){
+            if (judge.equals(PhoneOrEmailOrUserName.PHONECOLUMN)) {
+                /**
+                 * 手机号第一次登录
+                 * 则进入注册环节
+                 */
+                UserEntity userEntity = new UserEntity();
+                userEntity.setCode(IdUtil.simpleUUID());
+                userEntity.setPhonenumber(username);
+                userEntity.setAvatar(AVATAR);
+                userEntity.setUserType("01");
+                String userNameSet = "用户" + username;
+                userEntity.setUserName(userNameSet);
+                int i1 = baseMapper.insert(userEntity);
+                if (i1 < 1) {
+                    throw LightException.from(ResultCode.REGISTER_ERROR);
+                }
+                //设置用户信息
+                UserInfoEntity userInfo = new UserInfoEntity();
+                userInfo.setUserId(userEntity.getId());
+                userInfo.setUserMobile(username);
+                userInfo.setUserName(userNameSet);
+                userInfo.setBgUrl("http://img.xhnya.top/img/userbg.webp");
+                int i = userInfoDao.insert(userInfo);
+                if (i < 1) {
+                    throw LightException.from(ResultCode.REGISTER_ERROR);
+                }
+                /**
+                 * 把消息放进mq里面
+                 * 添加注册人数
+                 * 等级添加
+                 */
+                Long entityId = userEntity.getId();
+                rabbitTemplate.convertAndSend("fanout_register_exchange", "", entityId);
+
+                login.setId(userEntity.getId());
+                login.setCode(userEntity.getCode());
+                return login;
+            } else {
+                throw LightException.from(ResultCode.LOGIN_NOT);
+            }
+        }
+        UserEntity user = baseMapper.selectOne(wrapper);
+        //判断账号状态
+        if (!user.getYesapiRySysUserStatus().equals("0")) {
+            throw LightException.from(ResultCode.LOGIN_COUNT_ERROR);
+        }
+        login.setId(user.getId());
+        login.setCode(user.getCode());
+        return login;
     }
 
 }

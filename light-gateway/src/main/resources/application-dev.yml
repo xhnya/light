@@ -72,3 +72,10 @@ spring:
           filters:
             - RewritePath=/light/(?<segment>.*),/$\{segment}
 
+        - id: light_cloud
+          uri: lb://light-cloud
+          predicates:
+            - Path=/light/cloud/**
+          filters:
+            - RewritePath=/light/(?<segment>.*),/$\{segment}
+

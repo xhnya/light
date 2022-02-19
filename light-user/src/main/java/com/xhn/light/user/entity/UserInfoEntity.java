@@ -39,6 +39,11 @@ public class UserInfoEntity implements Serializable {
 	 * Email
 	 */
 	private String userEmail;
+
+	/**
+	 * 背景图
+	 */
+	private String bgUrl;
 	/**
 	 * 昵称
 	 */
@@ -66,7 +71,7 @@ public class UserInfoEntity implements Serializable {
 	/**
 	 * 城市
 	 */
-	private Integer city;
+	private String city;
 	/**
 	 * 联系地址
 	 */

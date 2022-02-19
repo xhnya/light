@@ -3,7 +3,7 @@
 
 <mapper namespace="com.xhn.light.game.dao.ScoreDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.xhn.light.game.entity.ScoreEntity" id="scoreMap">
         <result property="id" column="id"/>
         <result property="gameScore" column="game_score"/>
@@ -16,10 +16,26 @@
         <result property="gameId" column="game_id"/>
     </resultMap>
     <select id="getGameInfoList" resultType="com.xhn.light.game.entity.vo.GameInfoScoreList">
-        select id id,game_score gameScore,score_name scoreName,
+        select id             id,
+               game_score     gameScore,
+               score_name     scoreName,
                score_describe scoreDescribe
         from gms_score
-        where game_id=#{id}
+        where game_id = #{id}
+    </select>
+    <select id="getEvaluating" resultType="com.xhn.light.game.entity.vo.ScoreViewForIndex">
+        select s.id             id,
+               s.page_id        pageId,
+               s.score_describe scoreDescribe,
+               s.game_score     gameScore,
+               s.create_time    createTime,
+               s.score_name     scoreName,
+               g.img_url        url
+        from gms_score s,
+             gms_game g
+        where s.game_id=g.id and s.type!=1
+        order by s.create_time desc
+        limit 3
     </select>
 
 

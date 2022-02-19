@@ -15,6 +15,6 @@ import java.util.Map;
  */
 public interface FavoriteService extends IService<FavoriteEntity> {
 
-    PageUtils queryPage(Map<String, Object> params);
+    PageUtils queryPage(Map<String, Object> params,Long userId);
 }
 

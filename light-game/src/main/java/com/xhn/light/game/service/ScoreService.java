@@ -3,7 +3,9 @@ package com.xhn.light.game.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.game.entity.ScoreEntity;
+import com.xhn.light.game.entity.vo.ScoreViewForIndex;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,5 +19,7 @@ import java.util.Map;
 public interface ScoreService extends IService<ScoreEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    List<ScoreViewForIndex> getEvaluating();
 }
 

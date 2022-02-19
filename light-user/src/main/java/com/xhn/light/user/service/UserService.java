@@ -32,5 +32,7 @@ public interface UserService extends IService<UserEntity> {
     UserLogin getUserAndPassword1(String username, String password);
 
     UserInfoView getUserInfoByToken(Long userId);
+
+    UserLogin getUserInfoForAuth(String username, String password);
 }
 

@@ -3,7 +3,7 @@
 
 <mapper namespace="com.xhn.light.user.dao.UserInfoDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.xhn.light.user.entity.UserInfoEntity" id="userInfoMap">
         <result property="id" column="id"/>
         <result property="userId" column="user_id"/>
@@ -24,6 +24,25 @@
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
+    <select id="getUserInfo" resultType="com.xhn.light.user.entity.vo.UserInfoForMy">
+        select u.id                                                                         id,
+               u.avatar                                                                     cover,
+               ui.signature                                                                 autograph,
+               u.phonenumber                                                                phone,
+               ui.city                                                                      address,
+               u.email                                                                      email,
+               u.user_name                                                                  userName,
+               (select count(1) from ums_userfollower uf where uf.follower = u.id)          followNums,
+               (select count(1) from ums_userfollower uf where uf.userfollower_user = u.id) fansNums,
+               (select count(1) from ums_userfollower uf where uf.userfollower_user = u.id) fansNums,
+               (select nums from ums_user_count uc where uc.uid = u.id and uc.type = 0)     gameNums,
+               (select nums from ums_user_count uc where uc.uid = u.id and uc.type = 1)     likeNums,
+               ui.bg_url                                                                    bgUrl
+        from ums_user u,
+             ums_user_info ui
+        where u.id = ui.user_id
+          and u.id = #{userId}
+    </select>
 
 
 </mapper>

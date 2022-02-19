@@ -28,6 +28,7 @@ public class SmsSendServiceMq {
     private StringRedisTemplate redisTemplate;
     @Autowired
     private SmsSendService smsSendService;
+
     @RabbitHandler
     public void sendSms(String phone){
         Map<String,Object> param=new HashMap<>();

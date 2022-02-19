@@ -3,6 +3,7 @@ package com.xhn.light.user.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.xhn.light.common.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import com.xhn.light.user.service.FavoriteService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Result;
 
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -35,8 +37,14 @@ public class FavoriteController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("user:favorite:list")
-    public Result list(@RequestParam Map<String, Object> params){
-        PageUtils page = favoriteService.queryPage(params);
+    public Result list(@RequestParam Map<String, Object> params, HttpServletRequest request){
+        String info = JwtUtils.getUserInfoByJwtToken(request);
+        if (info.equals("")){
+            return Result.error().message("没有登录");
+        }
+        Long userId=Long.parseLong(info);
+
+        PageUtils page = favoriteService.queryPage(params,userId);
 
         return Result.ok().data("page", page);
     }
@@ -58,7 +66,13 @@ public class FavoriteController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("user:favorite:save")
-    public Result save(@RequestBody FavoriteEntity favorite){
+    public Result save(@RequestBody FavoriteEntity favorite,HttpServletRequest request){
+        String info = JwtUtils.getUserInfoByJwtToken(request);
+        if (info.equals("")){
+            return Result.error().message("没有登录");
+        }
+        Long userId=Long.parseLong(info);
+        favorite.setUserId(userId);
 		favoriteService.save(favorite);
 
         return Result.ok();

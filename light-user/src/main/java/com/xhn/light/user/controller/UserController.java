@@ -145,4 +145,14 @@ public class UserController {
         return Result.ok().data("result",userInfo);
     }
 
+    /**
+     * 手机验证登录
+     * @param userLogin
+     * @return
+     */
+    @PostMapping("/getUserInfoForAuth")
+    public UserLogin getUserInfoForAuth(@RequestBody UserLogin userLogin){
+        return userService.getUserInfoForAuth(userLogin.getUsername(), userLogin.getPassword());
+    }
+
 }

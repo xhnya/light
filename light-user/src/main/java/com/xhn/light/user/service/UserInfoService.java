@@ -3,6 +3,7 @@ package com.xhn.light.user.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.user.entity.UserInfoEntity;
+import com.xhn.light.user.entity.vo.UserInfoForMy;
 
 import java.util.Map;
 
@@ -16,5 +17,9 @@ import java.util.Map;
 public interface UserInfoService extends IService<UserInfoEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    UserInfoForMy getUserInfo(Long userId);
+
+    void updateUserInfo(UserInfoEntity userInfo,Long userId);
 }
 

@@ -3,18 +3,20 @@ package com.xhn.light.user.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.xhn.light.common.utils.JwtUtils;
+import com.xhn.light.user.entity.UserEntity;
+import com.xhn.light.user.entity.vo.UserInfoForMy;
+import com.xhn.light.user.entity.vo.UserInfoView;
+import com.xhn.light.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.xhn.light.user.entity.UserInfoEntity;
 import com.xhn.light.user.service.UserInfoService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Result;
 
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -69,9 +71,13 @@ public class UserInfoController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("user:userinfo:update")
-    public Result update(@RequestBody UserInfoEntity userInfo){
-		userInfoService.updateById(userInfo);
-
+    public Result update(@RequestBody UserInfoEntity userInfo,HttpServletRequest request){
+        String info = JwtUtils.getUserInfoByJwtToken(request);
+        if (info.equals("")){
+            return Result.error().message("没有登录");
+        }
+        Long userId=Long.parseLong(info);
+        userInfoService.updateUserInfo(userInfo,userId);
         return Result.ok();
     }
 
@@ -84,6 +90,17 @@ public class UserInfoController {
 		userInfoService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
+    }
+
+    @GetMapping("/userInfo")
+    public Result getUserInfo(HttpServletRequest request){
+        String info = JwtUtils.getUserInfoByJwtToken(request);
+        if (info.equals("")){
+            return Result.error().message("没有登录");
+        }
+        Long userId=Long.parseLong(info);
+        UserInfoForMy result=userInfoService.getUserInfo(userId);
+        return Result.ok().data("result",result);
     }
 
 }

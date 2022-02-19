@@ -24,4 +24,10 @@ public class UserFeignServiceImpl implements UserFeignService{
         log.info("调用user服务失败===============>");
         throw LightException.from("user服务异常");
     }
+
+    @Override
+    public UserLogin getUserInfoForAuth(UserLogin userLogin) {
+        log.info("调用user服务失败===============>");
+        throw LightException.from("user服务异常");
+    }
 }

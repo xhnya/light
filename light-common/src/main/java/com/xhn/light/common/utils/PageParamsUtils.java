@@ -9,7 +9,7 @@ import java.util.Map;
  * @date ：2022/2/14 9:07
  * @description： 分页数据处理,初始化分页
  */
-public class PageParamsUtils<T> {
+public class PageParamsUtils {
 
     public Page getPage(Map<String, Object> params){
         //分页参数

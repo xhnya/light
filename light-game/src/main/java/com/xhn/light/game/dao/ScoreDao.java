@@ -3,6 +3,7 @@ package com.xhn.light.game.dao;
 import com.xhn.light.game.entity.ScoreEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xhn.light.game.entity.vo.GameInfoScoreList;
+import com.xhn.light.game.entity.vo.ScoreViewForIndex;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -19,4 +20,6 @@ import java.util.List;
 public interface ScoreDao extends BaseMapper<ScoreEntity> {
 
     List<GameInfoScoreList> getGameInfoList(Long id);
+
+    List<ScoreViewForIndex> getEvaluating();
 }

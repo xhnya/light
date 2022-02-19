@@ -26,4 +26,7 @@ public class InformationListView {
     private Date time;
     private String content;
     private String url;
+    private Integer collection;
+    private Integer likes;
+    private Integer countComment;
 }

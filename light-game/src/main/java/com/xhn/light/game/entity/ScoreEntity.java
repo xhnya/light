@@ -28,7 +28,7 @@ public class ScoreEntity implements Serializable {
 	/**
 	 * 游戏分数
 	 */
-	private Integer gameScore;
+	private Double gameScore;
 	/**
 	 * 评分类型
 	 */

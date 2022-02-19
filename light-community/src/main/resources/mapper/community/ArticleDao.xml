@@ -41,8 +41,14 @@
         Order by update_time desc limit 8
     </select>
     <select id="selectCommunityIndexView" resultType="com.xhn.light.community.entity.vo.CommunityIndexView">
-        select id id, user userId, title title, update_time time,description content
-        from cms_article
+        select a.id    id,
+               a.user  userId,
+               a.title title,
+               a.update_time time,a.description content,
+        (select nums from cms_counts c where c.pid=a.id and c.type =0) likes,
+        (select nums from cms_counts c where c.pid=a.id and c.type =1) collection,
+        (select nums from cms_counts c where c.pid=a.id and c.type =2) countComment
+        from cms_article a
         order by update_time desc
     </select>
     <select id="getGamePageInfoLit" resultType="com.xhn.light.community.entity.vo.IndexHotPageList">
@@ -56,14 +62,48 @@
         select a.id id, a.title title
         from cms_article a,
              cms_community c
-        where c.name = '本站需知' AND a.parent_id=c.id
+        where c.name = '本站需知'
+          AND a.parent_id = c.id
         order by a.sort desc, a.update_time desc limit 3
     </select>
-    <select id="getInformation" resultType="com.xhn.light.community.entity.vo.CommunityIndexView">
-        select id id, user userId, title title, update_time time,description content
+    <select id="getInformation" resultType="com.xhn.light.community.entity.vo.InformationListView">
+        select a.id    id,
+               a.user  userId,
+               a.title title,
+               a.update_time time,a.description content,a.cover_image url,
+        (select nums from cms_counts c where c.pid=a.id and c.type =0) likes,
+        (select nums from cms_counts c where c.pid=a.id and c.type =1) collection,
+        (select nums from cms_counts c where c.pid=a.id and c.type =2) countComment
+        from cms_article a
+        where a.publish_type = '资讯'
+        order by a.update_time desc
+    </select>
+    <select id="getSelectPage" resultType="com.xhn.light.community.entity.vo.CommunityListViewForIndex">
+        select id id, title name
         from cms_article
-        where publish_type = '资讯'
+        where publish_type = '评测'
         order by update_time desc
+    </select>
+    <select id="getInformationByGameId" resultType="com.xhn.light.community.entity.vo.InformationListView">
+        select a.id id,
+        a.user userId,
+        a.title title,
+        a.update_time time,a.description content,a.cover_image url,
+        (select nums from cms_counts c where c.pid=a.id and c.type =0) likes,
+        (select nums from cms_counts c where c.pid=a.id and c.type =1) collection,
+        (select nums from cms_counts c where c.pid=a.id and c.type =2) countComment
+        from cms_article a ,cms_community y
+        <where>
+
+            <if test="param!=null and param!=''">
+                <if test="param.type!=null and param.type!=''">a.publish_type = #{param.type}</if>
+                <if test="param.gameId!=null and param.gameId!=''">
+                    and y.id=a.parent_id and y.parent_id=#{param.gameId}
+                </if>
+
+            </if>
+        </where>
+        order by a.update_time desc
     </select>
 
 

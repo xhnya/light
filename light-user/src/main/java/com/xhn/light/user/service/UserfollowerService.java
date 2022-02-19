@@ -15,6 +15,6 @@ import java.util.Map;
  */
 public interface UserfollowerService extends IService<UserfollowerEntity> {
 
-    PageUtils queryPage(Map<String, Object> params);
+    PageUtils queryPage(Map<String, Object> params,Long userId);
 }
 

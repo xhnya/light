@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xhn.light.common.pojo.PageOfGameName;
 import com.xhn.light.common.pojo.PageParam;
 import com.xhn.light.common.pojo.UserAnPageView;
-import com.xhn.light.common.utils.Result;
+import com.xhn.light.common.utils.*;
 import com.xhn.light.community.client.GameFeignService;
 import com.xhn.light.community.client.UserFeignService;
 import com.xhn.light.community.entity.vo.*;
@@ -19,8 +19,6 @@ import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.xhn.light.common.utils.PageUtils;
-import com.xhn.light.common.utils.Query;
 
 import com.xhn.light.community.dao.ArticleDao;
 import com.xhn.light.community.entity.ArticleEntity;
@@ -137,15 +135,44 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleEntity> i
     }
 
     @Override
-    public PageUtils getInformation(PageParam param) {
-        Page<ArticleEntity> page = new Page<>(param.getPage(), param.getLimit());
-        List<CommunityIndexView> result = articleDao.getInformation(page);
+    public PageUtils getInformation(Map<String, Object> params) {
+        Page pages = new PageParamsUtils().getPage(params);
+        Page<ArticleEntity> page = new Page<>(pages.getCurrent(), pages.getSize());
+        List<InformationListView> result = articleDao.getInformation(page);
         List<Long> list = new ArrayList<>();
-        for (CommunityIndexView view : result) {
+        for (InformationListView view : result) {
             list.add(view.getUserId());
         }
         List<UserAnPageView> userInfoList = userFeignService.getCommunityIndex(list);
-        for (CommunityIndexView view : result) {
+        for (InformationListView view : result) {
+            if (userInfoList != null) {
+                for (int i = 0; i < userInfoList.size(); i++) {
+                    UserAnPageView userAnPageView = userInfoList.get(i);
+                    if (userAnPageView.getId() == view.getUserId()) {
+                        view.setName(userAnPageView.getUserName());
+                        view.setCover(userAnPageView.getCover());
+                    }
+                }
+            }
+        }
+        return new PageUtils(result, (int) page.getTotal(), (int) page.getSize(), (int) page.getPages());
+    }
+
+    @Override
+    public List<CommunityListViewForIndex> getSelectPage() {
+        return articleDao.getSelectPage();
+    }
+
+    @Override
+    public PageUtils getInformationByGameId(InformationByGameIdParam param) {
+        Page<ArticleEntity> page = new Page<>(param.getPage(), param.getLimit());
+        List<InformationListView> result = articleDao.getInformationByGameId(page,param);
+        List<Long> list = new ArrayList<>();
+        for (InformationListView view : result) {
+            list.add(view.getUserId());
+        }
+        List<UserAnPageView> userInfoList = userFeignService.getCommunityIndex(list);
+        for (InformationListView view : result) {
             if (userInfoList != null) {
                 for (int i = 0; i < userInfoList.size(); i++) {
                     UserAnPageView userAnPageView = userInfoList.get(i);

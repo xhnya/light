@@ -34,7 +34,7 @@ public class FavoriteEntity implements Serializable {
 	/**
 	 * 用户id
 	 */
-	private Integer userId;
+	private Long userId;
 	/**
 	 * cover
 	 */
@@ -42,14 +42,21 @@ public class FavoriteEntity implements Serializable {
 	/**
 	 * 
 	 */
+	@TableField(fill = FieldFill.INSERT)
 	private Date createTime;
 	/**
 	 * 
 	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private Date updateTime;
 	/**
 	 * 
 	 */
 	private Integer isDel;
+
+	/**
+	 *
+	 */
+	private Integer type;
 
 }

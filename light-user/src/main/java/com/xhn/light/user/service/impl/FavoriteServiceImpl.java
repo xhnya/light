@@ -17,10 +17,10 @@ import com.xhn.light.user.service.FavoriteService;
 public class FavoriteServiceImpl extends ServiceImpl<FavoriteDao, FavoriteEntity> implements FavoriteService {
 
     @Override
-    public PageUtils queryPage(Map<String, Object> params) {
+    public PageUtils queryPage(Map<String, Object> params,Long userId) {
         IPage<FavoriteEntity> page = this.page(
                 new Query<FavoriteEntity>().getPage(params),
-                new QueryWrapper<FavoriteEntity>()
+                new QueryWrapper<FavoriteEntity>().eq("user_id",userId)
         );
 
         return new PageUtils(page);

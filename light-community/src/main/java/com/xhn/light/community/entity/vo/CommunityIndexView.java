@@ -24,4 +24,7 @@ public class CommunityIndexView {
     private String title;
     private Date time;
     private String content;
+    private Integer collection;
+    private Integer likes;
+    private Integer countComment;
 }

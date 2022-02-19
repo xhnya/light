@@ -30,6 +30,10 @@ public interface ArticleService extends IService<ArticleEntity> {
 
     List<IndexHotPageList> getUserNeedKnow();
 
-    PageUtils getInformation(PageParam param);
+    PageUtils getInformation(Map<String, Object> params);
+
+    List<CommunityListViewForIndex> getSelectPage();
+
+    PageUtils getInformationByGameId(InformationByGameIdParam param);
 }
 

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.xhn.light.common.pojo.PageOfGameName;
+import com.xhn.light.common.utils.JwtUtils;
 import com.xhn.light.game.client.AddCommunityFeign;
 import com.xhn.light.game.entity.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import com.xhn.light.game.entity.GameEntity;
 import com.xhn.light.game.service.GameService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Result;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -151,16 +154,20 @@ public class GameController {
 
     /**
      * 获取分类页的最近游戏，判断用户有没有登录，如果登录就返回历史或者关注的游戏
-     *
+     * TODO: 最近游戏显示
      * @return
      */
     @GetMapping("/reqMyGameList")
-    public Result getMyGameList() {
+    public Result getMyGameList(HttpServletRequest request) {
+        String info = JwtUtils.getUserInfoByJwtToken(request);
+//        if (info.equals("")){
+//        }
         List<ReleaseOrHotGameList> result = gameService.getNewReleaseGame();
         return Result.ok().data("result", result);
     }
 
     /**
+     *
      * 分类顶端的文本游戏的显示
      *
      * @param id 分类的id

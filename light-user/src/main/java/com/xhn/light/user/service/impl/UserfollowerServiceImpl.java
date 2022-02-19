@@ -17,10 +17,10 @@ import com.xhn.light.user.service.UserfollowerService;
 public class UserfollowerServiceImpl extends ServiceImpl<UserfollowerDao, UserfollowerEntity> implements UserfollowerService {
 
     @Override
-    public PageUtils queryPage(Map<String, Object> params) {
+    public PageUtils queryPage(Map<String, Object> params,Long id) {
         IPage<UserfollowerEntity> page = this.page(
                 new Query<UserfollowerEntity>().getPage(params),
-                new QueryWrapper<UserfollowerEntity>()
+                new QueryWrapper<UserfollowerEntity>().eq("user_id",id)
         );
 
         return new PageUtils(page);

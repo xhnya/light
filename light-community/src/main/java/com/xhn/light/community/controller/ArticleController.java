@@ -134,6 +134,13 @@ public class ArticleController {
         return Result.ok().data("list", result);
     }
 
+    /**
+     * 用户文章
+     *
+     * @param article
+     * @param request
+     * @return
+     */
     @RequestMapping("/saveUserArticle")
     //@RequiresPermissions("community:article:save")
     public Result saveUserArticle(@RequestBody ArticleEntity article, HttpServletRequest request) {
@@ -149,14 +156,32 @@ public class ArticleController {
 
 
     /**
+     * 获取资讯列表
      *
-     * @param param
+     * @param params
      * @return
      */
     @GetMapping("/getInformation")
-    public Result getInformation(PageParam param) {
-        PageUtils result=articleService.getInformation(param);
-        return Result.ok().data("page",result);
+    public Result getInformation(@RequestParam Map<String, Object> params) {
+        PageUtils result = articleService.getInformation(params);
+        return Result.ok().data("page", result);
+    }
+
+    @GetMapping("/getInformationByGameId")
+    public Result getInformationByGameId(InformationByGameIdParam param) {
+        PageUtils result = articleService.getInformationByGameId(param);
+        return Result.ok().data("page", result);
+    }
+
+    /**
+     * 下拉框获取评测的文章
+     *
+     * @return
+     */
+    @GetMapping("/getSelectPage")
+    public Result getSelectPage() {
+        List<CommunityListViewForIndex> result = articleService.getSelectPage();
+        return Result.ok().data("result", result);
     }
 
 
