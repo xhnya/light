@@ -1,13 +1,16 @@
 package com.xhn.light.community.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.hutool.core.lang.hash.Hash;
 import com.xhn.light.common.pojo.PageParam;
 import com.xhn.light.common.utils.JwtUtils;
 import com.xhn.light.community.entity.vo.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +35,8 @@ import javax.servlet.http.HttpServletRequest;
 public class ArticleController {
     @Autowired
     private ArticleService articleService;
+    @Autowired
+    private AmqpTemplate rabbitTemplate;
 
     /**
      * 列表
@@ -56,11 +61,20 @@ public class ArticleController {
 
 
     /**
-     * 信息
+     * 获取页面的详情
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("community:article:info")
-    public Result info(@PathVariable("id") Long id) {
+    public Result info(@PathVariable("id") Long id, HttpServletRequest request) {
+        String info = JwtUtils.getUserInfoByJwtToken(request);
+        //如果用户登录了，那么就报错历史记录
+        if (!info.equals("")) {
+            Long userId = Long.parseLong(info);
+            Map<String, Long> map = new HashMap<>();
+            map.put("userId", userId);
+            map.put("pid", id);
+            rabbitTemplate.convertAndSend("user_history", map);
+        }
         ArticleEntity article = articleService.getById(id);
 
         return Result.ok().data("article", article);
@@ -110,6 +124,7 @@ public class ArticleController {
         PageUtils result = articleService.selectCommunityIndexView(params);
         return Result.ok().data("results", result);
     }
+
 
     /**
      * 首页游戏动态展示
@@ -182,6 +197,29 @@ public class ArticleController {
     public Result getSelectPage() {
         List<CommunityListViewForIndex> result = articleService.getSelectPage();
         return Result.ok().data("result", result);
+    }
+
+    /**
+     * 获取我发表的文章
+     *
+     * @param param
+     * @param request
+     * @return
+     */
+    @GetMapping("/getMyPageList")
+    public Result getMyPageList(@RequestParam("param") CommunityIndexListParam param, HttpServletRequest request) {
+        String info = JwtUtils.getUserInfoByJwtToken(request);
+        if (info.equals("")) {
+            return Result.error().message("没有登录");
+        }
+        Long userId = Long.parseLong(info);
+        PageUtils page = articleService.getMyPageList(param, userId);
+        return Result.ok().data("page", page);
+    }
+    @GetMapping("/getGameCommunityList")
+    public Result getGameCommunityList( GameCommunityParams params) {
+        PageUtils result = articleService.getGameCommunityList(params);
+        return Result.ok().data("results", result);
     }
 
 

@@ -10,33 +10,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.xhn.light.user.entity.CollectionEntity;
-import com.xhn.light.user.service.CollectionService;
+import com.xhn.light.user.entity.HistoryEntity;
+import com.xhn.light.user.service.HistoryService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Result;
 
 
 
 /**
- * 收藏夹内容
+ * 用户历史表
  *
  * @author xhn
  * @email 930957853@qq.com
- * @date 2022-02-10 17:28:33
+ * @date 2022-02-20 11:42:28
  */
 @RestController
-@RequestMapping("user/collection")
-public class CollectionController {
+@RequestMapping("user/history")
+public class HistoryController {
     @Autowired
-    private CollectionService collectionService;
+    private HistoryService historyService;
 
     /**
      * 列表
      */
     @RequestMapping("/list")
-    //@RequiresPermissions("user:collection:list")
+    //@RequiresPermissions("user:history:list")
     public Result list(@RequestParam Map<String, Object> params){
-        PageUtils page = collectionService.queryPage(params);
+        PageUtils page = historyService.queryPage(params);
 
         return Result.ok().data("page", page);
     }
@@ -46,20 +46,20 @@ public class CollectionController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    //@RequiresPermissions("user:collection:info")
+    //@RequiresPermissions("user:history:info")
     public Result info(@PathVariable("id") Long id){
-		CollectionEntity collection = collectionService.getById(id);
+		HistoryEntity history = historyService.getById(id);
 
-        return Result.ok().data("collection", collection);
+        return Result.ok().data("history", history);
     }
 
     /**
      * 保存
      */
     @RequestMapping("/save")
-    //@RequiresPermissions("user:collection:save")
-    public Result save(@RequestBody CollectionEntity collection){
-		collectionService.save(collection);
+    //@RequiresPermissions("user:history:save")
+    public Result save(@RequestBody HistoryEntity history){
+		historyService.save(history);
 
         return Result.ok();
     }
@@ -68,9 +68,9 @@ public class CollectionController {
      * 修改
      */
     @RequestMapping("/update")
-    //@RequiresPermissions("user:collection:update")
-    public Result update(@RequestBody CollectionEntity collection){
-		collectionService.updateById(collection);
+    //@RequiresPermissions("user:history:update")
+    public Result update(@RequestBody HistoryEntity history){
+		historyService.updateById(history);
 
         return Result.ok();
     }
@@ -79,9 +79,10 @@ public class CollectionController {
      * 删除
      */
     @RequestMapping("/delete")
-    //@RequiresPermissions("user:collection:delete")
+    //@RequiresPermissions("user:history:delete")
     public Result delete(@RequestBody Long[] ids){
-		collectionService.removeByIds(Arrays.asList(ids));
+		historyService.removeByIds(Arrays.asList(ids));
+
         return Result.ok();
     }
 

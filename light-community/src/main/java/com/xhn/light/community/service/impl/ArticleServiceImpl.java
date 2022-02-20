@@ -95,20 +95,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleEntity> i
         }
         List<UserAnPageView> userInfoList = userFeignService.getCommunityIndex(list);
         for (CommunityIndexView view : result) {
-//            //使用二分查找算法
-//            int left = 0;
-//            int right = userInfoList.size() - 1;
-//            while (left <= right) {
-//                int mid = (right + left) / 2;
-//                UserAnPageView userAnPageView = userInfoList.get(mid);
-//                if (userAnPageView.getId() == view.getUserId()) {
-//                    view.setName(userAnPageView.getUserName());
-//                    view.setCover(userAnPageView.getCover());
-//                } else if (userAnPageView.getId() < view.getUserId())
-//                    left = mid + 1; // 注意
-//                else if (userAnPageView.getId() > view.getUserId())
-//                    right = mid - 1; // 注意
-//            }
             if (userInfoList != null) {
                 for (int i = 0; i < userInfoList.size(); i++) {
                     UserAnPageView userAnPageView = userInfoList.get(i);
@@ -183,6 +169,37 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleEntity> i
                 }
             }
         }
+        return new PageUtils(result, (int) page.getTotal(), (int) page.getSize(), (int) page.getPages());
+    }
+
+    @Override
+    public PageUtils getMyPageList(CommunityIndexListParam param, Long userId) {
+        Page<ArticleEntity> page = new Page<>(param.getPage(),param.getLimit());
+        List<MyListView> result=articleDao.getMyList(page,userId);
+        return new PageUtils(result, (int) page.getTotal(), (int) page.getSize(), (int) page.getPages());
+    }
+
+    @Override
+    public PageUtils getGameCommunityList(GameCommunityParams params) {
+        Page<ArticleEntity> page = new Page<>(params.getPage(), params.getLimit());
+        List<CommunityIndexView> result = articleDao.getGameCommunityList(page, params);
+        List<Long> list = new ArrayList<>();
+        for (CommunityIndexView view : result) {
+            list.add(view.getUserId());
+        }
+        List<UserAnPageView> userInfoList = userFeignService.getCommunityIndex(list);
+        for (CommunityIndexView view : result) {
+            if (userInfoList != null) {
+                for (int i = 0; i < userInfoList.size(); i++) {
+                    UserAnPageView userAnPageView = userInfoList.get(i);
+                    if (userAnPageView.getId() == view.getUserId()) {
+                        view.setName(userAnPageView.getUserName());
+                        view.setCover(userAnPageView.getCover());
+                    }
+                }
+            }
+        }
+
         return new PageUtils(result, (int) page.getTotal(), (int) page.getSize(), (int) page.getPages());
     }
 

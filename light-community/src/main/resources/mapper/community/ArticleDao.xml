@@ -105,6 +105,35 @@
         </where>
         order by a.update_time desc
     </select>
+    <select id="getMyList" resultType="com.xhn.light.community.entity.vo.MyListView">
+        select id pid, title title, update_time createTime
+        from cms_article
+        where user = #{userId}
+        order by update_time desc
+    </select>
+    <select id="getGameCommunityList" resultType="com.xhn.light.community.entity.vo.CommunityIndexView">
+        select a.id id,
+        a.user userId,
+        a.title title,
+        a.update_time time,a.description content,
+        (select nums from cms_counts c where c.pid=a.id and c.type =0) likes,
+        (select nums from cms_counts c where c.pid=a.id and c.type =1) collection,
+        (select nums from cms_counts c where c.pid=a.id and c.type =2) countComment
+        from cms_article a,cms_community y
+        <where>
+            a.parent_id=y.id and y.parent_id=#{params.gameId}
+            <if test="params.isHot!=null">
+                and  a.is_hot=#{params.isHot}
+            </if>
+            <if test="params.publishType!=null and params.publishType!=''">
+                and  a.publish_type=#{params.publishType}
+            </if>
+            <if test="params.title!=null and params.title!=''">
+               and a.title like concat('%', #{params.title},'%')
+            </if>
+        </where>
+        order by a.sort desc, a.update_time desc
+    </select>
 
 
 </mapper>

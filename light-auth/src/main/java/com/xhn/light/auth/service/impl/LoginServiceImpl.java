@@ -73,8 +73,8 @@ public class LoginServiceImpl implements LoginService {
 
         if (!encoder.matches(password,login.getPassword())) {
             //否则通过密码验证
-            throw LightException.from(ResultCode.LOGIN_ERROR);
-            //return Result.error().message("用户名或者密码错误");
+            //throw LightException.from(ResultCode.LOGIN_ERROR);
+            return Result.error().message("用户名或者密码错误");
         }
         String token = JwtUtils.getJwtToken(login.getId(), login.getCode());
         return Result.ok().data("token",token);

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xhn.light.community.dao.HistoryDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.xhn.light.community.entity.HistoryEntity" id="historyMap">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="pid" column="pid"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <select id="getUserHistory" resultType="com.xhn.light.community.entity.vo.UserHistoryViewList">
+        select h.id id,a.id pageId,a.title title,h.update_time watchTime,h.watch_days watchDays
+        from cms_article a,cms_history h
+        <where>
+            h.pid=a.id and user_id= #{userId}
+            <if test="title!=null and title!=''">and a.title like concat('%',#{title},'%')</if>
+        </where>
+        order by h.update_time desc
+    </select>
+    <select id="getAllDay" resultType="java.util.Date">
+        select h.watch_days from cms_history h,cms_article a
+        <where>
+            h.user_id= #{userId}
+            <if test="title!=null and title!=''">and a.title like concat('%',#{title},'%')</if>
+        </where>
+        group by h.watch_days order by h.update_time Asc
+    </select>
+
+
+</mapper>

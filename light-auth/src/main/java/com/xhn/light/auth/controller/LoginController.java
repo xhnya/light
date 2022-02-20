@@ -2,6 +2,8 @@ package com.xhn.light.auth.controller;
 
 import com.xhn.light.auth.service.LoginService;
 import com.xhn.light.auth.vo.LoginInfoVo;
+import com.xhn.light.common.enums.ResultCode;
+import com.xhn.light.common.exceptionhandler.LightException;
 import com.xhn.light.common.pojo.UserLogin;
 import com.xhn.light.common.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,7 @@ public class LoginController {
      */
     @PostMapping("/login")
     public Result login(@RequestBody UserLogin userLogin){
+        //throw LightException.from(ResultCode.LOGIN_ERROR);
         return loginService.login(userLogin);
     }
 

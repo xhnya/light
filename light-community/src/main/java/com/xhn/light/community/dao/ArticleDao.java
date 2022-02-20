@@ -36,4 +36,8 @@ public interface ArticleDao extends BaseMapper<ArticleEntity> {
     List<CommunityListViewForIndex> getSelectPage();
 
     List<InformationListView> getInformationByGameId(Page<ArticleEntity> page, InformationByGameIdParam param);
+
+    List<MyListView> getMyList(Page<ArticleEntity> page, Long userId);
+
+    List<CommunityIndexView> getGameCommunityList(Page<ArticleEntity> page, GameCommunityParams params);
 }

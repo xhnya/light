@@ -1,8 +1,11 @@
 package com.xhn.light.community.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
+import com.xhn.light.common.utils.JwtUtils;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +18,7 @@ import com.xhn.light.community.service.LikesService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Result;
 
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -29,7 +33,8 @@ import com.xhn.light.common.utils.Result;
 public class LikesController {
     @Autowired
     private LikesService likesService;
-
+    @Autowired
+    private AmqpTemplate rabbitTemplate;
     /**
      * 列表
      */
@@ -58,9 +63,17 @@ public class LikesController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("community:likes:save")
-    public Result save(@RequestBody LikesEntity likes){
+    public Result save(@RequestBody LikesEntity likes, HttpServletRequest request){
+        String info = JwtUtils.getUserInfoByJwtToken(request);
+        if (info.equals("")) {
+            return Result.error().message("没有登录");
+        }
+        Long userId = Long.parseLong(info);
+        likes.setUid(userId);
+        Map<String, Long> map = new HashMap<>();
+        map.put("id",likes.getPid());
+        rabbitTemplate.convertAndSend("user_likes",map);
 		likesService.save(likes);
-
         return Result.ok();
     }
 

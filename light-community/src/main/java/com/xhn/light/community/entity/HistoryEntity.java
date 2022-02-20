@@ -7,15 +7,15 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 文章统计表
+ * 用户历史表
  * 
  * @author xhn
  * @email 930957853@qq.com
- * @date 2022-02-09 16:28:26
+ * @date 2022-02-20 11:54:21
  */
 @Data
-@TableName("cms_counts")
-public class CountsEntity implements Serializable {
+@TableName("cms_history")
+public class HistoryEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -26,9 +26,23 @@ public class CountsEntity implements Serializable {
 	/**
 	 * 
 	 */
+	private Long userId;
+	/**
+	 * 
+	 */
 	private Long pid;
-	private Integer nums;
-	private Integer type;
 
+
+	private Date watchDays;
+	/**
+	 * 
+	 */
+	@TableField(fill = FieldFill.INSERT)
+	private Date createTime;
+	/**
+	 * 
+	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private Date updateTime;
 
 }

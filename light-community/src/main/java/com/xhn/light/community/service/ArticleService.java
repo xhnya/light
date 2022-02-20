@@ -35,5 +35,9 @@ public interface ArticleService extends IService<ArticleEntity> {
     List<CommunityListViewForIndex> getSelectPage();
 
     PageUtils getInformationByGameId(InformationByGameIdParam param);
+
+    PageUtils getMyPageList(CommunityIndexListParam param, Long userId);
+
+    PageUtils getGameCommunityList(GameCommunityParams params);
 }
 
