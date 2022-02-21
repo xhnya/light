@@ -79,3 +79,10 @@ spring:
           filters:
             - RewritePath=/light/(?<segment>.*),/$\{segment}
 
+        - id: light_wiki
+          uri: lb://light-wiki
+          predicates:
+            - Path=/light/wiki/**
+          filters:
+            - RewritePath=/light/(?<segment>.*),/$\{segment}
+

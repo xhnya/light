@@ -176,7 +176,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleEntity> i
     public PageUtils getMyPageList(CommunityIndexListParam param, Long userId) {
         Page<ArticleEntity> page = new Page<>(param.getPage(),param.getLimit());
         List<MyListView> result=articleDao.getMyList(page,userId);
-        return new PageUtils(result, (int) page.getTotal(), (int) page.getSize(), (int) page.getPages());
+        return new PageUtils(result, (int) page.getTotal(), (int) page.getSize(), (int) page.getCurrent());
     }
 
     @Override

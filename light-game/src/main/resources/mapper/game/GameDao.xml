@@ -111,6 +111,12 @@
         where g.game_type = t.id
         order by g.sort desc, g.update_time desc
     </select>
+    <select id="getWikiGameList" resultType="com.xhn.light.game.entity.vo.RecommendListView">
+        select g.id id,g.game_name name,g.cover_url cover
+        from gms_game g
+        order by g.sort desc, g.update_time desc
+        limit 16
+    </select>
 
 
 </mapper>

@@ -28,6 +28,7 @@
         <module>light-community</module>
         <module>light-user</module>
         <module>light-search</module>
+        <module>light-wiki</module>
 <!--        <module>renren-generator</module>-->
     </modules>
 

@@ -194,4 +194,10 @@ public class GameController {
         List<AllGameListView> result = gameService.getAllGameList();
         return Result.ok().data("result", result);
     }
+
+    @GetMapping("/getWikiGameList")
+    public Result getWikiGameList() {
+        List<RecommendListView> result = gameService.getWikiGameList();
+        return Result.ok().data("result", result);
+    }
 }

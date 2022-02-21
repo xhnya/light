@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xhn.light.wiki.dao.MenuDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.xhn.light.wiki.entity.MenuEntity" id="menuMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="level" column="level"/>
+        <result property="cover" column="cover"/>
+        <result property="editType" column="edit_type"/>
+        <result property="createUserId" column="create_user_id"/>
+        <result property="createUserName" column="create_user_name"/>
+        <result property="updateUserId" column="update_user_id"/>
+        <result property="updateUserName" column="update_user_name"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <select id="getMenuList" resultType="com.xhn.light.wiki.vo.MenuListVo">
+        select id id, pid pid, name name, cover cover, edit_type editType, parent_id parentId
+        from wms_menu m
+        where gid = #{id}
+        order by update_time desc
+    </select>
+
+
+</mapper>

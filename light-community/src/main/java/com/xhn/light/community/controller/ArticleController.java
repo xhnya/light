@@ -207,7 +207,7 @@ public class ArticleController {
      * @return
      */
     @GetMapping("/getMyPageList")
-    public Result getMyPageList(@RequestParam("param") CommunityIndexListParam param, HttpServletRequest request) {
+    public Result getMyPageList( CommunityIndexListParam param, HttpServletRequest request) {
         String info = JwtUtils.getUserInfoByJwtToken(request);
         if (info.equals("")) {
             return Result.error().message("没有登录");

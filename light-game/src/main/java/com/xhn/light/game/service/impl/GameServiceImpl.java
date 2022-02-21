@@ -125,4 +125,9 @@ public class GameServiceImpl extends ServiceImpl<GameDao, GameEntity> implements
         return gameDao.getAllGameList();
     }
 
+    @Override
+    public List<RecommendListView> getWikiGameList() {
+        return gameDao.getWikiGameList();
+    }
+
 }

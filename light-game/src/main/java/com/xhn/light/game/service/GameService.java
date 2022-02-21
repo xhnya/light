@@ -35,5 +35,7 @@ public interface GameService extends IService<GameEntity> {
     List<TypeGameListView> getGameTypeForTypeTop(Long id);
 
     List<AllGameListView> getAllGameList();
+
+    List<RecommendListView> getWikiGameList();
 }
 

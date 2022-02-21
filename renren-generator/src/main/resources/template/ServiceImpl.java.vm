@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import ${mainPath}.common.utils.PageUtils;
 import ${mainPath}.common.utils.Query;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import ${package}.${moduleName}.dao.${className}Dao;
 import ${package}.${moduleName}.entity.${className}Entity;
 import ${package}.${moduleName}.service.${className}Service;
