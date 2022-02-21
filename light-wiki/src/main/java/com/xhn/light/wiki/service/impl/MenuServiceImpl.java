@@ -1,7 +1,9 @@
 package com.xhn.light.wiki.service.impl;
 
+import com.xhn.light.wiki.service.PageService;
 import com.xhn.light.wiki.vo.MenuListView;
 import com.xhn.light.wiki.vo.MenuListVo;
+import com.xhn.light.wiki.vo.SaveMenuAndPageParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ import com.xhn.light.common.utils.Query;
 import com.xhn.light.wiki.dao.MenuDao;
 import com.xhn.light.wiki.entity.MenuEntity;
 import com.xhn.light.wiki.service.MenuService;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service("menuService")
@@ -25,6 +28,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuDao, MenuEntity> implements
 
     @Autowired
     private MenuDao menuDao;
+    @Autowired
+    private PageService pageService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -64,12 +69,26 @@ public class MenuServiceImpl extends ServiceImpl<MenuDao, MenuEntity> implements
                     menuListView1.setPid(menuListVo.getPid());
                     menuListView1.setEditType(menuListVo.getEditType());
                     menuListView1.setCover(menuListVo.getCover());
+                    menuListView1.setName(menuListVo.getName());
                     children.add(menuListView1);
                 }
             }
+            listView.setChildren(children);
         }
 
         return menuListView;
+    }
+    @Transactional
+    @Override
+    public void saveMenuAndPage(SaveMenuAndPageParam params) {
+        Long id=pageService.saveMenuAndPage(params);
+        MenuEntity menu = new MenuEntity();
+        menu.setCover(params.getCover());
+        menu.setGid(params.getGameId());
+        menu.setParentId(params.getMenuId());
+        menu.setName(params.getTitle());
+        menu.setPid(id);
+        menuDao.insert(menu);
     }
 
 }
