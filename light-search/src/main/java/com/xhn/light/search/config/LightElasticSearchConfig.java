@@ -5,6 +5,7 @@ import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.ElasticsearchTransport;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
 import org.apache.http.HttpHost;
+import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 
@@ -20,21 +21,38 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class LightElasticSearchConfig {
 
+    //    @Bean
+//   public ElasticsearchClient esRestClient() {
+//
+//        RestClientBuilder httpClientBuilder = RestClient.builder(
+//                new HttpHost("101.35.8.166", 9201)
+//        );
+//        RestHighLevelClient hlrc = new RestHighLevelClient(httpClientBuilder);
+//        // Create the new Java Client with the same low level client
+//        ElasticsearchTransport transport = new RestClientTransport(
+//                hlrc.getLowLevelClient(),
+//                new JacksonJsonpMapper()
+//        );
+//       // And create the API client
+//        ElasticsearchClient client = new ElasticsearchClient(transport);
+//        return client;
+//    }
     @Bean
-   public ElasticsearchClient esRestClient() {
-
-        RestClientBuilder httpClientBuilder = RestClient.builder(
-                new HttpHost("101.35.8.166", 9201)
-        );
-        RestHighLevelClient hlrc = new RestHighLevelClient(httpClientBuilder);
-        // Create the new Java Client with the same low level client
-        ElasticsearchTransport transport = new RestClientTransport(
-                hlrc.getLowLevelClient(),
-                new JacksonJsonpMapper()
-        );
-       // And create the API client
-        ElasticsearchClient client = new ElasticsearchClient(transport);
+    public RestHighLevelClient esRestClient() {
+        RestHighLevelClient client = new RestHighLevelClient(
+                RestClient.builder(new HttpHost("101.35.8.166", 9201, "http")));
         return client;
+    }
+
+    public static final RequestOptions COMMON_OPTIONS;
+
+    static {
+        RequestOptions.Builder builder = RequestOptions.DEFAULT.toBuilder();
+        // builder.addHeader("Authorization", "Bearer " + TOKEN);
+        // builder.setHttpAsyncResponseConsumerFactory(
+        //         new HttpAsyncResponseConsumerFactory
+        //                 .HeapBufferedResponseConsumerFactory(30 * 1024 * 1024 * 1024));
+        COMMON_OPTIONS = builder.build();
     }
 
 }

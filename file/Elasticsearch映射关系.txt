@@ -1,0 +1,32 @@
+PUT light
+{
+    "mappings" : {
+        "properties": {
+            "id": {
+                "type": "long"
+            },
+            "name": {
+                 "type": "text",
+                  "analyzer": "ik_smart"
+            },
+            "typeSearch": {
+                 "type": "keyword"
+             },
+            "hotScore": {
+               "type": "long"
+            },
+            "attrs": {
+              "type": "nested",
+              "properties": {
+                "gameType": {
+                    "type": "long"
+                },
+                "pageType": {
+                  "type": "keyword"
+                }
+              }
+            }
+          }
+        }
+
+}
