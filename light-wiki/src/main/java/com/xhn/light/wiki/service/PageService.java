@@ -3,6 +3,7 @@ package com.xhn.light.wiki.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.wiki.entity.PageEntity;
+import com.xhn.light.wiki.vo.SaveMenuAndPageParam;
 
 import java.util.Map;
 
@@ -16,5 +17,7 @@ import java.util.Map;
 public interface PageService extends IService<PageEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    Long saveMenuAndPage(SaveMenuAndPageParam params);
 }
 

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.xhn.light.wiki.vo.MenuListView;
+import com.xhn.light.wiki.vo.SaveMenuAndPageParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,9 +58,18 @@ public class MenuController {
     //@RequiresPermissions("wiki:menu:save")
     public Result save(@RequestBody MenuEntity menu) {
         menuService.save(menu);
-
         return Result.ok();
     }
+    /**
+     * 保存
+     */
+    @PostMapping("/saveMenuAndPage")
+    //@RequiresPermissions("wiki:menu:save")
+    public Result saveMenuAndPage(@RequestBody SaveMenuAndPageParam params) {
+        menuService.saveMenuAndPage(params);
+        return Result.ok();
+    }
+
 
     /**
      * 修改

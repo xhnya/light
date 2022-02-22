@@ -1,5 +1,6 @@
 package com.xhn.light.wiki.service.impl;
 
+import com.xhn.light.wiki.vo.SaveMenuAndPageParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Map;
@@ -28,6 +29,14 @@ public class PageServiceImpl extends ServiceImpl<PageDao, PageEntity> implements
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public Long saveMenuAndPage(SaveMenuAndPageParam params) {
+        PageEntity page = new PageEntity();
+        page.setContent(params.getContent());
+        pageDao.insert(page);
+        return page.getId();
     }
 
 }
