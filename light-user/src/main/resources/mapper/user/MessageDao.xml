@@ -3,18 +3,26 @@
 
 <mapper namespace="com.xhn.light.user.dao.MessageDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.xhn.light.user.entity.MessageEntity" id="messageMap">
         <result property="id" column="id"/>
-        <result property="chatMessageToUuid" column="chat_message_to_uuid"/>
-        <result property="chatMessageData" column="chat_message_data"/>
-        <result property="chatMessageType" column="chat_message_type"/>
-        <result property="chatMessageIsRead" column="chat_message_is_read"/>
-        <result property="chatMessageIo" column="chat_message_io"/>
-        <result property="userTo" column="user_to"/>
-        <result property="userForm" column="user_form"/>
+        <result property="notifyId" column="notify_id"/>
+        <result property="senderId" column="sender_id"/>
+        <result property="reciverId" column="reciver_id"/>
+        <result property="content" column="content"/>
         <result property="createTime" column="create_time"/>
     </resultMap>
+    <select id="getMyLikeList" resultType="com.xhn.light.user.entity.vo.MyLikeMessageVo">
+        select m.id id, u.avatar cover, m.create_time likeTime, m.content message
+        from ums_user u,
+             ums_notify n,
+             ums_message m
+        where m.notify_id = n.id
+          and n.type = 'likes'
+          and n.reciver_id = u.id
+          and n.reciver_id = #{userId}
+        order by m.create_time desc limit 15
+    </select>
 
 
 </mapper>

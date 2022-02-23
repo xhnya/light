@@ -4,7 +4,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xhn.light.common.utils.JwtUtils;
+import com.xhn.light.community.entity.ArticleEntity;
+import com.xhn.light.community.service.ArticleService;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +38,8 @@ public class LikesController {
     private LikesService likesService;
     @Autowired
     private AmqpTemplate rabbitTemplate;
+    @Autowired
+    private ArticleService articleService;
     /**
      * 列表
      */
@@ -70,9 +75,20 @@ public class LikesController {
         }
         Long userId = Long.parseLong(info);
         likes.setUid(userId);
-        Map<String, Long> map = new HashMap<>();
+        QueryWrapper<LikesEntity> wrapper = new QueryWrapper<>();
+        wrapper.eq("uid",userId).eq("pid",likes.getPid());
+        long count = likesService.count(wrapper);
+        if (count!=0){
+            return Result.error().message("你已经点赞过了");
+        }
+        Map<String, Object> map = new HashMap<>();
         map.put("id",likes.getPid());
-        rabbitTemplate.convertAndSend("user_likes",map);
+        map.put("userId",userId);
+        //设置文章的名称
+        ArticleEntity article = articleService.getById(likes.getPid());
+        map.put("pageName",article.getTitle());
+        map.put("toUser",article.getUser());
+        rabbitTemplate.convertAndSend("user_likes","",map);
 		likesService.save(likes);
         return Result.ok();
     }

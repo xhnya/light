@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xhn.light.community.entity.CountsEntity;
 import com.xhn.light.community.service.CountsService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
+import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,10 +25,13 @@ public class UserLikesMQ {
     @Autowired
     private CountsService countsService;
 
-    @RabbitListener(queuesToDeclare = @Queue("user_likes"))
-    public void userLikes(Map<String, Long> map){
+    @RabbitListener(bindings = @QueueBinding(
+            value = @Queue,
+            exchange = @Exchange(name="user_likes",type = "fanout")
+    ))
+    public void userLikes(Map<String, Object> map){
         log.info("map====>"+map);
-        Long id = map.get("id");
+        Long id = (Long) map.get("id");
         QueryWrapper<CountsEntity> wrapper = new QueryWrapper<>();
         wrapper.eq("pid",id).eq("type",0);
         CountsEntity counts = countsService.getOne(wrapper);
@@ -36,9 +41,13 @@ public class UserLikesMQ {
             countsEntity.setType(0);
             countsEntity.setNums(1);
             countsService.save(countsEntity);
+        }else {
+            Integer nums = counts.getNums();
+            nums++;
+            counts.setNums(nums);
+
+            countsService.updateById(counts);
         }
-        Integer nums = counts.getNums();
-        counts.setNums(nums++);
-        countsService.updateById(counts);
+
     }
 }

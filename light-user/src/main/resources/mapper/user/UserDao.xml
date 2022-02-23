@@ -40,9 +40,11 @@
             #{item}
         </foreach>
     </select>
+<!--    用户登录的时候就获取用户的信息-->
     <select id="getUserInfoByToken" resultType="com.xhn.light.user.entity.vo.UserInfoView">
-        select id id,avatar cover,user_name userName
-        from ums_user where id=#{userId}
+        select u.id id,u.avatar cover,u.user_name userName,
+               (select count(*) from ums_notify n where n.reciver_id=#{userId} and n.is_read=0) messageNum
+        from ums_user u where id=#{userId}
     </select>
 
 </mapper>

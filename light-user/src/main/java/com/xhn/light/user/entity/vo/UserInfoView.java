@@ -12,4 +12,5 @@ public class UserInfoView {
     private Long id;
     private String cover;
     private String userName;
+    private Integer messageNum;
 }

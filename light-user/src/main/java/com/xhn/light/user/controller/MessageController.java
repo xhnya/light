@@ -1,28 +1,28 @@
 package com.xhn.light.user.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.xhn.light.common.utils.JwtUtils;
+import com.xhn.light.user.entity.vo.MyLikeMessageVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.xhn.light.user.entity.MessageEntity;
 import com.xhn.light.user.service.MessageService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Result;
 
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
- * 私信
+ * 私信信息表,包含了所有用户的私信信息
  *
  * @author xhn
  * @email 930957853@qq.com
- * @date 2022-02-10 17:28:33
+ * @date 2022-02-23 10:23:42
  */
 @RestController
 @RequestMapping("user/message")
@@ -37,8 +37,18 @@ public class MessageController {
     //@RequiresPermissions("user:message:list")
     public Result list(@RequestParam Map<String, Object> params){
         PageUtils page = messageService.queryPage(params);
-
         return Result.ok().data("page", page);
+    }
+
+    @GetMapping("/getMyLikeList")
+    public Result getMyLikeList(HttpServletRequest request){
+        String info = JwtUtils.getUserInfoByJwtToken(request);
+        if (info.equals("")){
+            return Result.error().message("没有登录");
+        }
+        Long userId=Long.parseLong(info);
+        List<MyLikeMessageVo> result=messageService.getMyLikeList(userId);
+        return Result.ok().data("result", result);
     }
 
 

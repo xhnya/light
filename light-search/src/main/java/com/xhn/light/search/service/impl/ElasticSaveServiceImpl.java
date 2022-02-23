@@ -1,5 +1,6 @@
 package com.xhn.light.search.service.impl;
 
+import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
 import com.xhn.light.common.es.ElasticSearchModel;
 import com.xhn.light.search.config.LightElasticSearchConfig;
@@ -15,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author xhn
@@ -36,8 +40,7 @@ public class ElasticSaveServiceImpl implements ElasticSaveService {
         //在es中保存
         BulkRequest bulkRequest = new BulkRequest();
         IndexRequest request = new IndexRequest(EsConstant.LIGHT_INDEX);
-        //TODO: 设置id
-        request.id("1");
+//        request.id("1");
 
         String s = JSON.toJSONString(model);
         request.source(s, XContentType.JSON);
@@ -45,9 +48,11 @@ public class ElasticSaveServiceImpl implements ElasticSaveService {
 
         BulkResponse bulk = restHighLevelClient.bulk(bulkRequest, LightElasticSearchConfig.COMMON_OPTIONS);
         boolean b = bulk.hasReferences();
-        if (!b){
-            log.info(String.valueOf(model));
-        }
+        List<String> collect = Arrays.asList(bulk.getItems()).stream().map(item -> {
+            return item.getId();
+        }).collect(Collectors.toList());
+
+        log.info("ElasticSearch：{}",collect);
 
 
     }

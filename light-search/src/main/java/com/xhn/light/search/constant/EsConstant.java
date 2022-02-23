@@ -7,4 +7,5 @@ package com.xhn.light.search.constant;
  */
 public class EsConstant {
     public static final String LIGHT_INDEX="light";
+    public static final Integer PRODUCT_PAGESIZE = 16;
 }

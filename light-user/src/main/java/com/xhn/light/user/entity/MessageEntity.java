@@ -7,11 +7,11 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 私信
+ * 私信信息表,包含了所有用户的私信信息
  * 
  * @author xhn
  * @email 930957853@qq.com
- * @date 2022-02-10 17:28:33
+ * @date 2022-02-23 10:23:42
  */
 @Data
 @TableName("ums_message")
@@ -19,41 +19,30 @@ public class MessageEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
+	 * 主键
 	 */
 	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
-	 * 对话的uuid
+	 * 对应通知消息的id
 	 */
-	private String chatMessageToUuid;
+	private Long notifyId;
 	/**
-	 * 私信消息数据
+	 * 发送者用户ID
 	 */
-	private String chatMessageData;
+	private Long senderId;
 	/**
-	 * 类型，管理员之类的
+	 * 接受者用户ID
 	 */
-	private String chatMessageType;
+	private Long reciverId;
 	/**
-	 * 0未读，1已读
+	 * 消息内容,最长长度不允许超过1000
 	 */
-	private Integer chatMessageIsRead;
+	private String content;
 	/**
-	 * in为接收到的消息，out为发出的消息
+	 * 创建时间:按当前时间自动创建
 	 */
-	private String chatMessageIo;
-	/**
-	 * 发给谁
-	 */
-	private Long userTo;
-	/**
-	 * 谁发来
-	 */
-	private Long userForm;
-	/**
-	 * 
-	 */
+	@TableField(fill = FieldFill.INSERT)
 	private Date createTime;
 
 }

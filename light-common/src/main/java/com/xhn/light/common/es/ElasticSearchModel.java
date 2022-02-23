@@ -13,6 +13,9 @@ import java.util.List;
 public class ElasticSearchModel {
     private Long id;
     private String name;
+    /**
+     * 用户0，游戏1，文章2,
+     */
     private Integer typeSearch;
     private Integer hotScore;
     private List<Attrs> attrs;
