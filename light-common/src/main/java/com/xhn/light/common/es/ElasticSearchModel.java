@@ -14,7 +14,7 @@ public class ElasticSearchModel {
     private Long id;
     private String name;
     /**
-     * 用户0，游戏1，文章2,
+     * 用户0，游戏1，文章2, 百科3
      */
     private Integer typeSearch;
     private Integer hotScore;
