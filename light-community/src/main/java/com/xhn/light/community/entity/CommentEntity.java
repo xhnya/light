@@ -62,6 +62,7 @@ public class CommentEntity implements Serializable {
 	/**
 	 * 
 	 */
+	@TableField(fill = FieldFill.INSERT)
 	private Date createTime;
 	/**
 	 * 备注（审核不通过时添加）

@@ -20,8 +20,11 @@ public class CommentServiceImpl extends ServiceImpl<CommentDao, CommentEntity> i
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<CommentEntity> page = this.page(
                 new Query<CommentEntity>().getPage(params),
-                new QueryWrapper<CommentEntity>()
+                new QueryWrapper<CommentEntity>().eq("parent_id",0)
+                        .eq("is_delete",0).eq("aid",params.get("aid"))
+                        .orderByDesc("create_time")
         );
+
 
         return new PageUtils(page);
     }
