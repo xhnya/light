@@ -12,4 +12,6 @@ import java.util.List;
  */
 public interface ElasticSearchService {
     SearchResult esSearch(SearchParams params);
+
+    SearchResult hotGame(SearchParams params);
 }

@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.core.CountRequest;
+import org.elasticsearch.client.core.CountResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
@@ -39,6 +41,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
 
     @Autowired
     private RestHighLevelClient esRestClient;
+
     @Override
     public SearchResult esSearch(SearchParams params) {
         SearchResult result = null;
@@ -48,19 +51,37 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             SearchResponse response = esRestClient.search(searchRequest, LightElasticSearchConfig.COMMON_OPTIONS);
 
             //3、分析响应数据，封装成我们需要的格式
-            result = buildSearchResult(response,params);
+            result = buildSearchResult(response, params);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return result;
     }
+
+    @Override
+    public SearchResult hotGame(SearchParams params) {
+//        CountRequest  result = null;
+//        CountRequest  countRequest  = buildHotGameRequest(params);
+//        try {
+//            //2、执行检索请求
+//            CountResponse response = esRestClient.count(countRequest, LightElasticSearchConfig.COMMON_OPTIONS);
+//            //3、分析响应数据，封装成我们需要的格式
+//            result = buildSearchResult(response, params);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return result;
+        return null;
+    }
+
     /**
      * 构建结果数据
      * 模糊匹配，完成排序、分页、高亮,聚合分析功能
+     *
      * @param response
      * @return
      */
-    private SearchResult buildSearchResult(SearchResponse response,SearchParams param) {
+    private SearchResult buildSearchResult(SearchResponse response, SearchParams param) {
 
         SearchResult result = new SearchResult();
 
@@ -94,8 +115,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         result.setTotal(total);
 
         //2分页信息-总页码-计算
-        int totalPages = (int)total % EsConstant.PRODUCT_PAGESIZE == 0 ?
-                (int)total / EsConstant.PRODUCT_PAGESIZE : ((int)total / EsConstant.PRODUCT_PAGESIZE + 1);
+        int totalPages = (int) total % EsConstant.PRODUCT_PAGESIZE == 0 ?
+                (int) total / EsConstant.PRODUCT_PAGESIZE : ((int) total / EsConstant.PRODUCT_PAGESIZE + 1);
         result.setTotalPages(totalPages);
 
         return result;
@@ -104,6 +125,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     /**
      * 准备检索请求
      * 模糊匹配，过滤（按照属性，分类，品牌，价格区间，库存），排序，分页，高亮，聚合分析
+     *
      * @return
      */
     private SearchRequest buildSearchRequest(SearchParams param) {
@@ -114,22 +136,21 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
          * 模糊匹配，过滤
          */
         //1. 构建bool-query
-        BoolQueryBuilder boolQueryBuilder=new BoolQueryBuilder();
+        BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
 
         //1.1 bool-must
-        if(!StringUtils.isEmpty(param.getKeyword())){
-            boolQueryBuilder.must(QueryBuilders.matchQuery("name",param.getKeyword()));
+        if (!StringUtils.isEmpty(param.getKeyword())) {
+            boolQueryBuilder.must(QueryBuilders.matchQuery("name", param.getKeyword()));
         }
 
         //1.2
         //1.2.1
-        if(null != param.getTypeSearch()){
+        if (null != param.getTypeSearch()) {
             boolQueryBuilder.filter(QueryBuilders.termQuery("typeSearch", param.getTypeSearch()));
         }
 
         //封装所有的查询条件
         searchSourceBuilder.query(boolQueryBuilder);
-
 
         /**
          * 排序，分页，高亮
@@ -137,19 +158,19 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
 
         //排序
         //形式为sort=hotScore_asc/desc
-        if(!StringUtils.isEmpty(param.getSort())){
+        if (!StringUtils.isEmpty(param.getSort())) {
             String sort = param.getSort();
             String[] sortFileds = sort.split("_");
-            SortOrder sortOrder="asc".equalsIgnoreCase(sortFileds[1])?SortOrder.ASC:SortOrder.DESC;
-            searchSourceBuilder.sort(sortFileds[0],sortOrder);
+            SortOrder sortOrder = "asc".equalsIgnoreCase(sortFileds[1]) ? SortOrder.ASC : SortOrder.DESC;
+            searchSourceBuilder.sort(sortFileds[0], sortOrder);
         }
 
         //分页
-        searchSourceBuilder.from((param.getPageNum()-1)*EsConstant.PRODUCT_PAGESIZE);
+        searchSourceBuilder.from((param.getPageNum() - 1) * EsConstant.PRODUCT_PAGESIZE);
         searchSourceBuilder.size(EsConstant.PRODUCT_PAGESIZE);
 
         //高亮
-        if(!StringUtils.isEmpty(param.getKeyword())){
+        if (!StringUtils.isEmpty(param.getKeyword())) {
 
             HighlightBuilder highlightBuilder = new HighlightBuilder();
             highlightBuilder.field("name");
@@ -158,11 +179,46 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             searchSourceBuilder.highlighter(highlightBuilder);
         }
 
-        log.debug("构建的DSL语句 {}",searchSourceBuilder.toString());
+        log.debug("构建的DSL语句 {}", searchSourceBuilder.toString());
 
-        SearchRequest searchRequest = new SearchRequest(new String[]{EsConstant.LIGHT_INDEX},searchSourceBuilder);
+        SearchRequest searchRequest = new SearchRequest(new String[]{EsConstant.LIGHT_INDEX}, searchSourceBuilder);
 
         return searchRequest;
+    }
+
+    /**
+     * 构建热门游戏排行
+     * @param param
+     * @return
+     */
+    private CountRequest buildHotGameRequest(SearchParams param) {
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
+        boolQueryBuilder.filter(QueryBuilders.termQuery("typeSearch", 1));
+        searchSourceBuilder.query(boolQueryBuilder);
+        if (!StringUtils.isEmpty(param.getSort())) {
+            String sort = param.getSort();
+            String[] sortFileds = sort.split("_");
+            SortOrder sortOrder = "asc".equalsIgnoreCase(sortFileds[1]) ? SortOrder.ASC : SortOrder.DESC;
+            searchSourceBuilder.sort(sortFileds[0], sortOrder);
+        }
+        //分页
+        searchSourceBuilder.from((param.getPageNum() - 1) * EsConstant.PRODUCT_PAGESIZE);
+        searchSourceBuilder.size(5);
+
+        //高亮
+        if (!StringUtils.isEmpty(param.getKeyword())) {
+
+            HighlightBuilder highlightBuilder = new HighlightBuilder();
+            highlightBuilder.field("name");
+            highlightBuilder.preTags("<b style='color:red'>");
+            highlightBuilder.postTags("</b>");
+            searchSourceBuilder.highlighter(highlightBuilder);
+        }
+
+        log.debug("构建的DSL语句 {}", searchSourceBuilder.toString());
+        CountRequest countRequest = new CountRequest(new String[]{EsConstant.LIGHT_INDEX}, searchSourceBuilder);
+        return countRequest;
     }
 
 

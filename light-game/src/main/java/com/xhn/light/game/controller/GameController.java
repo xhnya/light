@@ -9,6 +9,7 @@ import com.xhn.light.common.pojo.PageOfGameName;
 import com.xhn.light.common.utils.JwtUtils;
 import com.xhn.light.game.client.AddCommunityFeign;
 import com.xhn.light.game.entity.vo.*;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +35,9 @@ public class GameController {
     private GameService gameService;
     @Autowired
     private AddCommunityFeign addCommunityFeign;
+
+    @Autowired
+    private AmqpTemplate rabbitTemplate;
 
     /**
      * 列表
@@ -104,6 +108,7 @@ public class GameController {
         Map<String, Object> map = new HashMap<>();
         map.put("id", game.getId());
         map.put("name", game.getGameNameChina());
+        rabbitTemplate.convertAndSend("es_game",map);
         addCommunityFeign.saveFromGame(map);
         return Result.ok().data("gameId", game.getId());
     }

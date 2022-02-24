@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -139,8 +140,13 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
                      * 添加注册人数
                      * 等级添加
                      */
+                    Map<String, Object> map = new HashMap<>();
+
                     Long entityId = userEntity.getId();
+                    map.put("id",entityId);
+                    map.put("name",userNameSet);
                     rabbitTemplate.convertAndSend("fanout_register_exchange", "", entityId);
+                    rabbitTemplate.convertAndSend("register_es",map);
                     /**
                      * 注册成功则返回token，和登录成功一样
                      */

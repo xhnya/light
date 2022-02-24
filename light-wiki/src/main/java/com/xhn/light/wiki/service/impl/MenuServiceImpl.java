@@ -1,13 +1,16 @@
 package com.xhn.light.wiki.service.impl;
 
+import com.xhn.light.common.config.RabbitMqConfiguration;
 import com.xhn.light.wiki.service.PageService;
 import com.xhn.light.wiki.vo.MenuListView;
 import com.xhn.light.wiki.vo.MenuListVo;
 import com.xhn.light.wiki.vo.SaveMenuAndPageParam;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +33,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuDao, MenuEntity> implements
     private MenuDao menuDao;
     @Autowired
     private PageService pageService;
-
+    @Autowired
+    private AmqpTemplate rabbitTemplate;
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<MenuEntity> page = this.page(
@@ -88,6 +92,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuDao, MenuEntity> implements
         menu.setParentId(params.getMenuId());
         menu.setName(params.getTitle());
         menu.setPid(id);
+        Map<String, Object> map = new HashMap<>();
+        map.put("id",params.getGameId());
+        map.put("name",params.getTitle());
+        rabbitTemplate.convertAndSend(RabbitMqConfiguration.WIKI_ADD_EXCHANGE,"",map);
         menuDao.insert(menu);
     }
 

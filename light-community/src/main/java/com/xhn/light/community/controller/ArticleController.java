@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.hutool.core.lang.hash.Hash;
+import com.xhn.light.common.config.RabbitMqConfiguration;
 import com.xhn.light.common.pojo.PageParam;
 import com.xhn.light.common.utils.JwtUtils;
 import com.xhn.light.community.entity.vo.*;
@@ -86,7 +87,7 @@ public class ArticleController {
     @RequestMapping("/save")
     //@RequiresPermissions("community:article:save")
     public Result save(@RequestBody ArticleEntity article) {
-
+        //添加到es，加上统计表
         articleService.save(article);
         return Result.ok();
     }
@@ -166,6 +167,12 @@ public class ArticleController {
         Long userId = Long.parseLong(info);
         article.setUser(userId);
         articleService.save(article);
+
+        Map<String,Object> map=new HashMap<>();
+        map.put("id",article.getId());
+        map.put("name",article.getTitle());
+        rabbitTemplate.convertAndSend(RabbitMqConfiguration.PAGE_ADD_EXCHANGE,"",map);
+
         return Result.ok();
     }
 

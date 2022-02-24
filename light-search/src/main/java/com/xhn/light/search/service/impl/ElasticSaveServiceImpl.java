@@ -35,12 +35,11 @@ public class ElasticSaveServiceImpl implements ElasticSaveService {
 
     @Override
     public void esSave(ElasticSearchModel model) throws IOException {
-    //    1.    保存到es,建立映射关系
-
+        //保存到es,建立映射关系
         //在es中保存
         BulkRequest bulkRequest = new BulkRequest();
         IndexRequest request = new IndexRequest(EsConstant.LIGHT_INDEX);
-//        request.id("1");
+
 
         String s = JSON.toJSONString(model);
         request.source(s, XContentType.JSON);

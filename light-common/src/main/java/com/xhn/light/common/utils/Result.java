@@ -53,6 +53,24 @@ public class Result {
         return result;
     }
 
+    //失败的静态方法
+    public static Result forbidden(){
+        Result result=new Result();
+        result.setSuccess(false);
+        result.setCode(ResultCode.FORBIDDEN);
+        result.setMessage("没有相关权限");
+        return result;
+    }
+    //未登录返回结果
+    public static Result unauthorized(){
+        Result result=new Result();
+        result.setSuccess(false);
+        result.setCode(ResultCode.UNAUTHORIZED);
+        result.setMessage("暂未登录或token已经过期");
+        return result;
+    }
+
+
     public Result success(Boolean success){
         this.setSuccess(success);
         return this;

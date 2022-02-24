@@ -5,11 +5,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
- * 云服务
- * 主要提供
+ *
+ * 认证模块
+ * 安全模块
  */
+
 @EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication

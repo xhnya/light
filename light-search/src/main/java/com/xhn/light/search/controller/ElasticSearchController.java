@@ -35,4 +35,13 @@ public class ElasticSearchController {
 
     }
 
+    @GetMapping("/hotGame")
+    public Result hotGame(SearchParams params, HttpServletRequest request){
+        params.set_queryString(request.getQueryString());
+        log.info(String.valueOf(params));
+        SearchResult result=elasticSearchService.hotGame(params);
+        return Result.ok().data("result",result);
+
+    }
+
 }

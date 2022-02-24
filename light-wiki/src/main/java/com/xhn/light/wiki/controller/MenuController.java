@@ -1,11 +1,14 @@
 package com.xhn.light.wiki.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.xhn.light.common.config.RabbitMqConfiguration;
 import com.xhn.light.wiki.vo.MenuListView;
 import com.xhn.light.wiki.vo.SaveMenuAndPageParam;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +30,8 @@ import com.xhn.light.common.utils.Result;
 public class MenuController {
     @Autowired
     private MenuService menuService;
-
+    @Autowired
+    private AmqpTemplate rabbitTemplate;
     /**
      * 列表
      */
@@ -57,6 +61,10 @@ public class MenuController {
     @RequestMapping("/save")
     //@RequiresPermissions("wiki:menu:save")
     public Result save(@RequestBody MenuEntity menu) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id",menu.getGid());
+        map.put("name",menu.getName());
+        rabbitTemplate.convertAndSend(RabbitMqConfiguration.WIKI_ADD_EXCHANGE,"",map);
         menuService.save(menu);
         return Result.ok();
     }
