@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>light</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+</head>
+<body>
+<h1 class="ui header">这是游戏社区</h1>
+<div class="ui card">
+    <div class="content">
+        <div class="header">系统推送</div>
+        <div class="meta"><span th:text="${dataNew}"></span></div>
+        <div class="description">
+            <p th:text="${pushMessage}"></p>
+        </div>
+        <div class="ui icon message">
+            <i class="inbox icon"></i>
+            <div class="content">
+                <div class="header">你听说过我们的邮件列表吗？ </div>
+                <p>每天用email接受最好的信息</p>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+</body>
+</html>

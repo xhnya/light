@@ -37,4 +37,11 @@
         </where>
         order by r.update_time DESC limit 6
     </select>
+    <select id="getBannerGame" resultType="com.xhn.light.game.entity.vo.IdAndNameVo">
+        select g.id id, g.game_name name
+        FROM gms_recommend r,
+             gms_game g
+        where  r.game_id = g.id and type = #{type}
+        order by r.update_time DESC limit 5
+    </select>
 </mapper>

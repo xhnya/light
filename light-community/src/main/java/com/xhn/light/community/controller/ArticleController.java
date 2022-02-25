@@ -229,5 +229,11 @@ public class ArticleController {
         return Result.ok().data("results", result);
     }
 
+    @GetMapping("/gameInfoList")
+    public Result gameInfoList( @RequestParam Long id) {
+        List<IdAndName> result = articleService.gameInfoList(id);
+        return Result.ok().data("results", result);
+    }
+
 
 }

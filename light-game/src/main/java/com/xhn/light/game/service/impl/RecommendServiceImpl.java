@@ -10,6 +10,7 @@ import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Query;
 import com.xhn.light.game.entity.GameEntity;
 import com.xhn.light.game.entity.RecommendEntity;
+import com.xhn.light.game.entity.vo.IdAndNameVo;
 import com.xhn.light.game.entity.vo.RecommendAdminList;
 import com.xhn.light.game.entity.vo.RecommendListView;
 import com.xhn.light.game.service.RecommendService;
@@ -46,6 +47,11 @@ public class RecommendServiceImpl extends ServiceImpl<RecommendDao, RecommendEnt
     public List<RecommendListView> listView(Integer type) {
         List<RecommendListView> list=recommendDao.listView(type);
         return list;
+    }
+
+    @Override
+    public List<IdAndNameVo> getBannerGame(Integer type) {
+        return recommendDao.getBannerGame(type);
     }
 }
 

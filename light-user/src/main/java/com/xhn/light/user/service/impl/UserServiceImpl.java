@@ -14,6 +14,7 @@ import com.xhn.light.user.dao.UserInfoDao;
 import com.xhn.light.user.entity.UserInfoEntity;
 import com.xhn.light.user.entity.UserLevelEntity;
 import com.xhn.light.common.utils.RabbitMqUtils;
+import com.xhn.light.user.entity.vo.ChangePasswordVo;
 import com.xhn.light.user.entity.vo.UserInfoView;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -21,6 +22,7 @@ import org.springframework.amqp.core.AmqpTemplate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -143,10 +145,10 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
                     Map<String, Object> map = new HashMap<>();
 
                     Long entityId = userEntity.getId();
-                    map.put("id",entityId);
-                    map.put("name",userNameSet);
+                    map.put("id", entityId);
+                    map.put("name", userNameSet);
                     rabbitTemplate.convertAndSend("fanout_register_exchange", "", entityId);
-                    rabbitTemplate.convertAndSend("register_es",map);
+                    rabbitTemplate.convertAndSend("register_es", map);
                     /**
                      * 注册成功则返回token，和登录成功一样
                      */
@@ -210,7 +212,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
         wrapper.eq(judge, username);
         UserLogin login = new UserLogin();
         Long count = baseMapper.selectCount(wrapper);
-        if (count==0){
+        if (count == 0) {
             if (judge.equals(PhoneOrEmailOrUserName.PHONECOLUMN)) {
                 /**
                  * 手机号第一次登录
@@ -260,6 +262,30 @@ public class UserServiceImpl extends ServiceImpl<UserDao, UserEntity> implements
         login.setId(user.getId());
         login.setCode(user.getCode());
         return login;
+    }
+
+    @Override
+    public Result changePassword(ChangePasswordVo param) {
+        String type = "";
+        if (param.getType() == 0) {
+            type="phonenumber";
+        }
+        if (param.getType() == 1) {
+            type="email";
+        }
+        String username=param.getUserName();
+        String code = redisTemplate.opsForValue().get(username);
+        log.info("username" + username + "===========>" + code);
+        if (!param.getCode().equals(code)) {
+            throw LightException.from(ResultCode.LOGIN_CODE_ERROR);
+        }
+        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>();
+        wrapper.eq(type,username);
+        UserEntity user = new UserEntity();
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(param.getPass()));
+        baseMapper.update(user,wrapper);
+        return  Result.ok();
     }
 
 }

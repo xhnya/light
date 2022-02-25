@@ -39,5 +39,7 @@ public interface ArticleService extends IService<ArticleEntity> {
     PageUtils getMyPageList(CommunityIndexListParam param, Long userId);
 
     PageUtils getGameCommunityList(GameCommunityParams params);
+
+    List<IdAndName> gameInfoList(Long id);
 }
 

@@ -3,6 +3,12 @@ spring:
     name: light-gateway
   profiles:
     active: dev
+  cloud:
+    #sentinel
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: localhost:8080
 
 #暴露所有端点
 management:

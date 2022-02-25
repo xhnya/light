@@ -134,6 +134,12 @@
         </where>
         order by a.sort desc, a.update_time desc
     </select>
+    <select id="gameInfoList" resultType="com.xhn.light.community.entity.vo.IdAndName">
+        select a.id id,a.title name
+        from cms_article a,cms_community c
+        where c.parent_id=#{id} and a.parent_id=c.id and publish_type!='原创'
+        order by a.create_time desc limit 12
+    </select>
 
 
 </mapper>

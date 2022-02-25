@@ -3,6 +3,7 @@ package com.xhn.light.game.dao;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xhn.light.game.entity.RecommendEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xhn.light.game.entity.vo.IdAndNameVo;
 import com.xhn.light.game.entity.vo.RecommendAdminList;
 import com.xhn.light.game.entity.vo.RecommendListView;
 import org.apache.ibatis.annotations.Mapper;
@@ -22,6 +23,8 @@ public interface RecommendDao extends BaseMapper<RecommendEntity> {
     List<RecommendAdminList> selectRecommendList(Page page, Integer type);
 
     List<RecommendListView> listView(Integer type);
+
+    List<IdAndNameVo> getBannerGame(Integer type);
 }
 
 

@@ -6,5 +6,6 @@ package com.xhn.light.cloud.service;
  * @description：
  */
 public interface MailboxService {
-    Boolean sendMailBox(String code,String email);
+    void sendMailBox(String code,String email);
+    void sendPush( String email,String message);
 }

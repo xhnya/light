@@ -7,6 +7,7 @@ import com.xhn.light.common.pojo.UserLogin;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Result;
 import com.xhn.light.user.entity.UserEntity;
+import com.xhn.light.user.entity.vo.ChangePasswordVo;
 import com.xhn.light.user.entity.vo.UserInfoView;
 
 import java.util.List;
@@ -34,5 +35,7 @@ public interface UserService extends IService<UserEntity> {
     UserInfoView getUserInfoByToken(Long userId);
 
     UserLogin getUserInfoForAuth(String username, String password);
+
+    Result changePassword(ChangePasswordVo param);
 }
 

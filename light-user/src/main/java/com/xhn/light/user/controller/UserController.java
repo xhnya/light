@@ -9,6 +9,7 @@ import com.xhn.light.common.pojo.UserAnPageView;
 import com.xhn.light.common.pojo.UserLogin;
 import com.xhn.light.common.utils.Constant;
 import com.xhn.light.common.utils.JwtUtils;
+import com.xhn.light.user.entity.vo.ChangePasswordVo;
 import com.xhn.light.user.entity.vo.UserInfoView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -153,6 +154,15 @@ public class UserController {
     @PostMapping("/getUserInfoForAuth")
     public UserLogin getUserInfoForAuth(@RequestBody UserLogin userLogin){
         return userService.getUserInfoForAuth(userLogin.getUsername(), userLogin.getPassword());
+    }
+
+    @PostMapping("/changePassword")
+    public Result changePassword(@RequestBody ChangePasswordVo param){
+        if (!param.getPass().equals(param.getCheckPass())){
+            return Result.error().message("两次密码不一致");
+        }
+
+        return userService.changePassword(param);
     }
 
 }

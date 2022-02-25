@@ -8,6 +8,12 @@ spring:
     port: 5673
     username: guest
     password: guest
+  cloud:
+    #sentinel
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: localhost:8080
 server:
   port: 8010
 management:

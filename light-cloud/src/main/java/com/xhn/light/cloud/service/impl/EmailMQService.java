@@ -30,11 +30,7 @@ public class EmailMQService {
     @RabbitHandler
     public void emailSend(String email){
         String code = RandomUtil.randomString(6);
-        boolean isSend = mailboxService.sendMailBox(code, email);
-        if (isSend) {
-            redisTemplate.opsForValue().set(email, code, 3, TimeUnit.MINUTES);
-        } else {
-            throw  LightException.from("邮件发送失败");
-        }
+        mailboxService.sendMailBox(code, email);
+
     }
 }

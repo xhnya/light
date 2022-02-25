@@ -8,9 +8,7 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -28,12 +26,8 @@ public class MailboxController {
     @Autowired
     private AmqpTemplate rabbitTemplate;
 
-    @PostMapping("/sendMailBox")
-    public Result sendMailBox(String email) {
-        String code = redisTemplate.opsForValue().get(email);
-        if (!StringUtils.isEmpty(code)) {
-            return Result.ok();
-        }
+    @GetMapping("/sendMailBox/{email}")
+    public Result sendMailBox(@PathVariable String email) {
         rabbitTemplate.convertAndSend("email",email);
         return Result.ok();
 

@@ -203,4 +203,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, ArticleEntity> i
         return new PageUtils(result, (int) page.getTotal(), (int) page.getSize(), (int) page.getPages());
     }
 
+    @Override
+    public List<IdAndName> gameInfoList(Long id) {
+        return articleDao.gameInfoList(id);
+    }
+
 }

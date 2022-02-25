@@ -4,6 +4,7 @@ import com.sun.xml.internal.bind.v2.TODO;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Result;
 import com.xhn.light.game.entity.RecommendEntity;
+import com.xhn.light.game.entity.vo.IdAndNameVo;
 import com.xhn.light.game.entity.vo.RecommendListView;
 import com.xhn.light.game.service.RecommendService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,12 @@ public class RecommendController {
     public Result delete(@RequestBody Long[] ids) {
         recommendService.removeByIds(Arrays.asList(ids));
         return Result.ok();
+    }
+
+    @GetMapping("/bannerList")
+    public Result getBannerGame(@RequestParam Integer type){
+        List<IdAndNameVo> result=recommendService.getBannerGame(type);
+        return Result.ok().data("result",result);
     }
 
 
