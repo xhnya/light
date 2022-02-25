@@ -9,6 +9,7 @@ import com.xhn.light.game.service.RecommendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +44,17 @@ public class RecommendController {
     public Result listView(@RequestParam Integer type) {
         List<RecommendListView> page=recommendService.listView(type);
         return Result.ok().data("page", page);
+    }
+
+
+    /**
+     * 删除
+     */
+    @RequestMapping("/delete")
+    //@RequiresPermissions("game:rank:delete")
+    public Result delete(@RequestBody Long[] ids) {
+        recommendService.removeByIds(Arrays.asList(ids));
+        return Result.ok();
     }
 
 

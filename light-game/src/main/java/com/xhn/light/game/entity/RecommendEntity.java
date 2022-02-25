@@ -25,7 +25,7 @@ public class RecommendEntity implements Serializable {
     private Long gameId;
 
     /**
-     * 
+     * 0推荐游戏，1为优惠促销，2为首页热门，3为最受期待，4为最近热门
      */
     private Byte type;
 

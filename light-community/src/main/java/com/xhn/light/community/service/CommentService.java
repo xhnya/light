@@ -3,6 +3,7 @@ package com.xhn.light.community.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.community.entity.CommentEntity;
+import com.xhn.light.community.entity.vo.CollectionMyParams;
 
 import java.util.Map;
 
@@ -16,5 +17,7 @@ import java.util.Map;
 public interface CommentService extends IService<CommentEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    PageUtils getCommentList(CollectionMyParams params);
 }
 

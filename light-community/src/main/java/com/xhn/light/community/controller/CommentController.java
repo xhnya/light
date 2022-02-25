@@ -3,6 +3,7 @@ package com.xhn.light.community.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.xhn.light.community.entity.vo.CollectionMyParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,12 +38,12 @@ public class CommentController {
         return Result.ok().data("page", page);
     }
 
-//    @GetMapping("/getCommentList")
-//    public Result getCommentList(){
-//        PageUtils page = commentService.queryPage(params);
-//
-//        return Result.ok().data("page", page);
-//    }
+    @GetMapping("/getCommentList")
+    public Result getCommentList(CollectionMyParams params){
+        PageUtils page = commentService.getCommentList(params);
+
+        return Result.ok().data("page", page);
+    }
 
 
     /**

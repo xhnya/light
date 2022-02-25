@@ -69,4 +69,7 @@ public class CommentEntity implements Serializable {
 	 */
 	private String remark;
 
+	private String userName;
+	private String userCover;
+
 }

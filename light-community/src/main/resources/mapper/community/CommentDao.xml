@@ -3,7 +3,7 @@
 
 <mapper namespace="com.xhn.light.community.dao.CommentDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.xhn.light.community.entity.CommentEntity" id="commentMap">
         <result property="id" column="id"/>
         <result property="userId" column="user_id"/>
@@ -18,6 +18,30 @@
         <result property="createTime" column="create_time"/>
         <result property="remark" column="remark"/>
     </resultMap>
+    <select id="getCommentList" resultType="com.xhn.light.community.entity.vo.CommentView">
+        select c.id          id,
+               c.user_id     userId,
+               c.user_name   userName,
+               c.user_cover  cover,
+               c.content     content,
+               c.create_time createTime,
+               c.parent_id   parentId
+        from cms_comment c
+        where c.aid = #{id}
+        order by c.create_time desc
+    </select>
+    <select id="getCommentListAll" resultType="com.xhn.light.community.entity.vo.CommentView">
+        select c.id          id,
+               c.user_id     userId,
+               c.user_name   userName,
+               c.user_cover  cover,
+               c.content     content,
+               c.create_time createTime,
+               c.parent_id   parentId
+        from cms_comment c
+        where c.aid = #{id}
+        order by c.create_time desc
+    </select>
 
 
 </mapper>

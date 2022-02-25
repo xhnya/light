@@ -16,7 +16,6 @@ import com.xhn.light.common.utils.PageUtils;
 import com.xhn.light.common.utils.Result;
 
 
-
 /**
  * 游戏评论表
  *
@@ -26,8 +25,7 @@ import com.xhn.light.common.utils.Result;
  */
 @RestController
 @RequestMapping("game/content")
-public class
-ContentController {
+public class ContentController {
     @Autowired
     private ContentService contentService;
 
@@ -36,7 +34,7 @@ ContentController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("game:content:list")
-    public Result list(@RequestParam Map<String, Object> params){
+    public Result list(@RequestParam Map<String, Object> params) {
         PageUtils page = contentService.queryPage(params);
 
         return Result.ok().data("page", page);
@@ -48,8 +46,8 @@ ContentController {
      */
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("game:content:info")
-    public Result info(@PathVariable("id") Long id){
-		ContentEntity content = contentService.getById(id);
+    public Result info(@PathVariable("id") Long id) {
+        ContentEntity content = contentService.getById(id);
 
         return Result.ok().data("content", content);
     }
@@ -59,8 +57,8 @@ ContentController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("game:content:save")
-    public Result save(@RequestBody ContentEntity content){
-		contentService.save(content);
+    public Result save(@RequestBody ContentEntity content) {
+        contentService.save(content);
 
         return Result.ok();
     }
@@ -70,8 +68,8 @@ ContentController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("game:content:update")
-    public Result update(@RequestBody ContentEntity content){
-		contentService.updateById(content);
+    public Result update(@RequestBody ContentEntity content) {
+        contentService.updateById(content);
 
         return Result.ok();
     }
@@ -81,8 +79,8 @@ ContentController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("game:content:delete")
-    public Result delete(@RequestBody Long[] ids){
-		contentService.removeByIds(Arrays.asList(ids));
+    public Result delete(@RequestBody Long[] ids) {
+        contentService.removeByIds(Arrays.asList(ids));
 
         return Result.ok();
     }

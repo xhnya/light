@@ -20,7 +20,7 @@ public class ContentServiceImpl extends ServiceImpl<ContentDao, ContentEntity> i
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<ContentEntity> page = this.page(
                 new Query<ContentEntity>().getPage(params),
-                new QueryWrapper<ContentEntity>()
+                new QueryWrapper<ContentEntity>().eq("game_id",params.get("gameId")).orderByDesc("create_time")
         );
 
         return new PageUtils(page);
