@@ -79,6 +79,10 @@ public class LoginServiceImpl implements LoginService {
         String token = JwtUtils.getJwtToken(login.getId(), login.getCode());
         return Result.ok().data("token",token);
     }
+
+
+
+
     @Override
     public String verificationLogin(UserLogin userLogin) {
         String username = userLogin.getUsername();
