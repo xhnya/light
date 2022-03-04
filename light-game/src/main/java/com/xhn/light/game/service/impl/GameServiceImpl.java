@@ -59,8 +59,9 @@ public class GameServiceImpl extends ServiceImpl<GameDao, GameEntity> implements
         if (sizePage!=null){
             size = Long.parseLong(sizePage);
         }
+
         Page<GameEntity> page = new Page<>(curPage,size);
-        List<GameListAdmin> result= gameDao.gameList(page);
+        List<GameListAdmin> result= gameDao.gameList(page,(String) params.get("gameName"));
         return new PageUtils(result,(int) page.getTotal(),(int) page.getSize(),(int) page.getCurrent());
     }
 

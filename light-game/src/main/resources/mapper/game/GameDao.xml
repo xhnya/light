@@ -39,7 +39,10 @@
                (select pe.name from gms_produce pe where pe.id = g.game_making) as gameMaking
         from gms_game g,
              gms_type t
-        where t.id = g.game_type
+        <where>
+            t.id = g.game_type
+            <if test="gameName!=null and gameName!=''">and g.game_name like concat('%',#{gameName},'%')</if>
+        </where>
     </select>
     <!--    TODO: 后台页面的详情展示-->
     <select id="getGameInfo" resultType="com.xhn.light.game.entity.vo.GameInfoVo">

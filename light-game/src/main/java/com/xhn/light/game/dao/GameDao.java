@@ -21,7 +21,6 @@ import java.util.List;
 public interface GameDao extends BaseMapper<GameEntity> {
 
 
-    List<GameListAdmin> gameList(Page<GameEntity> page);
 
     GameInfoVo getGameInfo(Long id);
 
@@ -38,4 +37,6 @@ public interface GameDao extends BaseMapper<GameEntity> {
     List<AllGameListView> getAllGameList();
 
     List<RecommendListView> getWikiGameList();
+
+    List<GameListAdmin> gameList(Page<GameEntity> page, String gameName);
 }
