@@ -10,6 +10,7 @@ import com.xhn.light.common.config.RabbitMqConfiguration;
 import com.xhn.light.common.pojo.PageParam;
 import com.xhn.light.common.utils.JwtUtils;
 import com.xhn.light.community.entity.vo.*;
+import com.xhn.light.community.utils.SensitiveFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class ArticleController {
     private ArticleService articleService;
     @Autowired
     private AmqpTemplate rabbitTemplate;
+
+    @Autowired
+    private SensitiveFilter sensitiveFilter;
 
     /**
      * 列表
@@ -87,6 +91,9 @@ public class ArticleController {
     @RequestMapping("/save")
     //@RequiresPermissions("community:article:save")
     public Result save(@RequestBody ArticleEntity article) {
+        String content = article.getContent();
+        String filter = sensitiveFilter.filter(content);
+        article.setContent(filter);
         //添加到es，加上统计表
         articleService.save(article);
         return Result.ok();
@@ -166,6 +173,11 @@ public class ArticleController {
         }
         Long userId = Long.parseLong(info);
         article.setUser(userId);
+        //敏感词过滤
+        String content = article.getContent();
+        String filter = sensitiveFilter.filter(content);
+        article.setContent(filter);
+
         articleService.save(article);
 
         Map<String,Object> map=new HashMap<>();
