@@ -161,7 +161,6 @@ public class UserController {
         if (!param.getPass().equals(param.getCheckPass())){
             return Result.error().message("两次密码不一致");
         }
-
         return userService.changePassword(param);
     }
 

@@ -19,6 +19,7 @@
             <if test="title!=null and title!=''">and a.title like concat('%',#{title},'%')</if>
         </where>
         order by h.update_time desc
+        limit 50
     </select>
     <select id="getAllDay" resultType="java.util.Date">
         select h.watch_days from cms_history h,cms_article a

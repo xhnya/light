@@ -30,6 +30,9 @@ public class UserLikeMQ {
 
     private static final String USER_LIKE="赞了我的文章";
 
+    private static final String LIKE_LABEL_LEFT="<span style=\"color:DodgerBlue;\">";
+    private static final String LIKE_LABEL_RIGHT="</span>";
+
     @Autowired
     private UserService userService;
     @Autowired
@@ -56,9 +59,16 @@ public class UserLikeMQ {
         message.setNotifyId(notify.getId());
         message.setReciverId((Long) map.get("toUser"));
         message.setSenderId((Long) map.get("userId"));
-        String content=user.getUserName()+USER_LIKE+map.get("pageName");
+        String content=user.getUserName()+USER_LIKE+likeMessageContent(map);
         message.setContent(content);
         messageService.save(message);
 
+    }
+
+    public static String likeMessageContent(Map<String, Object> map){
+        String name = (String) map.get("pageName");
+        StringBuffer buffer = new StringBuffer(LIKE_LABEL_LEFT);
+        buffer.append(name).append(LIKE_LABEL_RIGHT);
+        return buffer.toString();
     }
 }
