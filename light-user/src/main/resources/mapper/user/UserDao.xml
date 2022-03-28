@@ -3,7 +3,7 @@
 
 <mapper namespace="com.xhn.light.user.dao.UserDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.xhn.light.user.entity.UserEntity" id="userMap">
         <result property="id" column="id"/>
         <result property="code" column="code"/>
@@ -26,6 +26,17 @@
         <result property="userType" column="user_type"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
+    <update id="updateRelieveBan">
+        update ums_user
+        set yesapi_ry_sys_user_status=#{state}
+        where id = #{id}
+    </update>
+    <update id="updateRelieveUser">
+        update ums_user set yesapi_ry_sys_user_status=0 where id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
     <select id="getUserFromAdminCommunity" resultType="com.xhn.light.common.pojo.PageOfGameName">
         select id id,user_name name from ums_user where id in
         <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
@@ -40,11 +51,14 @@
             #{item}
         </foreach>
     </select>
-<!--    用户登录的时候就获取用户的信息-->
+    <!--    用户登录的时候就获取用户的信息-->
     <select id="getUserInfoByToken" resultType="com.xhn.light.user.entity.vo.UserInfoView">
-        select u.id id,u.avatar cover,u.user_name userName,
-               (select count(*) from ums_notify n where n.reciver_id=#{userId} and n.is_read=0) messageNum
-        from ums_user u where id=#{userId}
+        select u.id                                                                                 id,
+               u.avatar                                                                             cover,
+               u.user_name                                                                          userName,
+               (select count(*) from ums_notify n where n.reciver_id = #{userId} and n.is_read = 0) messageNum
+        from ums_user u
+        where id = #{userId}
     </select>
 
 </mapper>

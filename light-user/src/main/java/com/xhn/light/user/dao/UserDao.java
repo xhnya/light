@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xhn.light.user.entity.vo.UserInfoView;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,4 +25,8 @@ public interface UserDao extends BaseMapper<UserEntity> {
     List<UserAnPageView> getCommunityIndex(List<Long> ids);
 
     UserInfoView getUserInfoByToken(Long userId);
+
+    int updateRelieveBan(Long id,int state);
+
+    void updateRelieveUser(ArrayList<Long> user);
 }

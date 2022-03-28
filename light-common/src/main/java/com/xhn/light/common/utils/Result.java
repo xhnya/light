@@ -43,6 +43,14 @@ public class Result {
         result.setMessage("成功");
         return result;
     }
+    //成功的静态方法
+    public static Result ok(String message){
+        Result result=new Result();
+        result.setSuccess(true);
+        result.setCode(ResultCode.SUCCESS);
+        result.setMessage(message);
+        return result;
+    }
 
     //失败的静态方法
     public static Result error(){
@@ -50,6 +58,14 @@ public class Result {
         result.setSuccess(false);
         result.setCode(ResultCode.ERROR);
         result.setMessage("失败");
+        return result;
+    }
+
+    public static Result error(String message){
+        Result result=new Result();
+        result.setSuccess(false);
+        result.setCode(ResultCode.ERROR);
+        result.setMessage(message);
         return result;
     }
 
